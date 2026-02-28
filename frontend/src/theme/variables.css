@@ -1,0 +1,106 @@
+/* Ionic CSS Variables — Bypass Heart Health dark theme */
+
+:root {
+  --ion-background-color: #060d08;
+  --ion-background-color-rgb: 6, 13, 8;
+
+  --ion-text-color: #ffffff;
+  --ion-text-color-rgb: 255, 255, 255;
+
+  --ion-color-primary: #a3e635;
+  --ion-color-primary-rgb: 163, 230, 53;
+  --ion-color-primary-contrast: #060d08;
+  --ion-color-primary-contrast-rgb: 6, 13, 8;
+  --ion-color-primary-shade: #84cc16;
+  --ion-color-primary-tint: #bef264;
+
+  --ion-color-secondary: #1e2d20;
+  --ion-color-secondary-rgb: 30, 45, 32;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #111c14;
+  --ion-color-secondary-tint: #2a3d2c;
+
+  --ion-color-tertiary: #8a9a8c;
+  --ion-color-tertiary-rgb: 138, 154, 140;
+  --ion-color-tertiary-contrast: #060d08;
+  --ion-color-tertiary-contrast-rgb: 6, 13, 8;
+  --ion-color-tertiary-shade: #6b7a6d;
+  --ion-color-tertiary-tint: #9dac9f;
+
+  --ion-color-success: #22c55e;
+  --ion-color-success-rgb: 34, 197, 94;
+  --ion-color-success-contrast: #060d08;
+  --ion-color-success-contrast-rgb: 6, 13, 8;
+  --ion-color-success-shade: #16a34a;
+  --ion-color-success-tint: #4ade80;
+
+  --ion-color-warning: #f59e0b;
+  --ion-color-warning-rgb: 245, 158, 11;
+  --ion-color-warning-contrast: #060d08;
+  --ion-color-warning-contrast-rgb: 6, 13, 8;
+  --ion-color-warning-shade: #d97706;
+  --ion-color-warning-tint: #fbbf24;
+
+  --ion-color-danger: #ef4444;
+  --ion-color-danger-rgb: 239, 68, 68;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #dc2626;
+  --ion-color-danger-tint: #f87171;
+
+  --ion-color-dark: #0f1a12;
+  --ion-color-dark-rgb: 15, 26, 18;
+  --ion-color-dark-contrast: #ffffff;
+  --ion-color-dark-contrast-rgb: 255, 255, 255;
+  --ion-color-dark-shade: #060d08;
+  --ion-color-dark-tint: #1e2d20;
+
+  --ion-color-medium: #8a9a8c;
+  --ion-color-medium-rgb: 138, 154, 140;
+  --ion-color-medium-contrast: #060d08;
+  --ion-color-medium-contrast-rgb: 6, 13, 8;
+  --ion-color-medium-shade: #6b7a6d;
+  --ion-color-medium-tint: #9dac9f;
+
+  --ion-color-light: #1e2d20;
+  --ion-color-light-rgb: 30, 45, 32;
+  --ion-color-light-contrast: #ffffff;
+  --ion-color-light-contrast-rgb: 255, 255, 255;
+  --ion-color-light-shade: #111c14;
+  --ion-color-light-tint: #2a3d2c;
+
+  --ion-toolbar-background: #060d08;
+  --ion-card-background: #0f1a12;
+  --ion-item-background: #060d08;
+  --ion-tab-bar-background: #060d08;
+  --ion-tab-bar-border-color: #1e2d20;
+  --ion-border-color: #1e2d20;
+
+  /* custom vars used across components */
+  --color-accent: #a3e635;
+  --color-bg: #060d08;
+  --color-surface: #0f1a12;
+  --color-card: #111c14;
+  --color-border: #1e2d20;
+  --color-text-secondary: #8a9a8c;
+  --color-text-muted: #4a5a4c;
+}
+
+/* base resets */
+* { box-sizing: border-box; }
+
+body {
+  background: #060d08;
+  color: #ffffff;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* accent button override */
+ion-button.accent {
+  --background: #a3e635;
+  --color: #060d08;
+  --border-radius: 8px;
+  font-weight: 600;
+}
