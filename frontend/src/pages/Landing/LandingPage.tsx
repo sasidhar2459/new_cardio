@@ -1,5 +1,8 @@
+import React from 'react';
 import { IonButton, IonPage, IonContent } from '@ionic/react';
 import Navbar from '../../components/layout/Navbar';
+import Footer from '../../components/layout/Footer';
+import { useReveal, useSlideReveal } from '../../hooks/useScrollReveal';
 import './LandingPage.css';
 
 // ── Hero ──────────────────────────────────────────────
@@ -10,6 +13,7 @@ function HeroSection() {
         <source src="/bgvideo.mp4" type="video/mp4" />
       </video>
       <div className="hero-overlay"></div>
+      <div className="hero-bg-grid" />
       <div className="hero-content-wrapper">
         <h1 className="hero-title">BYPASS HEART HEALTH</h1>
         <h2 className="hero-subtitle">Stronger Heart. Longer Life. Powered by Science.</h2>
@@ -31,11 +35,16 @@ function HeroSection() {
 
 // ── Who We Are ────────────────────────────────────────
 function WhoWeAreSection() {
+  const { ref: textRef, visible: textVis, from: textFrom } = useSlideReveal('left');
+  const { ref: imgRef, visible: imgVis, from: imgFrom } = useSlideReveal('right');
   return (
     <section className="who-section">
       <div className="container">
         <div className="who-grid">
-          <div className="who-text">
+          <div
+            ref={textRef}
+            className={`who-text slide-${textFrom} ${textVis ? 'slide-in' : 'slide-hidden'}`}
+          >
             <h2 className="who-heading">Who we are.</h2>
             <p className="who-lead">
               Bypass is India's first comprehensive, cardiologist-designed preventive heart program.
@@ -45,11 +54,13 @@ function WhoWeAreSection() {
             </p>
             <div className="who-actions">
               <IonButton className="btn-white" shape="round" href="/contact">Get in Touch</IonButton>
-              <IonButton className="btn-outline-white" shape="round" fill="outline" href="/treatment">Our Approach</IonButton>
             </div>
           </div>
           {/* image right side — drop a real clinic/team photo here */}
-          <div className="who-image-wrap">
+          <div
+            ref={imgRef}
+            className={`who-image-wrap slide-${imgFrom} ${imgVis ? 'slide-in' : 'slide-hidden'}`}
+          >
             <div className="who-image-placeholder">
               <div className="who-image-inner" />
             </div>
@@ -81,13 +92,16 @@ const row1 = principles.slice(0, 6);
 const row2 = principles.slice(6);
 
 function PrinciplesSection() {
+  const { ref, visible } = useReveal();
   return (
     <section className="principles-section">
       <div className="container">
-        <p className="section-eyebrow">Principles</p>
-        <h2 className="section-heading text-center">
-          How we combine medical excellence, technology,<br />and personalization to transform heart care.
-        </h2>
+        <div ref={ref} className={visible ? 'reveal-in' : 'reveal-hidden'}>
+          <p className="section-eyebrow">Principles</p>
+          <h2 className="section-heading text-center">
+            How we combine medical excellence, technology,<br />and personalization to transform heart care.
+          </h2>
+        </div>
       </div>
 
       {/* row 1 — scrolls left */}
@@ -125,10 +139,11 @@ function PrinciplesSection() {
 
 // ── Mission ───────────────────────────────────────────
 function MissionSection() {
+  const { ref, visible } = useReveal();
   return (
     <section className="mission-section">
       <div className="container">
-        <div className="mission-inner">
+        <div ref={ref} className={`mission-inner ${visible ? 'reveal-in' : 'reveal-hidden'}`}>
           <p className="section-eyebrow">Our Mission</p>
           <h2 className="mission-text">
             To reduce preventable heart attacks in India by making world-class prevention accessible, evidence-based, and measurable.
@@ -142,63 +157,70 @@ function MissionSection() {
 
 // ── FAQ ───────────────────────────────────────────────
 const faqs = [
-  'What if I already got the tests done recently?',
-  'How long is the membership valid and what happens after that?',
-  'Why are so many screenings needed?',
-  'Will you consider my old test results also?',
+  {
+    q: 'What if I already got the tests done recently?',
+    a: 'If you have recent test results (within the last 3–6 months), our team will review them and let you know which, if any, tests need to be repeated. We never ask for unnecessary testing.',
+  },
+  {
+    q: 'How long is the membership valid and what happens after that?',
+    a: 'Your membership is valid for 12 months from activation. After that, you can renew at the same or updated rate. Your health data and history remain accessible throughout and after your membership.',
+  },
+  {
+    q: 'Why are so many screenings needed?',
+    a: 'Heart disease develops silently over years. A comprehensive baseline — covering biomarkers, imaging, and lifestyle factors — lets us catch risk early and personalise your plan rather than relying on generic advice.',
+  },
+  {
+    q: 'Will you consider my old test results also?',
+    a: 'Yes. Upload any previous reports and our physicians will incorporate them into your assessment. Historical data actually strengthens our ability to spot trends over time.',
+  },
 ];
 
-function FAQSection() {
+// ── Individual FAQ item with staggered reveal ────────
+function FAQItem({ item, index, isOpen, onToggle }: { item: typeof faqs[0]; index: number; isOpen: boolean; onToggle: () => void }) {
+  const { ref, visible } = useReveal(index * 100); // stagger each by 100ms
   return (
-    <section className="faq-section">
-      <div className="container">
-        <h2 className="section-heading text-center">Common Questions</h2>
-        <p className="section-sub text-center">Everything you need to know about Bypass</p>
-        <div className="faq-list">
-          {faqs.map((q, i) => (
-            <div className="faq-item" key={i}>
-              <span>{q}</span>
-              <span className="faq-icon">⊕</span>
-            </div>
-          ))}
-        </div>
-        <div className="faq-cta-card">
-          <h3>Still have questions?</h3>
-          <p>Can't find the answer you're looking for? Please talk to our team.</p>
-          <IonButton className="btn-white" shape="round" href="/contact">Get in touch</IonButton>
-        </div>
+    <div
+      ref={ref}
+      className={`faq-item${isOpen ? ' faq-item--open' : ''} ${visible ? 'reveal-in' : 'reveal-hidden'}`}
+      onClick={onToggle}
+    >
+      <div className="faq-row">
+        <span className="faq-question">{item.q}</span>
+        <span className="faq-icon">{isOpen ? '⊖' : '⊕'}</span>
       </div>
-    </section>
+      <div className="faq-answer">
+        <p>{item.a}</p>
+      </div>
+    </div>
   );
 }
 
-// ── Footer ────────────────────────────────────────────
-function Footer() {
+function FAQSection() {
+  const [open, setOpen] = React.useState<number | null>(null);
+  const { ref: headRef, visible: headVis } = useReveal();
+  const { ref: ctaRef, visible: ctaVis } = useReveal();
+
+  const toggle = (i: number) => setOpen(prev => (prev === i ? null : i));
+
   return (
-    <footer className="footer">
+    <section className="faq-section">
       <div className="container">
-        <div className="footer-top">
-          <a href="/" className="navbar-logo">
-            <span className="logo-mark">bypass</span>
-            <span className="logo-suffix">HEART HEALTH</span>
-          </a>
-          <div className="footer-links">
-            <a href="/home">Home</a>
-            <a href="/about">About Us</a>
-            <a href="/treatment">Treatment</a>
-            <a href="/wearables">Wearables</a>
-            <a href="/collaborate">Collaborate</a>
-          </div>
-          <div className="footer-auth">
-            <a href="/login">Login</a>
-            <a href="/signup" className="btn-join-footer">Join Now</a>
-          </div>
+        <div ref={headRef} className={headVis ? 'reveal-in' : 'reveal-hidden'}>
+          <h2 className="section-heading text-center">Common Questions</h2>
+          <p className="section-sub text-center">Everything you need to know about Bypass</p>
         </div>
-        <div className="footer-bottom">
-          <p>© 2025 Bypass Heart Health. All rights reserved.</p>
+        <div className="faq-list">
+          {faqs.map((item, i) => (
+            <FAQItem key={i} item={item} index={i} isOpen={open === i} onToggle={() => toggle(i)} />
+          ))}
+        </div>
+        <div ref={ctaRef} className={`faq-cta-card ${ctaVis ? 'reveal-in' : 'reveal-hidden'}`}>
+          <h3>Still have questions?</h3>
+          <p>Can't find the answer you're looking for? Please talk to our team.</p>
+          <IonButton className="btn-white" shape="round" href="/contact">Contact us</IonButton>
         </div>
       </div>
-    </footer>
+    </section>
   );
 }
 
@@ -211,8 +233,8 @@ export default function LandingPage() {
           <Navbar />
           <HeroSection />
           <WhoWeAreSection />
-          <PrinciplesSection />
           <MissionSection />
+          <PrinciplesSection />
           <FAQSection />
           <Footer />
         </div>

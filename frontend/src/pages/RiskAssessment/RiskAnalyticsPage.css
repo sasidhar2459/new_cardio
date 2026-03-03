@@ -1,0 +1,297 @@
+@import '../../hooks/scroll-reveal.css';
+
+/* ── Risk Analytics Results Page ─────────────────────────────────── */
+.rar-page {
+  background: #000;
+  min-height: 100vh;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ── Hero ─────────────────────────────────────────────────────────── */
+.rar-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 100px 0 60px;
+  background: #050505;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.rar-hero-title {
+  font-size: clamp(28px, 4vw, 56px);
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 16px;
+  line-height: 1.1;
+}
+
+.rar-hero-sub {
+  font-size: 16px;
+  color: rgba(255,255,255,0.5);
+  max-width: 520px;
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ── Main section ─────────────────────────────────────────────────── */
+.rar-main {
+  padding: 60px 0 100px;
+  background: #060e08;
+}
+
+.rar-grid {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+/* ── Score card (left) ────────────────────────────────────────────── */
+.rar-score-card {
+  background: #0f1210;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 24px;
+  padding: 36px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.rar-level-badge {
+  padding: 6px 18px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* ring */
+.rar-ring-wrap {
+  position: relative;
+  width: 180px;
+  height: 180px;
+}
+
+.rar-ring-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.rar-ring-score {
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.rar-ring-label {
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+}
+
+.rar-score-desc {
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.65;
+  text-align: center;
+  margin: 0;
+  padding: 16px;
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.02);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.rar-divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255,255,255,0.07);
+}
+
+.rar-drivers-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0;
+  align-self: flex-start;
+}
+
+.rar-factor-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+}
+
+.rar-factor-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rar-factor-label {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+}
+
+.rar-factor-value {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.rar-factor-desc {
+  font-size: 10px;
+  color: rgba(255,255,255,0.3);
+  line-height: 1.4;
+}
+
+/* ── Right column ─────────────────────────────────────────────────── */
+.rar-right {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* shared card shell */
+.rar-lifetime-card,
+.rar-plan-card,
+.rar-why-card {
+  background: #0f1210;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 28px 28px;
+}
+
+.rar-lifetime-card {
+  border-color: rgba(255,255,255,0.1); /* overridden inline with risk color */
+}
+
+.rar-card-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  margin: 0 0 20px;
+}
+
+/* Lifetime row */
+.rar-lifetime-row {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-bottom: 16px;
+}
+
+.rar-lifetime-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rar-stat-label {
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+}
+
+.rar-stat-value {
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.rar-lifetime-divider {
+  width: 1px;
+  height: 40px;
+  background: rgba(255,255,255,0.1);
+}
+
+.rar-lifetime-body {
+  font-size: 14px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Plan card */
+.rar-plan-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+
+.rar-plan-desc {
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.65;
+  margin: 0 0 20px;
+}
+
+/* shared checklist */
+.rar-checklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rar-checklist li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.75);
+}
+
+.rar-checklist li::before {
+  content: '';
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--dot-color, rgba(160,230,160,0.9));
+  flex-shrink: 0;
+  opacity: 0.25;
+  /* dot style — simple filled circle */
+  box-shadow: inset 0 0 0 5px var(--dot-color, rgba(160,230,160,0.9));
+}
+
+.rar-checklist--green li::before {
+  --dot-color: rgba(160,230,160,0.9);
+}
+
+/* ── CTA ──────────────────────────────────────────────────────────── */
+.rar-cta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 48px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+
+/* ── Responsive ───────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .rar-grid { grid-template-columns: 1fr; }
+  .rar-score-card { max-width: 480px; margin: 0 auto; }
+}
+
+@media (max-width: 600px) {
+  .rar-hero { padding: 80px 0 48px; }
+  .rar-main { padding: 40px 0 80px; }
+  .rar-cta { flex-direction: column; align-items: flex-start; }
+}

@@ -1,11 +1,12 @@
-/* Ionic CSS Variables — Bypass Heart Health dark theme */
+/* Ionic CSS Variables — Bypass Heart Health */
+/* NOTE: landing page uses a clean light theme (like Stealth AI SaaS UI) */
 
 :root {
-  --ion-background-color: #060d08;
-  --ion-background-color-rgb: 6, 13, 8;
+  --ion-background-color: #ffffff;
+  --ion-background-color-rgb: 255, 255, 255;
 
-  --ion-text-color: #ffffff;
-  --ion-text-color-rgb: 255, 255, 255;
+  --ion-text-color: #111111;
+  --ion-text-color-rgb: 17, 17, 17;
 
   --ion-color-primary: #a3e635;
   --ion-color-primary-rgb: 163, 230, 53;
@@ -85,16 +86,51 @@
   --color-border: #1e2d20;
   --color-text-secondary: #8a9a8c;
   --color-text-muted: #4a5a4c;
+
+  /* dark theme helpers (defaults) */
+  --color-text-primary: #ffffff;
+  --color-overlay: rgba(0, 5, 2, 0.85);
+  --color-glass-bg: rgba(29, 31, 37, 0.84);
+  --color-glass-border: rgba(255, 255, 255, 0.12);
+  --color-shadow: rgba(0, 0, 0, 0.3);
+  --nav-text: #ffffff;
+  --nav-border: rgba(255, 255, 255, 0.12);
+  --footer-bg: #050505;
+}
+
+/* Kill Ionic's automatic dark mode from OS prefers-color-scheme.
+   We manage dark/light manually via data-theme attribute. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ion-background-color: #ffffff;
+    --ion-background-color-rgb: 255, 255, 255;
+    --ion-text-color: #111111;
+    --ion-text-color-rgb: 17, 17, 17;
+    --ion-toolbar-background: #ffffff;
+    --ion-card-background: #ffffff;
+    --ion-item-background: #ffffff;
+    --ion-tab-bar-background: #ffffff;
+  }
 }
 
 /* base resets */
 * { box-sizing: border-box; }
 
 body {
-  background: #060d08;
-  color: #ffffff;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #ffffff;
+  color: #111111;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
+}
+
+/* ── Global shared typography ───────────────────────────────────── */
+.section-eyebrow {
+  font-size: 17px; /* one place to change for all pages */
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(160, 230, 160, 0.9);
+  margin-bottom: 16px;
 }
 
 /* accent button override */
@@ -103,4 +139,75 @@ ion-button.accent {
   --color: #060d08;
   --border-radius: 8px;
   font-weight: 600;
+}
+
+/* ── Light theme overrides ───────────────────────────────────────── */
+html[data-theme="light"] {
+  --ion-background-color: #ffffff;
+  --ion-background-color-rgb: 255, 255, 255;
+  --ion-text-color: #1a1a1a;
+  --ion-text-color-rgb: 26, 26, 26;
+
+  --ion-color-primary: #16a34a;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-shade: #15803d;
+  --ion-color-primary-tint: #22c55e;
+
+  --ion-color-secondary: #e8e8e8;
+  --ion-color-secondary-contrast: #1a1a1a;
+  --ion-color-secondary-shade: #d4d4d4;
+  --ion-color-secondary-tint: #f0f0f0;
+
+  --ion-color-dark: #f5f5f5;
+  --ion-color-dark-contrast: #1a1a1a;
+  --ion-color-dark-shade: #e5e5e5;
+  --ion-color-dark-tint: #fafafa;
+
+  --ion-color-light: #e8e8e8;
+  --ion-color-light-contrast: #1a1a1a;
+  --ion-color-light-shade: #d4d4d4;
+  --ion-color-light-tint: #f0f0f0;
+
+  --ion-toolbar-background: #ffffff;
+  --ion-card-background: #ffffff;
+  --ion-item-background: #ffffff;
+  --ion-tab-bar-background: #ffffff;
+  --ion-tab-bar-border-color: #e0e0e0;
+  --ion-border-color: #e0e0e0;
+
+  --color-accent: #16a34a;
+  --color-bg: #f7f7f7;
+  --color-surface: #ffffff;
+  --color-card: #ffffff;
+  --color-border: #e0e0e0;
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #666666;
+  --color-text-muted: #999999;
+
+  /* extra helpers used by components */
+  --color-overlay: rgba(255, 255, 255, 0.92);
+  --color-glass-bg: rgba(255, 255, 255, 0.82);
+  --color-glass-border: rgba(0, 0, 0, 0.08);
+  --color-shadow: rgba(0, 0, 0, 0.08);
+  --nav-text: #1a1a1a;
+  --nav-border: rgba(0, 0, 0, 0.12);
+  --footer-bg: #fafafa;
+}
+
+html[data-theme="light"] body,
+body[data-theme="light"] {
+  background: #f7f7f7;
+  color: #1a1a1a;
+}
+
+/* dark mode — explicit so it always wins even if OS is light */
+html[data-theme="dark"] ion-content,
+body[data-theme="dark"] ion-content {
+  --background: #060d08;
+}
+
+html[data-theme="dark"] ion-page,
+body[data-theme="dark"] ion-page {
+  --background: #060d08;
+  background: #060d08;
 }

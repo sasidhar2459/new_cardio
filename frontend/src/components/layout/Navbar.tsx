@@ -1,9 +1,9 @@
 import { IonButton, IonIcon } from '@ionic/react';
 import { menuOutline, closeOutline } from 'ionicons/icons';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import ThemeToggle from './ThemeToggle';
 import './Navbar.css';
 
-// TODO: Risk Assessment & Metrics should only show when logged in — wire up after auth
 const navLinks = [
   { label: 'Home', href: '/' },
   { label: 'About Us', href: '/about' },
@@ -16,17 +16,42 @@ const navLinks = [
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    let scrollEl: HTMLElement | null = null;
+
+    const onScroll = () => {
+      if (scrollEl) setScrolled(scrollEl.scrollTop > 50);
+    };
+
+    // IonContent isn't always ready immediately — wait a tick
+    const timer = setTimeout(() => {
+      const ionContent = document.querySelector('ion-content');
+      if (ionContent) {
+        (ionContent as any).getScrollElement().then((el: HTMLElement) => {
+          scrollEl = el;
+          el.addEventListener('scroll', onScroll);
+        });
+      }
+    }, 100);
+
+    return () => {
+      clearTimeout(timer);
+      if (scrollEl) scrollEl.removeEventListener('scroll', onScroll);
+    };
+  }, []);
 
   return (
     <nav className="navbar">
-      <div className="navbar-inner">
+      <div className={`navbar-inner${scrolled ? ' scrolled' : ''}`}>
         {/* logo */}
         <a href="/" className="navbar-logo">
           <span className="logo-mark">bypass</span>
           <span className="logo-suffix">HEART HEALTH</span>
         </a>
 
-        {/* desktop links */}
+        {/* desktop center links */}
         <div className="navbar-links-container">
           <ul className="navbar-links">
             {navLinks.map(l => (
@@ -35,12 +60,10 @@ export default function Navbar() {
           </ul>
         </div>
 
-        {/* desktop CTA */}
+        {/* desktop right actions */}
         <div className="navbar-actions">
-          <a href="/login" className="nav-login">Login</a>
-          <IonButton className="btn-join" size="small" shape="round" fill="outline" href="/signup">
-            Join Now
-          </IonButton>
+          <ThemeToggle />
+          <a href="/login" className="nav-login-btn">Login</a>
         </div>
 
         {/* mobile hamburger */}
@@ -56,7 +79,8 @@ export default function Navbar() {
             <a key={l.label} href={l.href} onClick={() => setMobileOpen(false)}>{l.label}</a>
           ))}
           <a href="/login" onClick={() => setMobileOpen(false)}>Login</a>
-          <a href="/signup" className="mobile-cta" onClick={() => setMobileOpen(false)}>Join Now</a>
+          <a href="/signup" className="mobile-cta" onClick={() => setMobileOpen(false)}>Join Now →</a>
+          <div className="mobile-theme-toggle"><ThemeToggle /></div>
         </div>
       )}
     </nav>

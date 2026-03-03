@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Z_Work/Git/Z_per/Stealth AI/stealth-ai-electron-app/frontend/**)",
+      "Read(//c/Z_Work/Git/Z_per/Stealth AI/stealth-ai-saas-platform-ui/frontend/**)"
+    ]
+  }
+}

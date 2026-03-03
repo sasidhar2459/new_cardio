@@ -1,0 +1,890 @@
+/* ── Light theme overrides — broad selectors ─────────────────────── */
+/* Targets common dark-theme patterns across all pages so they look
+   clean on a white background without editing every single CSS file. */
+
+/* ── Navbar — transparent by default, frosted pill only when .scrolled ── */
+/* DO NOT add background to .navbar-inner without .scrolled — it causes the white box bug */
+html[data-theme="light"] .navbar-inner {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="light"] .navbar-inner.scrolled {
+  background: linear-gradient(
+    140deg,
+    rgba(255, 255, 255, 0.32) 0%,
+    rgba(236, 242, 250, 0.24) 45%,
+    rgba(255, 255, 255, 0.30) 100%
+  ) !important;
+  border-color: rgba(122, 138, 159, 0.26) !important;
+  box-shadow:
+    0 8px 28px rgba(15, 23, 42, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72) !important;
+  backdrop-filter: blur(28px) saturate(1.45) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(1.45) !important;
+}
+
+/* ── Page-level backgrounds ──────────────────────────────────────── */
+html[data-theme="light"] .landing,
+html[data-theme="light"] .about-page,
+html[data-theme="light"] .treatment-page,
+html[data-theme="light"] .ra-page,
+html[data-theme="light"] .raf-page,
+html[data-theme="light"] .rar-page,
+html[data-theme="light"] .rad-page,
+html[data-theme="light"] .met-page,
+html[data-theme="light"] .mdd-page,
+html[data-theme="light"] .wb-page,
+html[data-theme="light"] .wbd-page,
+html[data-theme="light"] .col-page,
+html[data-theme="light"] .auth-page {
+  background: #f7f7f7;
+  color: #1a1a1a;
+}
+
+/* ── Sections with dark backgrounds ──────────────────────────────── */
+/* Landing */
+html[data-theme="light"] .hero,
+html[data-theme="light"] .preventive-insights,
+html[data-theme="light"] .longevity-section,
+html[data-theme="light"] .monitor-section,
+html[data-theme="light"] .mentor-section,
+html[data-theme="light"] .measure-section,
+html[data-theme="light"] .optimal-section,
+html[data-theme="light"] .who-section,
+html[data-theme="light"] .principles-section,
+html[data-theme="light"] .mission-section,
+html[data-theme="light"] .faq-section,
+/* About */
+html[data-theme="light"] .about-hero,
+html[data-theme="light"] .founders-section,
+html[data-theme="light"] .team-section,
+html[data-theme="light"] .info-section,
+html[data-theme="light"] .risk-section,
+html[data-theme="light"] .join-section,
+/* Treatment */
+html[data-theme="light"] .tx-hero,
+html[data-theme="light"] .plans-section,
+html[data-theme="light"] .why-section,
+/* Risk Assessment */
+html[data-theme="light"] .ra-hero,
+html[data-theme="light"] .ra-scores-section,
+html[data-theme="light"] .ra-why-section,
+html[data-theme="light"] .ra-factors-section,
+html[data-theme="light"] .ra-cta-section,
+html[data-theme="light"] .rar-hero,
+html[data-theme="light"] .rar-main,
+html[data-theme="light"] .raf-shell,
+/* Metrics */
+html[data-theme="light"] .met-hero,
+html[data-theme="light"] .met-baseline-section,
+html[data-theme="light"] .met-progress-section,
+html[data-theme="light"] .met-key-section,
+html[data-theme="light"] .met-pop-section,
+html[data-theme="light"] .met-cta-section,
+/* Wearables */
+html[data-theme="light"] .wb-hero,
+html[data-theme="light"] .wb-why-section,
+html[data-theme="light"] .wb-tracked-section,
+html[data-theme="light"] .wb-showcase-section,
+html[data-theme="light"] .wb-cta-section,
+html[data-theme="light"] .wb-connect-cta-section,
+html[data-theme="light"] .wb-device-section,
+html[data-theme="light"] .wb-dashboard-section,
+/* Collaborate */
+html[data-theme="light"] .col-tracks-section,
+html[data-theme="light"] .col-why-section,
+html[data-theme="light"] .col-process-section,
+html[data-theme="light"] .col-cta-section {
+  background: #f7f7f7;
+}
+
+/* ── Cards ───────────────────────────────────────────────────────── */
+/* Landing */
+html[data-theme="light"] .longevity-card,
+html[data-theme="light"] .monitor-chart-card,
+html[data-theme="light"] .biomarker-card,
+html[data-theme="light"] .concern-item,
+html[data-theme="light"] .action-plan-card,
+html[data-theme="light"] .measure-progress-card,
+html[data-theme="light"] .test-card,
+html[data-theme="light"] .who-visual-card,
+html[data-theme="light"] .faq-cta-card,
+html[data-theme="light"] .who-image-placeholder,
+/* About */
+html[data-theme="light"] .info-card,
+html[data-theme="light"] .measure-item,
+html[data-theme="light"] .risk-card,
+/* Auth */
+html[data-theme="light"] .auth-card,
+html[data-theme="light"] .auth-input,
+html[data-theme="light"] .auth-phone-row,
+/* Collaborate */
+html[data-theme="light"] .col-track-card,
+html[data-theme="light"] .col-why-card,
+html[data-theme="light"] .col-cta-card,
+html[data-theme="light"] .col-modal,
+html[data-theme="light"] .col-form-input,
+html[data-theme="light"] .col-phone-row,
+/* Treatment */
+html[data-theme="light"] .plan-card,
+html[data-theme="light"] .monitor-panel,
+/* Risk Assessment */
+html[data-theme="light"] .ra-hero-card,
+html[data-theme="light"] .ra-score-card,
+html[data-theme="light"] .ra-risk-factors-card,
+html[data-theme="light"] .ra-marker-card,
+html[data-theme="light"] .ra-cta-card,
+html[data-theme="light"] .rar-score-card,
+html[data-theme="light"] .rar-why-card,
+html[data-theme="light"] .raf-card,
+html[data-theme="light"] .raf-success-card,
+html[data-theme="light"] .rad-summary-panel,
+html[data-theme="light"] .rad-vital-card,
+html[data-theme="light"] .rad-overview-card,
+html[data-theme="light"] .rad-history-card,
+html[data-theme="light"] .rad-hcd-lifetime-card,
+html[data-theme="light"] .rad-hcd-plan-card,
+html[data-theme="light"] .rad-hcd-why-card,
+html[data-theme="light"] .rad-pg-btn,
+html[data-theme="light"] .rad-pg-num,
+/* Metrics */
+html[data-theme="light"] .met-hero-card,
+html[data-theme="light"] .met-baseline-pill,
+html[data-theme="light"] .met-phone-card,
+html[data-theme="light"] .met-pop-card,
+html[data-theme="light"] .met-cta-card,
+html[data-theme="light"] .mdd-metric-card,
+html[data-theme="light"] .mdd-history-table,
+html[data-theme="light"] .mdd-history-head,
+/* Wearables */
+html[data-theme="light"] .wb-hero-connect-card,
+html[data-theme="light"] .wb-cta-card,
+html[data-theme="light"] .wb-device-card,
+html[data-theme="light"] .wbd-device-panel,
+html[data-theme="light"] .wbd-metric-card {
+  background: #ffffff;
+  border-color: #e0e0e0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+/* ── Text color fixes ────────────────────────────────────────────── */
+html[data-theme="light"] h1,
+html[data-theme="light"] h2,
+html[data-theme="light"] h3,
+html[data-theme="light"] h4,
+html[data-theme="light"] h5,
+html[data-theme="light"] .section-heading,
+html[data-theme="light"] .big-title,
+html[data-theme="light"] .who-heading,
+html[data-theme="light"] .card-tag,
+html[data-theme="light"] .bio-header h3,
+html[data-theme="light"] .bio-val,
+html[data-theme="light"] .metric-large,
+html[data-theme="light"] .insight-stat,
+html[data-theme="light"] .optimal-title,
+html[data-theme="light"] .stat-num,
+html[data-theme="light"] .who-lead,
+html[data-theme="light"] .faq-cta-card h3,
+html[data-theme="light"] .mission-text,
+html[data-theme="light"] .test-card h4,
+html[data-theme="light"] .chart-header,
+html[data-theme="light"] .progress-header {
+  color: #1a1a1a;
+}
+
+/* secondary text */
+html[data-theme="light"] .hero-desc,
+html[data-theme="light"] .section-desc-text,
+html[data-theme="light"] .who-body,
+html[data-theme="light"] .faq-cta-card p,
+html[data-theme="light"] .optimal-desc,
+html[data-theme="light"] .section-sub,
+html[data-theme="light"] .card-sub,
+html[data-theme="light"] .biomarker-card p,
+html[data-theme="light"] .insight-text,
+html[data-theme="light"] .stat-lbl,
+html[data-theme="light"] .range-text,
+html[data-theme="light"] .chart-axis,
+html[data-theme="light"] .date-labels,
+html[data-theme="light"] .test-date,
+html[data-theme="light"] .progress-sub,
+html[data-theme="light"] .metric-label,
+html[data-theme="light"] .plan-item ul {
+  color: #555555;
+}
+
+html[data-theme="light"] .faq-item {
+  color: #333333;
+  border-color: #e0e0e0;
+}
+
+html[data-theme="light"] .faq-item:hover .faq-question,
+html[data-theme="light"] .faq-item--open .faq-question {
+  color: #1a1a1a;
+}
+
+html[data-theme="light"] .faq-answer p {
+  color: #555555;
+}
+
+html[data-theme="light"] .faq-icon {
+  color: #999999;
+}
+
+/* ── Eyebrow / accent text ───────────────────────────────────────── */
+html[data-theme="light"] .section-eyebrow {
+  color: #16a34a;
+}
+
+
+/* ── Borders ─────────────────────────────────────────────────────── */
+html[data-theme="light"] .plan-item {
+  border-color: #e0e0e0;
+}
+
+html[data-theme="light"] .visual-divider {
+  background: #e0e0e0;
+}
+
+html[data-theme="light"] .card-footer {
+  border-color: #e0e0e0;
+}
+
+/* ── Section top borders ─────────────────────────────────────────── */
+html[data-theme="light"] .monitor-section,
+html[data-theme="light"] .mentor-section,
+html[data-theme="light"] .measure-section,
+html[data-theme="light"] .mission-section {
+  border-top-color: #e0e0e0;
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────── */
+/* blur the actual ion-button native element for glass effect */
+html[data-theme="light"] .who-actions ion-button::part(native),
+html[data-theme="light"] .faq-cta-card ion-button::part(native) {
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+}
+
+/* section buttons on light bg — frosted glass pill */
+html[data-theme="light"] .btn-white {
+  --background: rgba(15, 23, 42, 0.06);
+  --background-hover: rgba(15, 23, 42, 0.12);
+  --color: #0f172a;
+  --border-width: 1.5px;
+  --border-color: rgba(15, 23, 42, 0.24);
+  --box-shadow: 0 6px 22px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.62), 0 0 0 1px rgba(15, 23, 42, 0.06);
+}
+
+html[data-theme="light"] .who-actions ion-button.btn-white::part(native) {
+  backdrop-filter: blur(20px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+}
+
+/* hero always on dark video bg — keep solid white primary */
+html[data-theme="light"] .btn-hero-primary {
+  --background: #ffffff;
+  --background-hover: #f0f0f0;
+  --color: #0a0a0a;
+  --box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+}
+
+html[data-theme="light"] .btn-hero-secondary {
+  --color: rgba(255, 255, 255, 0.92);
+  --border-color: rgba(255, 255, 255, 0.4);
+  --background: rgba(255, 255, 255, 0.08);
+  --background-hover: rgba(255, 255, 255, 0.16);
+}
+
+html[data-theme="light"] .btn-small-outline {
+  --border-color: rgba(0, 0, 0, 0.25);
+  --color: #1a1a1a;
+}
+
+/* ── Hero subtitle/desc on video bg (keep light for readability) ── */
+html[data-theme="light"] .hero-subtitle {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+html[data-theme="light"] .hero .hero-desc {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+html[data-theme="light"] .hero .btn-hero-primary {
+  --background: #ffffff;
+  --color: #000000;
+}
+
+html[data-theme="light"] .hero .btn-hero-secondary {
+  --color: #fff;
+  --border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* ── Principle cards in light — override all dark nth-child gradients */
+html[data-theme="light"] .principle-card {
+  background: #ffffff !important;
+  border-color: #e0e0e0;
+  color: #1a1a1a;
+}
+
+html[data-theme="light"] .principle-card:nth-child(1),
+html[data-theme="light"] .principle-card:nth-child(2),
+html[data-theme="light"] .principle-card:nth-child(3),
+html[data-theme="light"] .principle-card:nth-child(4),
+html[data-theme="light"] .principle-card:nth-child(5),
+html[data-theme="light"] .principle-card:nth-child(6),
+html[data-theme="light"] .principle-card:nth-child(7),
+html[data-theme="light"] .principle-card:nth-child(8),
+html[data-theme="light"] .principle-card:nth-child(9),
+html[data-theme="light"] .principle-card:nth-child(10),
+html[data-theme="light"] .principle-card:nth-child(11),
+html[data-theme="light"] .principle-card:nth-child(12) {
+  background: #ffffff !important;
+}
+
+html[data-theme="light"] .principle-num {
+  color: #16a34a;
+}
+
+html[data-theme="light"] .principle-title {
+  color: #1a1a1a;
+}
+
+html[data-theme="light"] .principle-desc {
+  color: #555555;
+}
+
+html[data-theme="light"] .principle-card:hover {
+  border-color: #16a34a;
+  box-shadow: 0 4px 16px rgba(22, 163, 74, 0.12);
+}
+
+/* card glass overlay — remove dark scrim, use light fade */
+html[data-theme="light"] .principle-card-content {
+  background: linear-gradient(to top, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.7) 60%, transparent 100%);
+}
+
+/* principles section heading is hardcoded white in LandingPage.css */
+html[data-theme="light"] .principles-section .section-heading {
+  color: #1a1a1a;
+}
+
+html[data-theme="light"] .marquee-wrap::before,
+html[data-theme="light"] .marquee-wrap::after {
+  display: none;
+}
+
+/* ── Tags & Pills ────────────────────────────────────────────────── */
+html[data-theme="light"] .tags span {
+  border-color: rgba(0, 0, 0, 0.2);
+  color: #333;
+}
+
+html[data-theme="light"] .risk-pill {
+  background: rgba(0, 0, 0, 0.06);
+  color: #333;
+}
+
+/* ── Metric unit ─────────────────────────────────────────────────── */
+html[data-theme="light"] .metric-large .unit {
+  color: #888;
+}
+
+/* ── Bio-val small text ──────────────────────────────────────────── */
+html[data-theme="light"] .bio-val small {
+  opacity: 0.7;
+  color: #666;
+}
+
+/* ── Body graphic / mentor ───────────────────────────────────────── */
+html[data-theme="light"] .mentor-visual {
+  background: radial-gradient(circle, rgba(22, 163, 74, 0.08) 0%, transparent 70%);
+}
+
+html[data-theme="light"] .body-graphic {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+html[data-theme="light"] .body-point {
+  background: #1a1a1a;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+}
+
+/* ── Measure progress card ───────────────────────────────────────── */
+html[data-theme="light"] .measure-progress-card {
+  background: linear-gradient(90deg, #e8eef3 0%, #e0ecf4 100%);
+}
+
+html[data-theme="light"] .progress-bar-bg {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+html[data-theme="light"] .progress-bar-fill {
+  background: #1a1a1a;
+}
+
+/* ── Test card backgrounds ───────────────────────────────────────── */
+html[data-theme="light"] .test-card-bg {
+  opacity: 0.85;
+}
+
+/* ── Marker white ────────────────────────────────────────────────── */
+html[data-theme="light"] .marker {
+  background: #1a1a1a;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+}
+
+/* ── Chart lines retain color on light bg ────────────────────────── */
+html[data-theme="light"] .chart-viz {
+  border-bottom-color: #e0e0e0;
+}
+
+/* ── Who image placeholder ───────────────────────────────────────── */
+html[data-theme="light"] .who-image-inner {
+  background: linear-gradient(135deg, #e0efe3 0%, #c8e0cc 40%, #d8edd8 100%);
+}
+
+/* ── Mission gradient ────────────────────────────────────────────── */
+html[data-theme="light"] .mission-section {
+  background: linear-gradient(135deg, #f0f5f1 0%, #e8f0ea 50%, #f0f5f1 100%);
+  border-top-color: #e0e8e2;
+}
+
+html[data-theme="light"] .mission-text {
+  color: #0f172a;
+}
+
+html[data-theme="light"] .mission-section .section-eyebrow {
+  color: #16a34a;
+}
+
+html[data-theme="light"] .mission-section .btn-white {
+  --background: rgba(15, 23, 42, 0.07);
+  --background-hover: rgba(15, 23, 42, 0.14);
+  --color: #0f172a;
+  --border-width: 1.5px;
+  --border-color: rgba(15, 23, 42, 0.26);
+  --box-shadow: 0 6px 22px rgba(15,23,42,0.08), inset 0 1px 0 rgba(255,255,255,0.55), 0 0 0 1px rgba(15, 23, 42, 0.07);
+}
+
+/* ── Mini chart line ─────────────────────────────────────────────── */
+html[data-theme="light"] .mini-chart-line {
+  background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.08));
+}
+
+html[data-theme="light"] .mini-chart-line::after {
+  background: #1a1a1a;
+}
+
+/* ── Mentor panel heading ────────────────────────────────────────── */
+html[data-theme="light"] .mentor-panel h4 {
+  color: #888;
+}
+
+/* ── Auth page ───────────────────────────────────────────────────── */
+html[data-theme="light"] .auth-card,
+html[data-theme="light"] .form-card {
+  background: #fff;
+  border-color: #e0e0e0;
+}
+
+html[data-theme="light"] .auth-input,
+html[data-theme="light"] .form-input {
+  background: #f5f5f5;
+  border-color: #d0d0d0;
+  color: #1a1a1a;
+}
+
+html[data-theme="light"] .auth-input:focus,
+html[data-theme="light"] .form-input:focus {
+  border-color: #16a34a;
+}
+
+/* ── Collaborate modal ───────────────────────────────────────────── */
+html[data-theme="light"] .collab-modal {
+  background: #fff;
+}
+
+/* ── Dashboard tables ────────────────────────────────────────────── */
+html[data-theme="light"] .history-table th {
+  color: #888;
+}
+
+html[data-theme="light"] .history-table td {
+  border-color: #e0e0e0;
+  color: #333;
+}
+
+/* ── Risk-form step indicators ───────────────────────────────────── */
+html[data-theme="light"] .step-dot {
+  background: #d0d0d0;
+}
+
+html[data-theme="light"] .step-dot.active {
+  background: #16a34a;
+}
+
+/* ── SVG / icon colors ───────────────────────────────────────────── */
+html[data-theme="light"] .ra-ring-text,
+html[data-theme="light"] .score-ring-text {
+  fill: #1a1a1a;
+}
+
+/* ── Smooth transitions on theme change ──────────────────────────── */
+html[data-theme="light"],
+[data-theme="dark"] {
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+/* ── IonContent backdrop ─────────────────────────────────────────── */
+html[data-theme="light"] ion-content {
+  --background: #f7f7f7;
+}
+
+html[data-theme="light"] ion-page {
+  --background: #f7f7f7;
+  background: #f7f7f7;
+}
+
+/* ── Ionic overrides ─────────────────────────────────────────────── */
+html[data-theme="light"] .ion-page {
+  background: #f7f7f7;
+}
+
+/* ── Scrollbar styling ───────────────────────────────────────────── */
+html[data-theme="light"] ::-webkit-scrollbar-track {
+  background: #f0f0f0;
+}
+
+html[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: #ccc;
+}
+
+/* ── Collab track card top borders (keep colored) ────────────────── */
+html[data-theme="light"] .collab-track-card {
+  background: #fff;
+}
+
+/* ── Treatment plan highlight ────────────────────────────────────── */
+html[data-theme="light"] .plan-card.highlight {
+  background: #f0fdf4;
+  border-color: #16a34a;
+}
+
+/* ── Wearables connect animation ─────────────────────────────────── */
+html[data-theme="light"] .bt-ring {
+  border-color: rgba(22, 163, 74, 0.15);
+}
+
+/* ── Link colors ─────────────────────────────────────────────────── */
+html[data-theme="light"] .see-all {
+  color: #333;
+}
+
+/* ── Form fields across pages ────────────────────────────────────── */
+html[data-theme="light"] input,
+html[data-theme="light"] textarea,
+html[data-theme="light"] select {
+  background: #f5f5f5;
+  color: #1a1a1a;
+  border-color: #d0d0d0;
+}
+
+html[data-theme="light"] input:focus,
+html[data-theme="light"] textarea:focus,
+html[data-theme="light"] select:focus {
+  border-color: #16a34a;
+}
+
+html[data-theme="light"] input::placeholder,
+html[data-theme="light"] textarea::placeholder {
+  color: #999;
+}
+
+/* form-specific resets */
+html[data-theme="light"] .raf-input,
+html[data-theme="light"] .raf-radio-btn,
+html[data-theme="light"] .col-form-input,
+html[data-theme="light"] .col-phone-row,
+html[data-theme="light"] .auth-input,
+html[data-theme="light"] .auth-phone-row {
+  background: #f5f5f5;
+  border-color: #d0d0d0;
+  color: #1a1a1a;
+}
+
+/* ── Info box in risk form ───────────────────────────────────────── */
+html[data-theme="light"] .info-box {
+  background: #f0fdf4;
+  border-color: #16a34a;
+  color: #333;
+}
+
+/* ── Filter chips ────────────────────────────────────────────────── */
+html[data-theme="light"] .filter-chip {
+  background: #f0f0f0;
+  color: #333;
+  border-color: #d0d0d0;
+}
+
+html[data-theme="light"] .filter-chip.active {
+  background: #16a34a;
+  color: #fff;
+  border-color: #16a34a;
+}
+
+/* ── Time tabs ───────────────────────────────────────────────────── */
+html[data-theme="light"] .time-tab {
+  color: #666;
+}
+
+html[data-theme="light"] .time-tab.active {
+  background: #16a34a;
+  color: #fff;
+}
+
+/* ── Device panel ────────────────────────────────────────────────── */
+html[data-theme="light"] .device-item {
+  background: #f5f5f5;
+  border-color: #e0e0e0;
+}
+
+html[data-theme="light"] .device-item:hover {
+  border-color: #16a34a;
+}
+
+/* ── Back button ─────────────────────────────────────────────────── */
+html[data-theme="light"] .back-btn {
+  color: #333;
+}
+
+html[data-theme="light"] .back-btn:hover {
+  color: #1a1a1a;
+}
+
+/* ── Toggle switch ───────────────────────────────────────────────── */
+html[data-theme="light"] .toggle-track {
+  background: #d0d0d0;
+}
+
+html[data-theme="light"] .toggle-track.on {
+  background: #16a34a;
+}
+
+/* ── Review table ────────────────────────────────────────────────── */
+html[data-theme="light"] .review-table td {
+  border-color: #e0e0e0;
+  color: #333;
+}
+
+html[data-theme="light"] .review-table .edit-btn {
+  color: #16a34a;
+}
+
+/* ── Radio buttons styled as toggle ──────────────────────────────── */
+html[data-theme="light"] .radio-btn {
+  background: #f0f0f0;
+  border-color: #d0d0d0;
+  color: #333;
+}
+
+html[data-theme="light"] .radio-btn.selected {
+  background: #16a34a;
+  color: #fff;
+  border-color: #16a34a;
+}
+
+/* ── Success screen ──────────────────────────────────────────────── */
+html[data-theme="light"] .success-icon {
+  color: #16a34a;
+}
+
+/* ── Expand / collapse indicators ────────────────────────────────── */
+html[data-theme="light"] .expand-icon {
+  color: #999;
+}
+
+/* ── Carousel showcase card text ─────────────────────────────────── */
+html[data-theme="light"] .showcase-card .card-overlay {
+  background: linear-gradient(to top, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.7) 60%, transparent 100%);
+}
+
+html[data-theme="light"] .showcase-card .card-overlay h4 {
+  color: #1a1a1a;
+}
+
+html[data-theme="light"] .showcase-card .card-overlay p {
+  color: #555;
+}
+
+/* ── Contact / collab modal ──────────────────────────────────────── */
+html[data-theme="light"] .modal-overlay {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+html[data-theme="light"] .modal-content {
+  background: #fff;
+  color: #1a1a1a;
+}
+
+/* ── Process step connector line ─────────────────────────────────── */
+html[data-theme="light"] .process-connector {
+  background: #e0e0e0;
+}
+
+/* ── Status pills (keep colored) ─────────────────────────────────── */
+html[data-theme="light"] .status-pill {
+  font-weight: 600;
+}
+
+/* ── Vitals bar ──────────────────────────────────────────────────── */
+html[data-theme="light"] .vitals-bar-bg {
+  background: #e8e8e8;
+}
+
+/* ── Card hover states ───────────────────────────────────────────── */
+html[data-theme="light"] .rad-history-card:hover {
+  background: #f0f0f0;
+}
+
+html[data-theme="light"] .wb-tracked-card:hover {
+  background: #f0f0f0;
+}
+
+/* ── History card left border accent ─────────────────────────────── */
+html[data-theme="light"] .history-entry {
+  border-color: #e0e0e0;
+}
+
+/* ── Checklist items ─────────────────────────────────────────────── */
+html[data-theme="light"] .checklist-dot {
+  border-color: #d0d0d0;
+}
+
+/* ── Progress ring lighter stroke bg ─────────────────────────────── */
+html[data-theme="light"] .ring-bg {
+  stroke: #e8e8e8;
+}
+
+/* ── Broad text & border color overrides ─────────────────────────── */
+/* Catch all elements that use white-alpha text/borders in dark mode */
+html[data-theme="light"] .landing,
+html[data-theme="light"] .about-page,
+html[data-theme="light"] .treatment-page,
+html[data-theme="light"] .ra-page,
+html[data-theme="light"] .raf-page,
+html[data-theme="light"] .rar-page,
+html[data-theme="light"] .rad-page,
+html[data-theme="light"] .met-page,
+html[data-theme="light"] .mdd-page,
+html[data-theme="light"] .wb-page,
+html[data-theme="light"] .wbd-page,
+html[data-theme="light"] .col-page,
+html[data-theme="light"] .auth-page {
+  color: #1a1a1a;
+}
+
+/* dashboard page titles & headers */
+html[data-theme="light"] .mdd-page-title,
+html[data-theme="light"] .wbd-page-title,
+html[data-theme="light"] .rad-page-title,
+html[data-theme="light"] .raf-heading {
+  color: #1a1a1a;
+}
+
+/* page-level back buttons */
+html[data-theme="light"] .mdd-back-btn,
+html[data-theme="light"] .wbd-back-btn,
+html[data-theme="light"] .rad-back-btn,
+html[data-theme="light"] .raf-back-btn,
+html[data-theme="light"] .rar-back-btn {
+  color: #555;
+}
+
+html[data-theme="light"] .mdd-back-btn:hover,
+html[data-theme="light"] .wbd-back-btn:hover,
+html[data-theme="light"] .rad-back-btn:hover,
+html[data-theme="light"] .raf-back-btn:hover,
+html[data-theme="light"] .rar-back-btn:hover {
+  color: #1a1a1a;
+}
+
+/* ── Dashboard specifics ─────────────────────────────────────────── */
+html[data-theme="light"] .mdd-page,
+html[data-theme="light"] .wbd-page {
+  background: #f5f5f5;
+}
+
+/* ── Auth page specifics ─────────────────────────────────────────── */
+html[data-theme="light"] .auth-label {
+  color: #333;
+}
+
+html[data-theme="light"] .auth-hint,
+html[data-theme="light"] .auth-otp-hint {
+  color: #888;
+}
+
+html[data-theme="light"] .auth-submit-btn {
+  background: #16a34a;
+  color: #fff;
+}
+
+html[data-theme="light"] .auth-pass-toggle {
+  color: #888;
+}
+
+html[data-theme="light"] .auth-phone-prefix {
+  color: #555;
+}
+
+/* ── Collaborate specifics ───────────────────────────────────────── */
+html[data-theme="light"] .col-hero-section {
+  background: linear-gradient(180deg, #f0f5f1 0%, #f7f7f7 100%);
+}
+
+html[data-theme="light"] .col-process-step::before {
+  background: #e0e0e0;
+}
+
+/* ── RA form step dots ───────────────────────────────────────────── */
+html[data-theme="light"] .raf-step-dot {
+  background: #d0d0d0;
+}
+
+html[data-theme="light"] .raf-step-dot.raf-step-active {
+  background: #16a34a;
+}
+
+html[data-theme="light"] .raf-step-dot.raf-step-done {
+  background: #16a34a;
+}
+
+html[data-theme="light"] .raf-progress-fill {
+  background: #16a34a;
+}
+
+html[data-theme="light"] .raf-progress-bar {
+  background: #e0e0e0;
+}
+
+html[data-theme="light"] .raf-radio-btn.raf-selected {
+  background: #16a34a;
+  color: #fff;
+  border-color: #16a34a;
+}
+
+/* ── Wearable hero connect card glow ─────────────────────────────── */
+html[data-theme="light"] .wb-hero-connect-card {
+  border-color: #16a34a;
+}
+
+/* ── Section dividers ────────────────────────────────────────────── */
+html[data-theme="light"] .tx-hero,
+html[data-theme="light"] .ra-hero,
+html[data-theme="light"] .met-hero,
+html[data-theme="light"] .wb-hero {
+  border-bottom: 1px solid #e8e8e8;
+}

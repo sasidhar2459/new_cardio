@@ -1,0 +1,351 @@
+@import '../../hooks/scroll-reveal.css';
+
+/* ── Wearables Dashboard Page ─────────────────────────────────────── */
+.wbd-page {
+  position: relative;
+  background: #080808;
+  min-height: 100vh;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+}
+
+.wbd-main {
+  padding: 100px 0 100px;
+}
+
+/* ── Page header ──────────────────────────────────────────────────── */
+.wbd-page-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 48px;
+}
+
+.wbd-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.35);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 0;
+  width: fit-content;
+  letter-spacing: 0.5px;
+}
+
+.wbd-back-btn:hover { color: rgba(255,255,255,0.7); }
+
+.wbd-page-title {
+  font-size: clamp(32px, 4vw, 56px);
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+  letter-spacing: -2px;
+  line-height: 1;
+}
+
+/* ── Device Panel ─────────────────────────────────────────────────── */
+.wbd-device-panel {
+  background: #111;
+  border: 1px solid #1e1e1e;
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-bottom: 40px;
+}
+
+.wbd-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.wbd-panel-header-icon {
+  font-size: 20px;
+  color: #a3e635;
+  flex-shrink: 0;
+}
+
+.wbd-panel-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.wbd-panel-sub {
+  font-size: 12px;
+  color: rgba(255,255,255,0.35);
+  margin: 2px 0 0;
+}
+
+.btn-green-sm {
+  --background: #a3e635;
+  --color: #000;
+  --border-radius: 999px;
+  font-weight: 700;
+  font-size: 12px;
+  height: 32px;
+  margin-left: auto;
+}
+
+.wbd-disconnect-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(239,68,68,0.5);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.wbd-disconnect-btn:hover { color: #ef4444; }
+
+/* scanning */
+.wbd-scanning-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 28px 0 8px;
+}
+
+/* device list */
+.wbd-device-list-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.wbd-found-label {
+  font-size: 12px;
+  color: rgba(255,255,255,0.3);
+  margin: 0;
+}
+
+.wbd-device-list { display: flex; flex-direction: column; gap: 6px; }
+
+.wbd-device-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  width: 100%;
+  text-align: left;
+}
+
+.wbd-device-item:hover {
+  background: rgba(163,230,53,0.06);
+  border-color: rgba(163,230,53,0.2);
+}
+
+.wbd-device-item-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(59,130,246,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #3b82f6;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.wbd-device-item-info { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.wbd-device-item-name { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.85); }
+.wbd-device-item-type { font-size: 11px; color: rgba(255,255,255,0.3); }
+
+.wbd-device-item-battery {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+}
+
+/* ── Metrics section ──────────────────────────────────────────────── */
+.wbd-metrics-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.wbd-metrics-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.wbd-metrics-title {
+  font-size: clamp(16px, 1.8vw, 22px);
+  font-weight: 700;
+  color: rgba(255,255,255,0.7);
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+/* time tabs */
+.wb-time-tabs {
+  display: flex;
+  gap: 4px;
+}
+
+.wb-time-tab {
+  padding: 6px 16px;
+  border-radius: 999px;
+  border: 1px solid #222;
+  background: transparent;
+  color: rgba(255,255,255,0.35);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.wb-time-tab:hover { color: rgba(255,255,255,0.65); border-color: #333; }
+
+.wb-time-tab-active {
+  background: #1a1a1a;
+  color: #fff;
+  border-color: #333;
+}
+
+/* ── Metric cards ─────────────────────────────────────────────────── */
+.wbd-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.wbd-metric-card {
+  background: #0e0e0e;
+  border: 1px solid #1a1a1a;
+  border-radius: 18px;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.2s, transform 0.2s;
+  cursor: default;
+}
+
+/* accent bar at top — gets color via inline style on the element */
+.wbd-metric-card::before {
+  content: '';
+  display: block;
+  height: 3px;
+  width: 100%;
+  background: var(--accent, #fff);
+  opacity: 0.7;
+}
+
+.wbd-metric-card:hover {
+  border-color: #2a2a2a;
+  transform: translateY(-3px);
+}
+
+.wbd-metric-body {
+  padding: 20px 22px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.wbd-metric-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wbd-metric-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.wbd-metric-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.35);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.wbd-metric-value-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.wbd-metric-value {
+  font-size: 42px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+  letter-spacing: -2px;
+}
+
+.wbd-metric-unit {
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0;
+}
+
+.wbd-metric-range {
+  font-size: 10px;
+  color: rgba(255,255,255,0.2);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* chart sits flush at bottom of card */
+.wbd-metric-chart {
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+.wbd-metric-chart svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ── Responsive ───────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .wbd-metrics-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 900px) {
+  .wbd-metrics-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .wbd-main { padding: 80px 0 60px; }
+  .wbd-metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .wbd-metrics-header { flex-direction: column; align-items: flex-start; }
+  .wbd-device-panel { padding: 16px 18px; }
+}
+
+@media (max-width: 500px) {
+  .wbd-metrics-grid { grid-template-columns: 1fr; }
+}

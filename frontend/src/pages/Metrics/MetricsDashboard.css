@@ -1,0 +1,225 @@
+@import '../../hooks/scroll-reveal.css';
+
+/* ── Metrics Dashboard ──────────────────────────────────────────── */
+.mdd-page {
+  position: relative;
+  background: #080808;
+  min-height: 100vh;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+}
+
+.mdd-main { padding: 100px 0 100px; }
+
+/* ── Page header ───────────────────────────────────────────────── */
+.mdd-page-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 48px;
+}
+
+.mdd-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.35);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 0;
+  width: fit-content;
+  letter-spacing: 0.5px;
+}
+.mdd-back-btn:hover { color: rgba(255,255,255,0.7); }
+
+.mdd-page-title {
+  font-size: clamp(32px, 4vw, 56px);
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+  letter-spacing: -2px;
+  line-height: 1;
+}
+
+/* ── Metrics section ───────────────────────────────────────────── */
+.mdd-metrics-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+.mdd-metrics-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.mdd-metrics-title {
+  font-size: clamp(16px, 1.8vw, 22px);
+  font-weight: 700;
+  color: rgba(255,255,255,0.7);
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.mdd-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+/* ── Metric card ───────────────────────────────────────────────── */
+.mdd-metric-card {
+  background: #0e0e0e;
+  border: 1px solid #1a1a1a;
+  border-radius: 18px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.mdd-metric-card::before {
+  content: '';
+  display: block;
+  height: 3px;
+  background: var(--accent, #fff);
+  opacity: 0.7;
+}
+.mdd-metric-card:hover { border-color: #2a2a2a; transform: translateY(-3px); }
+
+.mdd-metric-body {
+  padding: 20px 22px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.mdd-metric-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.mdd-metric-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.mdd-metric-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.35);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.mdd-metric-value-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.mdd-metric-value {
+  font-size: 42px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+  letter-spacing: -2px;
+}
+.mdd-metric-unit {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.3);
+}
+
+.mdd-metric-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.mdd-metric-range {
+  font-size: 10px;
+  color: rgba(255,255,255,0.2);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.mdd-metric-target {
+  font-size: 10px;
+  color: rgba(255,255,255,0.2);
+}
+.mdd-metric-status {
+  font-size: 10px;
+  font-weight: 700;
+  margin-left: auto;
+}
+
+.mdd-metric-chart { margin-top: auto; padding-top: 12px; }
+
+/* ── History table ─────────────────────────────────────────────── */
+.mdd-history-section { display: flex; flex-direction: column; gap: 20px; }
+
+.mdd-history-title {
+  font-size: clamp(16px, 1.8vw, 22px);
+  font-weight: 700;
+  color: rgba(255,255,255,0.7);
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.mdd-history-table {
+  background: #0e0e0e;
+  border: 1px solid #1a1a1a;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.mdd-history-head {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1.2fr 1fr 1fr 1fr;
+  padding: 12px 20px;
+  background: #111;
+  border-bottom: 1px solid #1a1a1a;
+}
+.mdd-history-head span {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.25);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.mdd-history-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1.2fr 1fr 1fr 1fr;
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.15s;
+}
+.mdd-history-row:last-child { border-bottom: none; }
+.mdd-history-row:hover { background: rgba(255,255,255,0.02); }
+.mdd-history-row span { font-size: 13px; color: rgba(255,255,255,0.65); }
+
+/* ── Responsive ────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .mdd-metrics-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 900px) {
+  .mdd-metrics-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .mdd-main { padding: 80px 0 60px; }
+  .mdd-metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .mdd-metrics-header { flex-direction: column; align-items: flex-start; }
+  .mdd-history-head, .mdd-history-row { grid-template-columns: 1fr 1fr 1fr 1fr; }
+  .mdd-history-head span:nth-child(n+5),
+  .mdd-history-row span:nth-child(n+5) { display: none; }
+}
+
+@media (max-width: 500px) {
+  .mdd-metrics-grid { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Z_Work/Git/Z_per/BypassHeartHealth/old_cardio/**)",
+      "Read(//c/Z_Work/Git/Z_per/BypassHeartHealth/**)"
+    ]
+  }
+}

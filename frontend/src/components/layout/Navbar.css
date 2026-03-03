@@ -1,31 +1,111 @@
+/* Import Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
 .navbar {
   position: fixed;
-  top: 8px;
+  top: 0;
   left: 0;
   right: 0;
   z-index: 100;
   display: flex;
   justify-content: center;
+  padding: 0;
   pointer-events: none;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  /* kill any Ionic toolbar chrome */
+  --background: transparent !important;
+  --border-width: 0 !important;
 }
 
+/* default — fully transparent at top, no glass */
 .navbar-inner {
-  width: min(1340px, calc(100% - 28px));
+  width: 100%;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 0 34px;
-  height: 80px;
+  padding: 0 28px;
+  height: 72px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-radius: 48px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: linear-gradient(180deg, rgba(29, 31, 37, 0.84) 0%, rgba(21, 23, 29, 0.78) 100%);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  border-radius: 0;
+  border: none;
+  background: transparent !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
   pointer-events: auto;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* scrolled — Apple Liquid Glass pill */
+.navbar-inner.scrolled {
+  max-width: 900px;
+  margin: 10px auto 0;
+  padding: 0 28px;
+  height: 54px;
+  border-radius: 22px;
+  /* light mode: soft gray-tinted glass like the theme toggle button */
+  background: rgba(15, 23, 42, 0.05) !important;
+  border: 1.5px solid rgba(15, 23, 42, 0.1);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.06),
+    0 1px 3px rgba(0, 0, 0, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.02);
+  backdrop-filter: blur(48px) saturate(1.6);
+  -webkit-backdrop-filter: blur(48px) saturate(1.6);
+}
+
+/* dark mode — default: still fully transparent */
+[data-theme="dark"] .navbar-inner,
+html[data-theme="dark"] .navbar-inner {
+  background: transparent !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* dark mode — scrolled: dark Liquid Glass */
+[data-theme="dark"] .navbar-inner.scrolled,
+html[data-theme="dark"] .navbar-inner.scrolled {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.25),
+    0 1px 0 rgba(255, 255, 255, 0.06) inset;
+  backdrop-filter: blur(48px) saturate(1.4) brightness(0.9);
+  -webkit-backdrop-filter: blur(48px) saturate(1.4) brightness(0.9);
+}
+
+[data-theme="dark"] .navbar-inner.scrolled .logo-mark,
+html[data-theme="dark"] .navbar-inner.scrolled .logo-mark { color: #ffffff; }
+
+[data-theme="dark"] .navbar-inner.scrolled .logo-suffix,
+html[data-theme="dark"] .navbar-inner.scrolled .logo-suffix { color: rgba(255,255,255,0.45); }
+
+[data-theme="dark"] .navbar-inner.scrolled .navbar-links a,
+html[data-theme="dark"] .navbar-inner.scrolled .navbar-links a { color: rgba(255,255,255,0.88); }
+
+[data-theme="dark"] .navbar-inner.scrolled .theme-toggle,
+html[data-theme="dark"] .navbar-inner.scrolled .theme-toggle {
+  border-color: rgba(255,255,255,0.22);
+  color: rgba(255,255,255,0.88);
+}
+
+[data-theme="dark"] .navbar-inner.scrolled .nav-login-btn,
+html[data-theme="dark"] .navbar-inner.scrolled .nav-login-btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.35);
+  color: #ffffff;
+}
+
+[data-theme="dark"] .navbar-inner.scrolled .nav-login-btn:hover,
+html[data-theme="dark"] .navbar-inner.scrolled .nav-login-btn:hover {
+  background: rgba(255,255,255,0.10);
+}
+
+/* ---- LOGO ---- */
 .navbar-logo {
   text-decoration: none;
   display: flex;
@@ -37,28 +117,37 @@
 }
 
 .logo-mark {
+  font-family: 'Poppins', sans-serif;
   font-size: 22px;
   font-weight: 300;
   letter-spacing: -0.8px;
-  color: #fff;
-  font-family: 'Inter', sans-serif;
+  color: #ffffff;
   text-transform: lowercase;
+  transition: color 0.3s;
 }
 
 .logo-suffix {
+  font-family: 'Poppins', sans-serif;
   font-size: 7px;
   font-weight: 600;
-  letter-spacing: 1px;
-  color: #fff;
-  opacity: 0.72;
+  letter-spacing: 1.5px;
+  color: rgba(255,255,255,0.7);
+  text-transform: uppercase;
   margin-top: -1px;
   margin-left: 2px;
+  transition: color 0.3s;
 }
 
+/* when scrolled — logo goes dark */
+.navbar-inner.scrolled .logo-mark { color: #111; }
+.navbar-inner.scrolled .logo-suffix { color: #555; }
+
+/* ---- CENTER LINKS ---- */
 .navbar-links-container {
   flex: 1;
   display: flex;
   justify-content: center;
+  /* no absolute positioning — let flexbox handle it */
 }
 
 .navbar-links {
@@ -66,121 +155,156 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  gap: 46px;
+  gap: 18px;
 }
 
 .navbar-links a {
-  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  color: #ffffff;
   text-decoration: none;
-  font-size: 16px;
-  font-weight: 600;
-  letter-spacing: -0.2px;
-  opacity: 0.92;
-  transition: opacity 0.2s;
+  font-size: 13px;
+  font-weight: 500;
+  opacity: 0.9;
+  transition: opacity 0.18s, color 0.3s;
+  white-space: nowrap;
 }
 
-.navbar-links a:hover {
-  opacity: 1;
-}
+.navbar-links a:hover { opacity: 1; }
 
+/* scrolled — links go dark */
+.navbar-inner.scrolled .navbar-links a { color: #222; }
+
+/* ---- RIGHT ACTIONS ---- */
 .navbar-actions {
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 10px;
   flex-shrink: 0;
+  /* ThemeToggle size fix */
+  --theme-toggle-size: 20px;
 }
 
-.nav-login {
-  color: #fff;
+/* Login — glass pill, white text over hero video */
+.nav-login-btn {
+  font-family: 'Poppins', sans-serif;
+  color: #ffffff;
   text-decoration: none;
-  font-size: 16px;
-  font-weight: 600;
-  letter-spacing: -0.2px;
-  transition: opacity 0.2s;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 9px 22px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  border-radius: 9999px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: background 0.2s ease, border-color 0.2s ease;
+  white-space: nowrap;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.2);
 }
 
-.nav-login:hover {
-  opacity: 0.8;
+.nav-login-btn:hover {
+  background: rgba(255, 255, 255, 0.24);
+  border-color: rgba(255, 255, 255, 0.45);
 }
 
-.btn-join {
-  --border-color: rgba(255, 255, 255, 0.34);
-  --border-width: 1px;
-  --border-radius: 9999px;
-  --padding-start: 18px;
-  --padding-end: 18px;
-  --color: #fff;
-  font-weight: 600;
-  text-transform: none;
-  font-size: 15px;
-  letter-spacing: -0.15px;
-  height: 42px;
-  min-height: 42px;
-  margin-right: 2px;
+/* scrolled light mode — glass pill button */
+.navbar-inner.scrolled .nav-login-btn {
+  color: #0f172a;
+  background: rgba(15, 23, 42, 0.06);
+  border: 1.5px solid rgba(15, 23, 42, 0.14);
+  box-shadow: 0 1px 6px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.6);
 }
 
+.navbar-inner.scrolled .nav-login-btn:hover {
+  background: rgba(15, 23, 42, 0.12);
+  border-color: rgba(15, 23, 42, 0.22);
+}
+
+/* ---- HAMBURGER ---- */
 .nav-hamburger {
   display: none;
   background: none;
   border: none;
-  color: #fff;
+  color: #111;
   font-size: 24px;
   cursor: pointer;
   padding: 4px;
   margin-left: auto;
 }
 
+/* ---- MOBILE DRAWER ---- */
 .navbar-mobile {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(32px) saturate(1.8);
+  -webkit-backdrop-filter: blur(32px) saturate(1.8);
+  padding: 80px 28px 32px;
   display: flex;
   flex-direction: column;
-  padding: 16px 24px 24px;
-  gap: 4px;
-  background: var(--color-bg);
-  border-top: 1px solid var(--color-border);
+  gap: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
+  z-index: 99;
+}
+
+html[data-theme="dark"] .navbar-mobile {
+  background: rgba(10, 15, 13, 0.7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+}
+
+html[data-theme="dark"] .navbar-mobile a {
+  color: rgba(255, 255, 255, 0.88);
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+html[data-theme="dark"] .navbar-mobile a.mobile-cta {
+  color: #ffffff;
 }
 
 .navbar-mobile a {
-  color: var(--color-text-secondary);
+  font-family: 'Poppins', sans-serif;
+  color: #222;
   text-decoration: none;
-  font-size: 16px;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--color-border);
-  transition: color 0.2s;
+  font-size: 17px;
+  font-weight: 500;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+  transition: color 0.18s;
 }
 
-.navbar-mobile a:hover,
-.navbar-mobile a.mobile-cta {
-  color: var(--color-accent);
+.navbar-mobile a:hover {
+  color: #111;
 }
 
 .navbar-mobile a.mobile-cta {
+  color: #111;
   font-weight: 600;
   border-bottom: none;
-  margin-top: 8px;
+  margin-top: 12px;
 }
 
+.mobile-theme-toggle {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.07);
+}
+
+/* ---- RESPONSIVE ---- */
 @media (max-width: 768px) {
   .navbar {
-    top: 6px;
+    padding: 12px 10px 0;
   }
 
   .navbar-inner {
-    height: 66px;
-    width: calc(100% - 20px);
+    height: 58px;
     padding: 0 18px;
   }
 
-  .logo-mark {
-    font-size: 30px;
-    letter-spacing: -1.2px;
-  }
-
-  .logo-suffix {
-    font-size: 8px;
-    margin-top: -3px;
-  }
-
-  .navbar-links,
+  .navbar-links-container,
   .navbar-actions {
     display: none;
   }

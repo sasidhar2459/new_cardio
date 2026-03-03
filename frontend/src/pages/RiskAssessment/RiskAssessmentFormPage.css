@@ -1,0 +1,444 @@
+/* ── Risk Assessment Form Page ─────────────────────────────────────── */
+@import '../../hooks/scroll-reveal.css';
+
+.raf-page {
+  position: relative;
+  background: #000;
+  min-height: 100vh;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+}
+
+.raf-shell {
+  padding: 60px 0 100px;
+  background: #050505;
+  min-height: calc(100vh - 72px);
+}
+
+/* ── Step Progress Bar ─────────────────────────────────────────────── */
+.raf-stepbar {
+  margin-bottom: 48px;
+}
+
+.raf-stepbar-track {
+  height: 3px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 99px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.raf-stepbar-fill {
+  height: 100%;
+  background: rgba(160,230,160,0.9);
+  border-radius: 99px;
+  transition: width 0.4s ease;
+}
+
+.raf-steps-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.raf-step-dot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+}
+
+.raf-dot-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.15);
+  background: #0f1210;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.3);
+  transition: all 0.3s ease;
+}
+
+.raf-step-dot.done .raf-dot-circle {
+  background: rgba(160,230,160,0.15);
+  border-color: rgba(160,230,160,0.6);
+  color: rgba(160,230,160,0.9);
+}
+
+.raf-step-dot.active .raf-dot-circle {
+  background: rgba(160,230,160,0.9);
+  border-color: rgba(160,230,160,0.9);
+  color: #000;
+}
+
+.raf-dot-label {
+  font-size: 10px;
+  color: rgba(255,255,255,0.3);
+  text-align: center;
+  line-height: 1.3;
+  transition: color 0.3s;
+}
+
+.raf-step-dot.active .raf-dot-label { color: rgba(160,230,160,0.9); }
+.raf-step-dot.done .raf-dot-label  { color: rgba(255,255,255,0.5); }
+
+/* ── Step Header ───────────────────────────────────────────────────── */
+.raf-step-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.raf-step-count {
+  font-size: 12px;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.5px;
+}
+
+.raf-step-section-label {
+  font-size: 12px;
+  color: rgba(160,230,160,0.7);
+  margin: 0;
+}
+
+/* ── Form Card ─────────────────────────────────────────────────────── */
+.raf-card {
+  background: #0f1210;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 40px;
+}
+
+.raf-step-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.raf-step-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.raf-step-sub {
+  font-size: 14px;
+  color: rgba(255,255,255,0.45);
+  margin: -12px 0 0;
+}
+
+/* ── Fields ────────────────────────────────────────────────────────── */
+.raf-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.raf-field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.raf-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.7);
+}
+
+.raf-unit {
+  font-weight: 400;
+  color: rgba(255,255,255,0.35);
+}
+
+.raf-input {
+  background: #151a16;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 15px;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.raf-input:focus {
+  border-color: rgba(160,230,160,0.5);
+}
+
+.raf-input::placeholder { color: rgba(255,255,255,0.2); }
+
+/* number input — remove arrows */
+.raf-input[type="number"]::-webkit-inner-spin-button,
+.raf-input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+/* ── Radio Group ───────────────────────────────────────────────────── */
+.raf-radio-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.raf-radio-btn {
+  background: #151a16;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.6);
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s;
+}
+
+.raf-radio-btn:hover { border-color: rgba(160,230,160,0.3); color: #fff; }
+.raf-radio-btn.active {
+  background: rgba(160,230,160,0.12);
+  border-color: rgba(160,230,160,0.6);
+  color: rgba(160,230,160,0.9);
+  font-weight: 700;
+}
+
+/* ── Toggle ────────────────────────────────────────────────────────── */
+.raf-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  cursor: pointer;
+}
+
+.raf-toggle-row:last-of-type { border-bottom: none; }
+
+.raf-toggle-text { flex: 1; }
+
+.raf-toggle-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.85);
+  margin: 0 0 2px;
+}
+
+.raf-toggle-desc {
+  font-size: 12px;
+  color: rgba(255,255,255,0.35);
+  margin: 0;
+}
+
+.raf-toggle {
+  width: 44px;
+  height: 24px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.12);
+  position: relative;
+  flex-shrink: 0;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.raf-toggle--on {
+  background: rgba(160,230,160,0.25);
+  border-color: rgba(160,230,160,0.6);
+}
+
+.raf-toggle-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  transition: left 0.2s, background 0.2s;
+}
+
+.raf-toggle--on .raf-toggle-thumb {
+  left: 23px;
+  background: rgba(160,230,160,0.9);
+}
+
+/* ── Info Box ──────────────────────────────────────────────────────── */
+.raf-info-box {
+  background: rgba(160,230,160,0.04);
+  border: 1px solid rgba(160,230,160,0.12);
+  border-radius: 10px;
+  padding: 16px 20px;
+}
+
+.raf-info-box p {
+  font-size: 13px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ── CAC result ────────────────────────────────────────────────────── */
+.raf-cac-result {
+  border: 1px solid;
+  border-radius: 10px;
+  padding: 14px 18px;
+}
+
+.raf-cac-result p {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* ── Review Table ──────────────────────────────────────────────────── */
+.raf-review-table {
+  display: flex;
+  flex-direction: column;
+}
+
+.raf-review-row {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  gap: 16px;
+}
+
+.raf-review-row:last-child { border-bottom: none; }
+
+.raf-review-label {
+  font-size: 13px;
+  color: rgba(255,255,255,0.45);
+  width: 160px;
+  flex-shrink: 0;
+}
+
+.raf-review-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  flex: 1;
+}
+
+.raf-edit-btn {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: 11px;
+  color: rgba(160,230,160,0.8);
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: border-color 0.2s;
+}
+
+.raf-edit-btn:hover { border-color: rgba(160,230,160,0.4); }
+
+/* ── Errors ────────────────────────────────────────────────────────── */
+.raf-errors {
+  background: rgba(248,113,113,0.07);
+  border: 1px solid rgba(248,113,113,0.25);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-top: 8px;
+}
+
+.raf-errors p {
+  font-size: 13px;
+  color: #f87171;
+  margin: 0 0 4px;
+}
+
+.raf-errors p:last-child { margin: 0; }
+
+/* ── Navigation ────────────────────────────────────────────────────── */
+.raf-nav {
+  display: flex;
+  align-items: center;
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+
+.raf-back-btn {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 999px;
+  padding: 10px 24px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.raf-back-btn:hover { border-color: rgba(255,255,255,0.35); color: #fff; }
+
+/* ── Success Screen ────────────────────────────────────────────────── */
+.raf-success {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 72px);
+  padding: 60px 20px;
+}
+
+.raf-success-card {
+  background: #0f1210;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 24px;
+  padding: 60px 48px;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.raf-success-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(160,230,160,0.12);
+  border: 2px solid rgba(160,230,160,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: rgba(160,230,160,0.9);
+}
+
+.raf-success-card h2 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.raf-success-card p {
+  font-size: 15px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ── Responsive ────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .raf-card { padding: 28px 20px; }
+  .raf-field-row { grid-template-columns: 1fr; }
+  .raf-dot-label { display: none; }
+  .raf-steps-row { gap: 4px; }
+  .raf-dot-circle { width: 26px; height: 26px; font-size: 11px; }
+  .raf-review-label { width: 110px; }
+  .raf-success-card { padding: 40px 24px; }
+}
