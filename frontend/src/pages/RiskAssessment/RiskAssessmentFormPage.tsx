@@ -348,8 +348,9 @@ const RiskAssessmentFormPage: React.FC = () => {
     <IonPage>
       <IonContent fullscreen scrollY>
         <div className="raf-page">
-          <div className="hero-bg-grid hero-bg-grid--dark" />
           <Navbar />
+          <div className="hero-bg-grid hero-bg-grid--dark" />
+
 
           <div className="raf-shell">
             <div className="container">

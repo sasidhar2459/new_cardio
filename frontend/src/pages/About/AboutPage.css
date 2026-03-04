@@ -193,12 +193,13 @@ html[data-theme="dark"] .about-page .navbar-inner:not(.scrolled) .theme-toggle {
 .founder-name-overlay {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  padding: 28px 20px 20px;
-  background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, transparent 100%);
+  padding: 40px 20px 20px;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.8);
 }
 
 .founder-name-overlay h3 {
-  color: #fff;
+  color: #fff !important;
   font-family: 'Poppins', sans-serif;
   font-size: 20px;
   font-weight: 700;
@@ -206,7 +207,7 @@ html[data-theme="dark"] .about-page .navbar-inner:not(.scrolled) .theme-toggle {
 }
 
 .founder-name-overlay p {
-  color: #4ade80;
+  color: #4ade80 !important;
   font-size: 13px;
   margin: 0;
   font-weight: 500;
@@ -217,22 +218,6 @@ html[data-theme="dark"] .about-page .navbar-inner:not(.scrolled) .theme-toggle {
   flex-direction: column;
   gap: 16px;
 }
-
-.founder-linkedin {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 38px;
-  height: 38px;
-  background: #0077b5;
-  border-radius: 8px;
-  color: #fff;
-  font-size: 20px;
-  text-decoration: none;
-  transition: background 0.18s;
-}
-
-.founder-linkedin:hover { background: #005885; }
 
 .founder-bio-para {
   color: #4b5563;
@@ -312,12 +297,13 @@ html[data-theme="dark"] .about-page .navbar-inner:not(.scrolled) .theme-toggle {
 .team-name-overlay {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  padding: 20px 16px 16px;
-  background: linear-gradient(to top, rgba(0,0,0,0.78) 0%, transparent 100%);
+  padding: 30px 16px 16px;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.8);
 }
 
 .team-name-overlay h4 {
-  color: #fff;
+  color: #fff !important;
   font-family: 'Poppins', sans-serif;
   font-size: 15px;
   font-weight: 700;
@@ -325,7 +311,7 @@ html[data-theme="dark"] .about-page .navbar-inner:not(.scrolled) .theme-toggle {
 }
 
 .team-name-overlay p {
-  color: #4ade80;
+  color: #4ade80 !important;
   font-size: 12px;
   margin: 0;
   font-weight: 500;
@@ -387,14 +373,34 @@ html[data-theme="dark"] .about-page .navbar-inner:not(.scrolled) .theme-toggle {
   max-width: 720px;
   margin: 0 auto;
   text-align: center;
+  position: relative;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
-  background: linear-gradient(135deg, #f0f5f1 0%, #e8f0ea 100%);
-  border: 1px solid #d4e4d8;
+  background: linear-gradient(
+    155deg,
+    var(--liquid-glass-bg-strong) 0%,
+    var(--liquid-glass-bg) 72%
+  );
+  border: 1px solid var(--liquid-glass-border);
   border-radius: 28px;
   padding: 60px 48px;
+  box-shadow:
+    0 10px 30px var(--liquid-glass-shadow),
+    inset 0 1px 0 var(--liquid-glass-highlight);
+  backdrop-filter: blur(calc(var(--liquid-glass-blur) * 0.55)) saturate(var(--liquid-glass-saturation));
+  -webkit-backdrop-filter: blur(calc(var(--liquid-glass-blur) * 0.55)) saturate(var(--liquid-glass-saturation));
+}
+
+.join-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(circle at 14% 12%, rgba(255, 255, 255, 0.34), transparent 54%);
 }
 
 .join-title {
@@ -494,8 +500,12 @@ html[data-theme="dark"] .join-section {
 }
 
 html[data-theme="dark"] .join-card {
-  background: linear-gradient(135deg, #0f1a12 0%, #111c14 100%);
-  border-color: #1e2d20;
+  background: linear-gradient(
+    155deg,
+    var(--liquid-glass-bg-strong) 0%,
+    var(--liquid-glass-bg) 72%
+  );
+  border-color: var(--liquid-glass-border);
 }
 
 html[data-theme="dark"] .join-title { color: rgba(255,255,255,0.9); }

@@ -69,9 +69,6 @@ function FounderCard({ founder, reverse }: { founder: typeof founders[0]; revers
         </div>
       </div>
       <div className="founder-info">
-        <a href={founder.linkedin} target="_blank" rel="noreferrer" className="founder-linkedin">
-          <IonIcon icon={Icons.linkedin} />
-        </a>
         {founder.bio.map((para, i) => (
           <p key={i} className="founder-bio-para">{para}</p>
         ))}
@@ -240,10 +237,11 @@ const AboutPage: React.FC = () => {
     <IonPage>
       <IonContent fullscreen scrollY>
         <div className="about-page">
-          <Navbar />
+
 
           {/* hero — full-bleed image with overlapping card (AHA style) */}
           <section className="about-hero">
+              <Navbar />
             {/* grid bg overlay */}
             <div className="about-hero-bg-grid" />
             {/* hero background image */}

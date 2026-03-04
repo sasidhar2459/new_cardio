@@ -183,8 +183,9 @@ const WearablesDashboardPage: React.FC = () => {
     <IonPage>
       <IonContent fullscreen scrollY>
         <div className="wbd-page">
-          <div className="hero-bg-grid hero-bg-grid--dark" />
           <Navbar />
+          <div className="hero-bg-grid hero-bg-grid--dark" />
+
 
           <div className="wbd-main">
             <div className="container">

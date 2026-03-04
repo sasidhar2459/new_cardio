@@ -163,6 +163,7 @@ const RiskAnalyticsPage: React.FC = () => {
         <div className="rar-page">
           <Navbar />
 
+
           {/* ── Hero banner ── */}
           <section className="rar-hero">
             <div className="hero-bg-grid hero-bg-grid--dark" />

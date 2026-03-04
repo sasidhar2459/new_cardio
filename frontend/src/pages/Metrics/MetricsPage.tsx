@@ -474,6 +474,7 @@ const MetricsPage: React.FC = () => (
     <IonContent fullscreen scrollY>
       <div className="met-page">
         <Navbar />
+
         <MetricsHero />
         <BaselineSection />
         <ProgressSection />

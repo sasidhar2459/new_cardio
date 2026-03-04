@@ -1,7 +1,6 @@
-/* default — over dark hero video: white glass */
 .theme-toggle {
-  background: rgba(255, 255, 255, 0.14);
-  border: 1px solid rgba(255, 255, 255, 0.32);
+  position: relative;
+  overflow: hidden;
   border-radius: 50%;
   width: 34px;
   height: 34px;
@@ -9,44 +8,61 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: #ffffff;
+  color: var(--liquid-glass-icon);
   font-size: 16px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.2);
-  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  border: 1px solid var(--liquid-glass-border);
+  background: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--liquid-glass-bg-strong) 85%, white 15%) 0%,
+    var(--liquid-glass-bg) 60%
+  );
+  backdrop-filter: blur(calc(var(--liquid-glass-blur) * 0.35)) saturate(var(--liquid-glass-saturation));
+  -webkit-backdrop-filter: blur(calc(var(--liquid-glass-blur) * 0.35)) saturate(var(--liquid-glass-saturation));
+  box-shadow:
+    0 4px 14px var(--liquid-glass-shadow),
+    inset 0 1px 0 var(--liquid-glass-highlight);
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
   flex-shrink: 0;
 }
 
+.theme-toggle::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at 30% 18%, rgba(255, 255, 255, 0.45), transparent 52%);
+  pointer-events: none;
+}
+
 .theme-toggle:hover {
-  background: rgba(255, 255, 255, 0.24);
-  border-color: rgba(255, 255, 255, 0.45);
+  transform: translateY(-1px);
+  background: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--liquid-glass-bg-strong) 75%, white 25%) 0%,
+    color-mix(in srgb, var(--liquid-glass-bg) 88%, white 12%) 62%
+  );
+  border-color: color-mix(in srgb, var(--liquid-glass-border) 80%, white 20%);
 }
 
-/* scrolled light mode — glass on white pill */
+.theme-toggle:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--color-accent) 72%, white 28%);
+  outline-offset: 2px;
+}
+
 .navbar-inner.scrolled .theme-toggle {
-  background: rgba(15, 23, 42, 0.07);
-  border-color: rgba(15, 23, 42, 0.18);
-  color: #0f172a;
-  box-shadow: 0 1px 6px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.6);
+  background: linear-gradient(
+    165deg,
+    color-mix(in srgb, var(--liquid-glass-bg-strong) 90%, white 10%) 0%,
+    var(--liquid-glass-bg) 68%
+  );
 }
 
-.navbar-inner.scrolled .theme-toggle:hover {
-  background: rgba(15, 23, 42, 0.13);
-  border-color: rgba(15, 23, 42, 0.28);
-}
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle {
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  }
 
-/* scrolled dark mode — glass on dark pill */
-[data-theme="dark"] .navbar-inner.scrolled .theme-toggle,
-html[data-theme="dark"] .navbar-inner.scrolled .theme-toggle {
-  background: rgba(255, 255, 255, 0.10);
-  border-color: rgba(255, 255, 255, 0.22);
-  color: rgba(255, 255, 255, 0.88);
-  box-shadow: 0 1px 6px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.08);
-}
-
-[data-theme="dark"] .navbar-inner.scrolled .theme-toggle:hover,
-html[data-theme="dark"] .navbar-inner.scrolled .theme-toggle:hover {
-  background: rgba(255, 255, 255, 0.18);
-  border-color: rgba(255, 255, 255, 0.35);
+  .theme-toggle:hover {
+    transform: none;
+  }
 }

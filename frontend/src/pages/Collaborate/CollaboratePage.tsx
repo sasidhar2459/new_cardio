@@ -287,6 +287,7 @@ const CollaboratePage: React.FC = () => {
       <IonContent fullscreen scrollY>
         <div className="col-page">
           <Navbar />
+
           <ColHero onContact={() => setShowModal(true)} />
           <ProcessSection />
           <ColCTA onContact={() => setShowModal(true)} />

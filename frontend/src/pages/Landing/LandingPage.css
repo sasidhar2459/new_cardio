@@ -221,19 +221,30 @@ h1, h2, h3, h4, h5 { margin: 0; }
 }
 
 .who-image-placeholder {
+  position: relative;
   width: 100%;
-  max-width: 480px;
-  aspect-ratio: 4/5;
+  max-width: 510px;
+  aspect-ratio: 7/8;
   border-radius: 28px;
   overflow: hidden;
   background: #f9fafb;
   border: 1px solid #e5e7eb;
 }
 
-.who-image-inner {
+.who-image-photo {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 40%, #a7f3d0 100%);
+  object-fit: cover;
+  display: block;
+}
+
+.who-image-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 14% 12%, rgba(255, 255, 255, 0.2), transparent 42%),
+    linear-gradient(180deg, rgba(8, 20, 14, 0.04) 0%, rgba(8, 20, 14, 0.36) 100%);
+  pointer-events: none;
 }
 
 /* ── PRINCIPLES ── */
@@ -309,56 +320,84 @@ h1, h2, h3, h4, h5 { margin: 0; }
 
 .principle-card {
   width: 240px;
-  height: 320px;
+  height: 340px;
   flex-shrink: 0;
   border-radius: 20px;
   overflow: hidden;
   position: relative;
-  border: 1px solid #e5e7eb;
   background: #fff;
-  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  transition: transform 0.25s, box-shadow 0.25s;
   cursor: default;
 }
 
 .principle-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(0,0,0,0.09);
-  border-color: #bbf7d0;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
 }
-
-.principle-card:nth-child(odd)  { background: linear-gradient(155deg, #f0fdf4 0%, #dcfce7 55%, #fff 100%); }
-.principle-card:nth-child(even) { background: linear-gradient(155deg, #f0f9ff 0%, #e0f2fe 55%, #fff 100%); }
 
 .principle-card-content {
   position: absolute;
-  bottom: 0; left: 0; right: 0;
-  padding: 20px;
-  background: linear-gradient(to top, rgba(255,255,255,0.97) 0%, rgba(255,255,255,0.7) 60%, transparent 100%);
+  bottom: 8px; left: 8px; right: 8px;
+  padding: 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  z-index: 2;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+html[data-theme="dark"] .principle-card-content {
+  background: rgba(25, 35, 30, 0.6);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.principle-card-media {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+}
+
+.principle-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .principle-num {
+  position: absolute;
+  top: 16px;
+  right: 16px;
   font-size: 10px;
-  color: #16a34a;
-  font-weight: 700;
+  color: #a3e635; /* Using standard lime-green accent */
+  background: rgba(10, 15, 13, 0.7);
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-weight: 800;
   letter-spacing: 2px;
-  margin-bottom: 8px;
-  display: block;
+  z-index: 3;
 }
 
 .principle-title {
   font-family: 'Poppins', sans-serif;
   font-size: 14px;
   font-weight: 700;
-  color: #0f172a;
-  line-height: 1.3;
-  margin-bottom: 6px;
+  color: #0f1a12;
+  line-height: 1.25;
+  margin: 0;
+  margin-bottom: 4px;
 }
 
 .principle-desc {
   font-family: 'Poppins', sans-serif;
   font-size: 11px;
-  color: #6b7280;
-  line-height: 1.55;
+  color: #3f4e43;
+  line-height: 1.45;
+  font-weight: 400;
+  margin: 0;
 }
 
 /* ── MISSION ── */
@@ -511,8 +550,14 @@ html[data-theme="dark"] .who-image-placeholder {
   border-color: #1e2d20;
 }
 
-html[data-theme="dark"] .who-image-inner {
-  background: linear-gradient(135deg, #0f2d18 0%, #1a4a2a 40%, #0f2d18 100%);
+html[data-theme="dark"] .who-image-photo {
+  filter: saturate(1.05) contrast(1.03);
+}
+
+html[data-theme="dark"] .who-image-overlay {
+  background:
+    radial-gradient(circle at 14% 12%, rgba(255, 255, 255, 0.08), transparent 45%),
+    linear-gradient(180deg, rgba(5, 10, 8, 0.1) 0%, rgba(5, 10, 8, 0.5) 100%);
 }
 
 html[data-theme="dark"] .principles-section {
@@ -530,22 +575,11 @@ html[data-theme="dark"] .marquee-wrap::after {
   background: linear-gradient(to left, #060d08, transparent);
 }
 
-html[data-theme="dark"] .principle-card { border-color: #1e2d20; }
+html[data-theme="dark"] .principle-card { border-color: transparent; }
 
-html[data-theme="dark"] .principle-card:nth-child(odd) {
-  background: linear-gradient(155deg, #0f1a12 0%, #111c14 55%, #0a0f0d 100%);
-}
-
-html[data-theme="dark"] .principle-card:nth-child(even) {
-  background: linear-gradient(155deg, #0d1a14 0%, #101f16 55%, #0a0f0d 100%);
-}
-
-html[data-theme="dark"] .principle-card-content {
-  background: linear-gradient(to top, rgba(6,13,8,0.97) 0%, rgba(6,13,8,0.7) 60%, transparent 100%);
-}
-
+html[data-theme="dark"] .principle-num { color: #a3e635; background: rgba(10, 15, 13, 0.7); }
 html[data-theme="dark"] .principle-title { color: #ffffff; }
-html[data-theme="dark"] .principle-desc { color: #8a9a8c; }
+html[data-theme="dark"] .principle-desc { color: #e2e8f0; }
 
 html[data-theme="dark"] .faq-section {
   background: #060d08;
@@ -600,7 +634,7 @@ html[data-theme="dark"] .btn-white {
   .who-image-placeholder { max-width: 100%; aspect-ratio: 16/9; border-radius: 20px; }
   .who-section, .principles-section, .mission-section, .faq-section { padding: 64px 0; }
   .container { padding: 0 20px; }
-  .principle-card { width: 210px; height: 280px; }
+  .principle-card { width: 210px; height: 300px; }
   .marquee-wrap::before, .marquee-wrap::after { width: 50px; }
   .hero-content-wrapper { padding: 0 20px; }
   .hero-title { font-size: clamp(26px, 8vw, 48px); letter-spacing: -0.5px; }

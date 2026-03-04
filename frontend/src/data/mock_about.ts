@@ -5,7 +5,7 @@ export const founders = [
     id: 1,
     name: 'Dr. Siva Kumar',
     title: 'Co-founder & Chief Medical Director',
-    image: '/team/siva-kumar.jpg', // placeholder — swap with real image
+    image: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&h=800&q=80',
     linkedin: 'https://linkedin.com',
     bio: [
       "In med school, we're taught to treat diseases. Preventive and personalized health came along later in my practice. I even reversed my own chronic migraines. Creating health and making a difference way before suffering starts – that's what keeps me motivated. Health shouldn't stop anyone from the opportunities life throws their way. It shouldn't take away the joys of life.",
@@ -17,7 +17,7 @@ export const founders = [
     id: 2,
     name: 'Mr. Siva Rama Krishna',
     title: 'Co-founder & Chief of Strategy & Expansions',
-    image: '/team/siva-rama-krishna.jpg',
+    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=800&h=800&q=80',
     linkedin: 'https://linkedin.com',
     bio: [
       'I stepped into my 40s with low energy and flexibility, and longevity medicine changed that for me. Now I know the possibilities. I know it\'s possible to function younger than your age.',
@@ -32,19 +32,49 @@ export const team = [
     id: 1,
     name: 'Dr. Abishek Suresh',
     title: 'Head of Clinical Programs',
-    image: '/team/abishek.jpg',
+    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&h=800&q=80',
   },
   {
     id: 2,
     name: 'Dr. Bebin Leenus',
     title: 'Physician',
-    image: '/team/bebin.jpg',
+    image: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=800&h=800&q=80',
   },
   {
     id: 3,
     name: 'Alekhya Katta',
     title: 'Senior Nutritionist',
-    image: '/team/alekhya.jpg',
+    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&h=800&q=80',
+  },
+  {
+    id: 4,
+    name: 'Dr. Ramesh Kumar',
+    title: 'Senior Cardiologist',
+    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&h=800&q=80',
+  },
+  {
+    id: 5,
+    name: 'Sarah Jenkins',
+    title: 'Lifestyle Coach',
+    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=800&h=800&q=80',
+  },
+  {
+    id: 6,
+    name: 'Dr. Michael Chen',
+    title: 'Head of Research',
+    image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&h=800&q=80',
+  },
+  {
+    id: 7,
+    name: 'Priya Sharma',
+    title: 'Clinical Coordinator',
+    image: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=800&h=800&q=80',
+  },
+  {
+    id: 8,
+    name: 'Rahul Patel',
+    title: 'Data Scientist',
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&h=800&q=80',
   },
 ];
 

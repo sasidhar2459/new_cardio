@@ -1,2 +1,2 @@
-cd new_cardio/frontend
+cd frontend
 ionic serve

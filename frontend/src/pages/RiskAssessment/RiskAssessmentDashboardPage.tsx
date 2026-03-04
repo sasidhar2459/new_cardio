@@ -533,8 +533,9 @@ const RiskAssessmentDashboardPage: React.FC = () => {
     <IonPage>
       <IonContent fullscreen scrollY>
         <div className="rad-page">
-          <div className="hero-bg-grid hero-bg-grid--dark" />
           <Navbar />
+          <div className="hero-bg-grid hero-bg-grid--dark" />
+
           <div className="rad-main">
             <div className="container">
               <div className="rad-page-header">

@@ -258,6 +258,7 @@ const RiskAssessmentPage: React.FC = () => (
     <IonContent fullscreen scrollY>
       <div className="ra-page">
         <Navbar />
+
         <RiskHero />
         <RiskScoresSection />
         <WhyRiskSection />

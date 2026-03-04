@@ -343,6 +343,7 @@ const TreatmentPage: React.FC = () => {
       <IonContent fullscreen scrollY>
         <div className="treatment-page">
           <Navbar />
+
           <TreatmentHero />
           <RiskSection />
           <PlansSection />

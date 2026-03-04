@@ -41,6 +41,7 @@ export default function ContactPage() {
         <div className="contact-page">
           <Navbar />
 
+
           {/* ── Hero ── */}
           <section className="contact-hero">
             <div className="hero-bg-grid" />

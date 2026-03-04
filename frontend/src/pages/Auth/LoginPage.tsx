@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { IonPage, IonContent } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
+import Navbar from '../../components/layout/Navbar';
 import './AuthPage.css';
 
 const LoginPage: React.FC = () => {
@@ -18,6 +19,7 @@ const LoginPage: React.FC = () => {
     <IonPage>
       <IonContent fullscreen scrollY>
         <div className="auth-page">
+          <Navbar />
           <div className="auth-bg-grid" />
           <div className="auth-card">
 

@@ -278,6 +278,7 @@ const WearablesPage: React.FC = () => (
     <IonContent fullscreen scrollY>
       <div className="wb-page">
         <Navbar />
+
         <WearablesHero />
         <WhySection />
         <TrackedSection />

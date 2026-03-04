@@ -96,6 +96,29 @@
   --nav-text: #ffffff;
   --nav-border: rgba(255, 255, 255, 0.12);
   --footer-bg: #050505;
+
+  /* liquid glass tokens - dark */
+  --liquid-glass-bg: rgba(255, 255, 255, 0.08);
+  --liquid-glass-bg-strong: rgba(255, 255, 255, 0.12);
+  --liquid-glass-border: rgba(255, 255, 255, 0.22);
+  --liquid-glass-highlight: rgba(255, 255, 255, 0.55);
+  --liquid-glass-shadow: rgba(0, 0, 0, 0.3);
+  --liquid-glass-text: rgba(255, 255, 255, 0.9);
+  --liquid-glass-icon: rgba(255, 255, 255, 0.92);
+  --liquid-glass-blur: 34px;
+  --liquid-glass-saturation: 170%;
+
+  /* navbar-specific glass tuning - dark */
+  --nav-glass-bg-1: rgba(11, 17, 14, 0.95);
+  --nav-glass-bg-2: rgba(8, 13, 10, 0.94);
+  --nav-glass-border: rgba(255, 255, 255, 0.2);
+  --nav-glass-highlight: rgba(255, 255, 255, 0.16);
+  --nav-glass-tint: rgba(8, 13, 10, 0.48);
+  --nav-glass-shadow: rgba(0, 0, 0, 0.34);
+  --nav-glass-text: rgba(255, 255, 255, 0.92);
+  --nav-glass-icon: rgba(255, 255, 255, 0.94);
+  --nav-glass-blur: 68px;
+  --nav-glass-saturation: 150%;
 }
 
 /* Kill Ionic's automatic dark mode from OS prefers-color-scheme.
@@ -192,6 +215,29 @@ html[data-theme="light"] {
   --nav-text: #1a1a1a;
   --nav-border: rgba(0, 0, 0, 0.12);
   --footer-bg: #fafafa;
+
+  /* liquid glass tokens - light */
+  --liquid-glass-bg: rgba(255, 255, 255, 0.56);
+  --liquid-glass-bg-strong: rgba(255, 255, 255, 0.72);
+  --liquid-glass-border: rgba(15, 23, 42, 0.15);
+  --liquid-glass-highlight: rgba(255, 255, 255, 0.78);
+  --liquid-glass-shadow: rgba(15, 23, 42, 0.1);
+  --liquid-glass-text: #0f172a;
+  --liquid-glass-icon: #0f172a;
+  --liquid-glass-blur: 30px;
+  --liquid-glass-saturation: 180%;
+
+  /* navbar-specific glass tuning - light */
+  --nav-glass-bg-1: rgba(248, 250, 252, 0.9);
+  --nav-glass-bg-2: rgba(241, 245, 249, 0.88);
+  --nav-glass-border: rgba(15, 23, 42, 0.2);
+  --nav-glass-highlight: rgba(255, 255, 255, 0.68);
+  --nav-glass-tint: rgba(248, 250, 252, 0.24);
+  --nav-glass-shadow: rgba(15, 23, 42, 0.13);
+  --nav-glass-text: #0f172a;
+  --nav-glass-icon: #0f172a;
+  --nav-glass-blur: 52px;
+  --nav-glass-saturation: 145%;
 }
 
 html[data-theme="light"] body,
@@ -210,4 +256,16 @@ html[data-theme="dark"] ion-page,
 body[data-theme="dark"] ion-page {
   --background: #060d08;
   background: #060d08;
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  :root {
+    --liquid-glass-bg: rgba(17, 28, 20, 0.95);
+    --liquid-glass-bg-strong: rgba(17, 28, 20, 0.98);
+  }
+
+  html[data-theme="light"] {
+    --liquid-glass-bg: rgba(255, 255, 255, 0.95);
+    --liquid-glass-bg-strong: rgba(255, 255, 255, 0.98);
+  }
 }
