@@ -222,7 +222,7 @@ function JoinTeamSection() {
           <p className="section-eyebrow">Join Our Team</p>
           <h2 className="join-title">We're always on the lookout for passionate, dynamic, and talented individuals to join our team.</h2>
           <p className="join-sub">Find a role that fits you best!</p>
-          <IonButton className="btn-white" shape="round" href="/careers">
+          <IonButton className="btn-white" shape="round" type="button">
             Check out the Current Openings
           </IonButton>
         </div>

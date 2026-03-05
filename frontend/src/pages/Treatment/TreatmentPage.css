@@ -155,6 +155,88 @@ html[data-theme="dark"] .tx-hero-sub { color: #8a9a8c; }
   flex-wrap: wrap;
 }
 
+/* Hero primary CTA: keep glass feel but reduce transparency */
+.tx-hero-actions .btn-white {
+  --background: rgba(255, 255, 255, 0.24);
+  --background-hover: rgba(255, 255, 255, 0.34);
+  --border-color: rgba(255, 255, 255, 0.42);
+  --box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.tx-hero-actions .btn-white::part(native) {
+  backdrop-filter: blur(14px) saturate(145%);
+  -webkit-backdrop-filter: blur(14px) saturate(145%);
+}
+
+html[data-theme="light"] .tx-hero-actions .btn-white {
+  --background: rgba(255, 255, 255, 0.82);
+  --background-hover: rgba(255, 255, 255, 0.92);
+  --color: #0f172a;
+  --border-color: rgba(15, 23, 42, 0.16);
+  --box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+
+/* ── Simple Talk Popup ─────────────────────────────────────────── */
+.tx-talk-popup {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 9999;
+  min-width: 260px;
+  max-width: min(420px, calc(100vw - 32px));
+  padding: 14px 14px 14px 16px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  background: #0f1a12;
+  border: 1px solid #2a3d2c;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
+}
+
+.tx-talk-popup-text {
+  margin: 0;
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.tx-talk-popup-close {
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: transparent;
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.tx-talk-popup-close:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+html[data-theme="light"] .tx-talk-popup {
+  background: #ffffff;
+  border-color: #d8e2db;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.14);
+}
+
+html[data-theme="light"] .tx-talk-popup-text {
+  color: #0f172a;
+}
+
+html[data-theme="light"] .tx-talk-popup-close {
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+html[data-theme="light"] .tx-talk-popup-close:hover {
+  background: #f1f5f9;
+}
+
 /* center headings for plans + monitor — same pattern as landing */
 .plans-section .section-eyebrow,
 .plans-section .section-heading,
@@ -613,6 +695,127 @@ html[data-theme="light"] .plans-section .plan-card--highlight .btn-white {
   margin-top: 24px;
 }
 
+.tx-monitor-layout {
+  margin: 24px auto 0;
+  max-width: 1180px;
+  display: grid;
+  grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.45fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.tx-monitor-left {
+  position: sticky;
+  top: 96px;
+  background: linear-gradient(145deg, rgba(17, 23, 20, 0.92), rgba(10, 15, 12, 0.9));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 20px 20px 18px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+}
+
+.tx-monitor-right {
+  min-width: 0;
+}
+
+.tx-monitor-loop-viewport {
+  height: 560px;
+  overflow: hidden;
+  position: relative;
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%);
+}
+
+.tx-monitor-loop-track {
+  --tx-loop-play-state: paused;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: tx-monitor-vertical-loop 18s linear infinite;
+  animation-play-state: var(--tx-loop-play-state);
+  will-change: transform;
+}
+
+@keyframes tx-monitor-vertical-loop {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+}
+
+.tx-monitor-points-title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.tx-monitor-points-sub {
+  margin: 10px 0 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.64);
+}
+
+.tx-monitor-visual {
+  margin-top: 14px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.tx-monitor-visual-img {
+  width: 100%;
+  height: 180px;
+  display: block;
+  object-fit: cover;
+}
+
+.tx-monitor-visual-caption {
+  margin: 0;
+  padding: 10px 12px 11px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.tx-monitor-point-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: linear-gradient(145deg, rgba(17, 23, 20, 0.92), rgba(10, 15, 12, 0.9));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 14px 14px 13px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.78);
+  transition: border-color 0.22s ease, box-shadow 0.22s ease, transform 0.22s ease;
+}
+
+.tx-monitor-point-item:hover {
+  border-color: rgba(34, 197, 94, 0.28);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.tx-monitor-point-item.is-active {
+  border-color: rgba(34, 197, 94, 0.5);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+  transform: translateY(-1px);
+}
+
+.tx-monitor-point-item strong {
+  color: #e2e8f0;
+}
+
+.tx-monitor-point-dot {
+  width: 6px;
+  height: 6px;
+  margin-top: 7px;
+  border-radius: 999px;
+  flex-shrink: 0;
+  background: #22c55e;
+}
+
 .monitor-grid {
   display: grid;
   grid-template-columns: 1.4fr 1fr 1fr;
@@ -787,6 +990,52 @@ html[data-theme="light"] .kpi-card {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
+html[data-theme="light"] .tx-monitor-points {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+html[data-theme="light"] .tx-monitor-left {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+html[data-theme="light"] .tx-monitor-visual {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+html[data-theme="light"] .tx-monitor-visual-caption {
+  color: #334155;
+}
+
+html[data-theme="light"] .tx-monitor-points-title,
+html[data-theme="light"] .tx-monitor-point-item strong {
+  color: #0f172a;
+}
+
+html[data-theme="light"] .tx-monitor-points-sub,
+html[data-theme="light"] .tx-monitor-point-item {
+  color: #475569;
+}
+
+html[data-theme="light"] .tx-monitor-point-item {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+html[data-theme="light"] .tx-monitor-point-item:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+}
+
+html[data-theme="light"] .tx-monitor-point-item.is-active {
+  border-color: rgba(22, 163, 74, 0.36);
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.1);
+}
+
 /* ── Recharts custom tooltip ────────────────────────────────────── */
 .rchart-tooltip {
   background: #1e293b;
@@ -890,6 +1139,30 @@ html[data-theme="light"] .rchart-tooltip-value { color: #0f172a; }
 
   .monitor-tile { min-height: 200px; }
 
+  .tx-monitor-layout {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .tx-monitor-loop-viewport {
+    height: auto;
+    mask-image: none;
+  }
+
+  .tx-monitor-loop-track {
+    animation: none;
+    --tx-loop-play-state: paused;
+  }
+
+  .tx-monitor-left {
+    position: static;
+    top: auto;
+  }
+
+  .tx-monitor-point-item {
+    transform: none;
+  }
+
   .kpi-grid { grid-template-columns: 1fr; }
 
   .kpi-value { font-size: 28px; }
@@ -905,4 +1178,11 @@ html[data-theme="light"] .rchart-tooltip-value { color: #0f172a; }
 
 @media (max-width: 480px) {
   .monitor-tile { padding: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tx-monitor-points,
+  .tx-monitor-point-item {
+    will-change: auto;
+  }
 }

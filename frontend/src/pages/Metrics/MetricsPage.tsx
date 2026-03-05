@@ -66,7 +66,7 @@ function MetricsHero() {
             <p className="met-hero-sub">
               Bypass tracks the biomarkers that actually predict cardiac events — not vanity numbers. Every metric is colour-coded, quantifiable, and tied to outcomes.
             </p>
-            <IonButton className="btn-white" shape="round" href="/risk-assessment/form">
+            <IonButton className="btn-white start-assessment-btn" shape="round" href="/risk-assessment/form">
               Start Your Assessment
             </IonButton>
           </div>
@@ -97,20 +97,16 @@ function MetricsHero() {
                   </div>
                 </div>
    <div className="ra-hero-face ra-hero-face--back ra-hero-card">
-                  <p className="section-eyebrow">Your Biomarkers</p>
                   <h2 className="ra-hero-card-title">See Your Key<br />Metrics Live.</h2>
                   <p className="ra-hero-card-sub">
                     Every biomarker that actually predicts cardiac events — tracked continuously, colour-coded, and actionable.
                   </p>
-                  <div className="ra-hero-card-btns">
-                    <button className="ra-hero-scan-btn" onClick={() => window.location.href = '/metrics/dashboard'}>
+                  <div className="ra-hero-card-btns ra-hero-card-btns--single">
+                    <button className="ra-hero-scan-btn" onClick={() => window.location.href = '/risk-assessment/dashboard'}>
                       <span className="ra-hsb-bg" />
                       <IonIcon icon={Icons.analytics} className="ra-hsb-icon" />
-                      <span className="ra-hsb-label">Metrics Dashboard</span>
-                    </button>   <IonButton className="btn-white" shape="round" href="/risk-assessment/form">
-                      Take Assessment
-                    </IonButton>
-                 
+                      <span className="ra-hsb-label">Risk Dashboard</span>
+                    </button>
                   </div>
                 </div>
                 {/* <div className="met-hero-face met-hero-face--back met-hero-card">
@@ -160,7 +156,6 @@ function BaselineSection() {
         </div>
 
         <div className="met-baseline-footer">
-          <span className="met-badge-pulse" />
           <span className="met-badge-text">This becomes your personalised <strong>"Heart Health Starting Line"</strong> — the benchmark everything else is measured against.</span>
         </div>
       </div>

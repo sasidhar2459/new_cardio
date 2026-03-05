@@ -280,6 +280,11 @@ html[data-theme="light"] .faq-icon {
   color: #999999;
 }
 
+/* Keep landing Who We Are accent color in light theme */
+html[data-theme="light"] .who-section .who-heading {
+  color: #16a34a !important;
+}
+
 /* ── Eyebrow / accent text ───────────────────────────────────────── */
 html[data-theme="light"] .section-eyebrow {
   color: #16a34a;
@@ -348,6 +353,27 @@ html[data-theme="light"] .btn-hero-secondary {
 html[data-theme="light"] .btn-small-outline {
   --border-color: rgba(0, 0, 0, 0.25);
   --color: #1a1a1a;
+}
+
+/* Shared Start Your Assessment CTA style */
+.start-assessment-btn {
+  --background: rgba(255, 255, 255, 0.24);
+  --background-hover: rgba(255, 255, 255, 0.34);
+  --border-color: rgba(255, 255, 255, 0.42);
+  --box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.start-assessment-btn::part(native) {
+  backdrop-filter: blur(14px) saturate(145%);
+  -webkit-backdrop-filter: blur(14px) saturate(145%);
+}
+
+html[data-theme="light"] .start-assessment-btn {
+  --background: rgba(255, 255, 255, 0.82);
+  --background-hover: rgba(255, 255, 255, 0.92);
+  --color: #0f172a;
+  --border-color: rgba(15, 23, 42, 0.16);
+  --box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.75);
 }
 
 /* ── Hero subtitle/desc on video bg (keep light for readability) ── */
@@ -1076,6 +1102,21 @@ html[data-theme="light"] .rad-pg-num--active {
 html[data-theme="light"] .rad-driver-track,
 html[data-theme="light"] .rad-factor-bar-track {
   background: #e8edf3;
+}
+
+/* Risk summary dividers - stronger in light mode */
+html[data-theme="light"] .rad-summary-left {
+  border-right-color: #b9c5d3;
+}
+
+html[data-theme="light"] .rad-risk-stat-divider {
+  background: #b9c5d3;
+}
+
+@media (max-width: 1024px) {
+  html[data-theme="light"] .rad-summary-left {
+    border-bottom-color: #b9c5d3;
+  }
 }
 
 html[data-theme="light"] .rad-hc-detail {

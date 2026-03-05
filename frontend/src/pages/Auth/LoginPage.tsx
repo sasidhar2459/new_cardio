@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { IonPage, IonContent } from '@ionic/react';
+import { IonPage, IonContent, IonIcon } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
 import Navbar from '../../components/layout/Navbar';
+import { Icons } from '../../lib/icons';
 import './AuthPage.css';
 
 const LoginPage: React.FC = () => {
@@ -23,10 +24,7 @@ const LoginPage: React.FC = () => {
           <div className="auth-bg-grid" />
           <div className="auth-card">
 
-            <a className="auth-logo" href="/home">
-              <span className="auth-logo-mark">bypass</span>
-              <span className="auth-logo-suffix">Heart Health</span>
-            </a>
+          
 
             <div className="auth-header">
               <h1 className="auth-title">Welcome back</h1>
@@ -37,7 +35,7 @@ const LoginPage: React.FC = () => {
               <div className="auth-form-group">
                 <label className="auth-label">Phone Number</label>
                 <div className="auth-phone-row">
-                  <span className="auth-phone-prefix">🇮🇳 +91</span>
+                  <span className="auth-phone-prefix">IN +91</span>
                   <input className="auth-input auth-phone-input" type="tel"
                     placeholder="98765 43210" required
                     value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} />
@@ -51,8 +49,13 @@ const LoginPage: React.FC = () => {
                     type={showPass ? 'text' : 'password'}
                     placeholder="Enter your password" required
                     value={form.password} onChange={e => setForm({ ...form, password: e.target.value })} />
-                  <button type="button" className="auth-pass-toggle" onClick={() => setShowPass(!showPass)}>
-                    {showPass ? '🙈' : '👁️'}
+                  <button
+                    type="button"
+                    className="auth-pass-toggle"
+                    aria-label={showPass ? 'Hide password' : 'Show password'}
+                    onClick={() => setShowPass(!showPass)}
+                  >
+                    <IonIcon icon={showPass ? Icons.eyeOff : Icons.eye} />
                   </button>
                 </div>
                 <span className="auth-forgot">Forgot password?</span>
@@ -75,7 +78,7 @@ const LoginPage: React.FC = () => {
 
             <p className="auth-switch">
               Don't have an account?{' '}
-              <a onClick={() => history.push('/signup')}>Sign up free</a>
+              <button type="button" className="auth-switch-btn" onClick={() => history.push('/signup')}>Sign up free</button>
             </p>
 
           </div>

@@ -174,12 +174,7 @@ function RiskHero() {
                   <p className="ra-hero-card-sub">
                     Enter your data and get a personalised cardiovascular risk profile — broken down by key drivers.
                   </p>
-                  <div className="ra-hero-card-btns">
-                    <button className="ra-hero-scan-btn" onClick={() => window.location.href = '/risk-assessment/dashboard'}>
-                      <span className="ra-hsb-bg" />
-                      <IonIcon icon={Icons.analytics} className="ra-hsb-icon" />
-                      <span className="ra-hsb-label">Risk Dashboard</span>
-                    </button>
+                  <div className="ra-hero-card-btns ra-hero-card-btns--single">
                     <IonButton className="btn-white" shape="round" href="/risk-assessment/form">
                       Take Assessment
                     </IonButton>

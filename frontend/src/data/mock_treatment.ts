@@ -31,6 +31,12 @@ export interface MonitorDashboard {
   biomarkers: BiomarkerConfig[];
 }
 
+export interface MonitoringPoint {
+  title: string;
+  desc: string;
+  image: string;
+}
+
 // ── Monitor Dashboard — the whole panel mapped from one object ──────
 export const monitorDashboard: MonitorDashboard = {
   trendCharts: [
@@ -70,6 +76,54 @@ export const monitorDashboard: MonitorDashboard = {
     { id: 'bp', label: 'Blood Pressure', value: '118/76', unit: 'mmHg', status: 'optimal', change: -14, sparkline: [145, 138, 132, 128, 124, 118] },
   ],
 };
+
+export const monitoringPoints: MonitoringPoint[] = [
+  {
+    title: 'Cholesterol & ApoB',
+    desc: 'the most accurate marker of plaque formation',
+    image: 'https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=1300&q=80',
+  },
+  {
+    title: 'Inflammation (hs-CRP)',
+    desc: 'silent accelerant of heart disease',
+    image: 'https://images.unsplash.com/photo-1579165466741-7f35e4755660?auto=format&fit=crop&w=1300&q=80',
+  },
+  {
+    title: 'Blood Pressure & Glucose',
+    desc: 'everyday metrics that change outcomes',
+    image: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1300&q=80',
+  },
+  {
+    title: 'VO2 Max & Fitness',
+    desc: "your body's cardiovascular engine",
+    image: 'https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&w=1300&q=80',
+  },
+  {
+    title: 'Body Composition',
+    desc: 'real metabolic health, not just weight',
+    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1300&q=80',
+  },
+  {
+    title: 'Genetic Markers',
+    desc: 'your inherited risks',
+    image: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1300&q=80',
+  },
+  {
+    title: 'Calcium Score & Coronary CTA',
+    desc: 'a direct look at plaque',
+    image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1300&q=80',
+  },
+  {
+    title: 'Echocardiogram',
+    desc: 'heart structure and function',
+    image: 'https://images.unsplash.com/photo-1628771065518-0d82f1938462?auto=format&fit=crop&w=1300&q=80',
+  },
+  {
+    title: 'Wearables',
+    desc: 'sleep, steps, heart rate, HRV and more',
+    image: 'https://picsum.photos/seed/wearables-health-hrv/1600/900',
+  },
+];
 
 // ── Status → color map (used by the component) ─────────────────────
 export const statusColors: Record<BiomarkerStatus, string> = {

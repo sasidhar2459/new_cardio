@@ -202,6 +202,66 @@
 .mdd-history-row:hover { background: rgba(255,255,255,0.02); }
 .mdd-history-row span { font-size: 13px; color: rgba(255,255,255,0.65); }
 
+/* ── Light Theme: Metrics Dashboard Contrast ───────────────────── */
+html[data-theme="light"] .mdd-page {
+  background: #f5f7f6;
+  color: #0f172a;
+}
+
+html[data-theme="light"] .mdd-page-title,
+html[data-theme="light"] .mdd-metrics-title,
+html[data-theme="light"] .mdd-history-title,
+html[data-theme="light"] .mdd-metric-value {
+  color: #0f172a;
+}
+
+html[data-theme="light"] .mdd-back-btn {
+  color: #64748b;
+}
+
+html[data-theme="light"] .mdd-back-btn:hover {
+  color: #1e293b;
+}
+
+html[data-theme="light"] .mdd-metric-card,
+html[data-theme="light"] .mdd-history-table {
+  background: #ffffff;
+  border-color: #dbe4ee;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+}
+
+html[data-theme="light"] .mdd-metric-card:hover {
+  border-color: #c8d5e4;
+}
+
+html[data-theme="light"] .mdd-metric-label,
+html[data-theme="light"] .mdd-metric-unit,
+html[data-theme="light"] .mdd-metric-range,
+html[data-theme="light"] .mdd-metric-target {
+  color: #64748b;
+}
+
+html[data-theme="light"] .mdd-history-head {
+  background: #f8fafc;
+  border-bottom-color: #dde6f0;
+}
+
+html[data-theme="light"] .mdd-history-head span {
+  color: #64748b;
+}
+
+html[data-theme="light"] .mdd-history-row {
+  border-bottom-color: #edf2f7;
+}
+
+html[data-theme="light"] .mdd-history-row:hover {
+  background: #f8fafc;
+}
+
+html[data-theme="light"] .mdd-history-row span {
+  color: #334155;
+}
+
 /* ── Responsive ────────────────────────────────────────────────── */
 @media (max-width: 1024px) {
   .mdd-metrics-grid { grid-template-columns: repeat(3, 1fr); }

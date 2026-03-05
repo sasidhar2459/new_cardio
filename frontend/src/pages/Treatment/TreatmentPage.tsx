@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import { IonPage, IonContent, IonButton, IonIcon } from '@ionic/react';
 import {
   ResponsiveContainer, AreaChart, Area, XAxis, YAxis,
@@ -9,7 +10,7 @@ import Footer from '../../components/layout/Footer';
 import { Icons } from '../../lib/icons';
 import {
   riskLevels, treatmentPlans, outcomeStats, whyItWorks,
-  monitorDashboard, statusColors,
+  monitorDashboard, monitoringPoints, statusColors,
   type TrendChartConfig, type BiomarkerConfig,
 } from '../../data/mock_treatment';
 import { useReveal } from '../../hooks/useScrollReveal';
@@ -200,7 +201,7 @@ function VelocityTile({ trendCharts }: { trendCharts: TrendChartConfig[] }) {
   );
 }
 
-function TreatmentHero() {
+function TreatmentHero({ onTalkToProfessionals }: { onTalkToProfessionals: () => void }) {
   const imageUrl = 'https://images.unsplash.com/photo-1530026405186-ed1f139313f8?auto=format&fit=crop&w=1400&q=80';
 
   return (
@@ -210,13 +211,13 @@ function TreatmentHero() {
         <div className="tx-hero-grid">
           <div className="tx-hero-left">
             <p className="section-eyebrow">Treatment</p>
-            <h1 className="tx-hero-title">Your Heart.<br />Our <span className="tx-hero-accent">Protocol.</span></h1>
+              <h1 className="tx-hero-title">Your Heart<br />Our <span className="tx-hero-accent">Protocol.</span></h1>
             <p className="tx-hero-sub">
               A precision-driven, cardiologist-led program that identifies your true risk and builds a plan around you - not a generic template.
             </p>
             <div className="tx-hero-actions">
-              <IonButton className="btn-white" shape="round" href="/signup">Start Your Assessment</IonButton>
-              <IonButton className="btn-outline-white" shape="round" fill="outline" href="/contact">Talk to a Cardiologist</IonButton>
+              <IonButton className="btn-white start-assessment-btn" shape="round" href="/signup">Start Your Assessment</IonButton>
+              <IonButton className="btn-outline-white" shape="round" fill="outline" onClick={onTalkToProfessionals}>Talk to Professionals</IonButton>
             </div>
           </div>
           <div className="tx-hero-right">
@@ -345,6 +346,36 @@ function WhySection() {
 function MonitorSection() {
   const { ref, visible } = useReveal(0, 0.03);
   const { trendCharts, biomarkers } = monitorDashboard;
+  const [activeMonitorIndex, setActiveMonitorIndex] = useState(0);
+  const monitorLoopRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const loopEl = monitorLoopRef.current;
+    if (!loopEl) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion || window.innerWidth <= 768) {
+      return;
+    }
+
+    const tickMs = 1900;
+
+    const timer = window.setInterval(() => {
+      setActiveMonitorIndex((prev) => {
+        const next = (prev + 1) % monitoringPoints.length;
+        return next;
+      });
+    }, tickMs);
+
+    loopEl.style.setProperty('--tx-loop-play-state', 'running');
+
+    return () => {
+      window.clearInterval(timer);
+      loopEl.style.removeProperty('--tx-loop-play-state');
+    };
+  }, []);
+
+  const activePoint = monitoringPoints[activeMonitorIndex] ?? monitoringPoints[0];
 
   return (
     <section className="monitor-section">
@@ -354,6 +385,51 @@ function MonitorSection() {
         <p className="section-sub">
           Real patient data. Every enrolled member gets a live dashboard showing their biomarker trends over time.
         </p>
+
+        <div className="tx-monitor-layout">
+          <div className="tx-monitor-left">
+            <p className="tx-monitor-points-title">Things we are monitoring:</p>
+            <p className="tx-monitor-points-sub">Your dashboard updates continuously with real, measurable changes. We don't guess. We measure everything that truly affects your heart:</p>
+            <div className="tx-monitor-visual">
+              <img
+                src={activePoint.image}
+                alt={activePoint.title}
+                className="tx-monitor-visual-img"
+                loading="lazy"
+              />
+              <p className="tx-monitor-visual-caption">{activePoint.title}</p>
+            </div>
+          </div>
+          <div className="tx-monitor-right">
+            <div className="tx-monitor-loop-viewport">
+              <div className="tx-monitor-loop-track" ref={monitorLoopRef}>
+                {monitoringPoints.map((item, idx) => (
+                  <div
+                    key={`mon-a-${item.title}`}
+                    className={`tx-monitor-point-item ${activeMonitorIndex === idx ? 'is-active' : ''}`}
+                  >
+                    <span className="tx-monitor-point-dot" />
+                    <span>
+                      <strong>{item.title}</strong> - {item.desc}
+                    </span>
+                  </div>
+                ))}
+                {monitoringPoints.map((item, idx) => (
+                  <div
+                    key={`mon-b-${item.title}`}
+                    className={`tx-monitor-point-item ${activeMonitorIndex === idx ? 'is-active' : ''}`}
+                    aria-hidden="true"
+                  >
+                    <span className="tx-monitor-point-dot" />
+                    <span>
+                      <strong>{item.title}</strong> - {item.desc}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div ref={ref} className={`monitor-dash ${visible ? 'reveal-in' : 'reveal-hidden'}`}>
           <div className="monitor-grid">
@@ -380,13 +456,50 @@ function MonitorSection() {
 }
 
 const TreatmentPage: React.FC = () => {
+  const [showTalkPopup, setShowTalkPopup] = useState(false);
+  const popupTimerRef = useRef<number | null>(null);
+
+  const closeTalkPopup = () => {
+    setShowTalkPopup(false);
+    if (popupTimerRef.current !== null) {
+      window.clearTimeout(popupTimerRef.current);
+      popupTimerRef.current = null;
+    }
+  };
+
+  const openTalkPopup = () => {
+    setShowTalkPopup(true);
+    if (popupTimerRef.current !== null) {
+      window.clearTimeout(popupTimerRef.current);
+    }
+    popupTimerRef.current = window.setTimeout(() => {
+      setShowTalkPopup(false);
+      popupTimerRef.current = null;
+    }, 5000);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (popupTimerRef.current !== null) {
+        window.clearTimeout(popupTimerRef.current);
+      }
+    };
+  }, []);
+
   return (
     <IonPage>
       <IonContent fullscreen scrollY>
         <div className="treatment-page">
           <Navbar />
 
-          <TreatmentHero />
+          {showTalkPopup && (
+            <div className="tx-talk-popup" role="status" aria-live="polite">
+              <p className="tx-talk-popup-text">Our team will contact you shortly.</p>
+              <button type="button" className="tx-talk-popup-close" onClick={closeTalkPopup}>Close</button>
+            </div>
+          )}
+
+          <TreatmentHero onTalkToProfessionals={openTalkPopup} />
           <RiskSection />
           <PlansSection />
           <WhySection />

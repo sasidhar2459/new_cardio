@@ -24,13 +24,10 @@ function ContactModal({ onClose }: { onClose: () => void }) {
           <IonIcon icon={Icons.close} />
         </button>
 
-        <div className="col-modal-banner">
-          <div className="col-mb-circle col-mb-circle-1" />
-          <div className="col-mb-circle col-mb-circle-2" />
-          <svg className="col-mb-icon" viewBox="0 0 64 64" fill="none">
-            <path d="M32 56C32 56 8 40 8 24C8 15.16 15.16 8 24 8C28.48 8 32.56 9.92 35.52 13C38.48 9.92 42.56 8 48 8C56.84 8 64 15.16 64 24C64 40 32 56 32 56Z"
-              fill="rgba(160,230,160,0.12)" stroke="rgba(160,230,160,0.8)" strokeWidth="2" strokeLinejoin="round" />
-          </svg>
+        <div className="col-modal-head">
+          <p className="col-modal-kicker">Partnership Team</p>
+          <h2 className="col-modal-title">Request a Callback</h2>
+          <p className="col-modal-sub">Fill in your details and we will get in touch shortly.</p>
         </div>
 
         {submitted ? (
@@ -44,9 +41,6 @@ function ContactModal({ onClose }: { onClose: () => void }) {
           </div>
         ) : (
           <div className="col-modal-body">
-            <h2 className="col-modal-title">Request a Callback</h2>
-            <p className="col-modal-sub">Fill in your details and we'll get in touch shortly</p>
-
             <form className="col-modal-form" onSubmit={handleSubmit}>
               <div className="col-form-group">
                 <label className="col-form-label">Full Name <span className="col-required">*</span></label>
@@ -77,7 +71,7 @@ function ContactModal({ onClose }: { onClose: () => void }) {
 
               <div className="col-form-group">
                 <label className="col-form-label">Message</label>
-                <input className="col-form-input" type="text" placeholder="How can we help you?"
+                <textarea className="col-form-input col-form-textarea" placeholder="Tell us about your requirement"
                   value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} />
               </div>
 
@@ -229,36 +223,6 @@ function WhySection() {
   );
 }
 
-// ── Process steps ──────────────────────────────────────────────────
-const STEPS = [
-  { num: '01', title: 'Reach Out',          desc: 'Fill the contact form or call us. Tell us about your practice, hospital, or company.' },
-  { num: '02', title: 'Discovery Call',     desc: 'A 30-minute call with our partnerships team to understand your needs and suggest the right program.' },
-  { num: '03', title: 'Agreement & Setup',  desc: 'We sign a simple partnership agreement and set up your dedicated onboarding within days.' },
-  { num: '04', title: 'Go Live',            desc: 'Start referring patients or enrolling employees. Our team handles everything from day one.' },
-];
-
-function ProcessSection() {
-  const { ref, visible } = useReveal();
-  return (
-    <section className="col-process-section">
-      <div className="container">
-        <p className="section-eyebrow" style={{ textAlign: 'center' }}>How It Works</p>
-        <h2 className="section-heading" style={{ textAlign: 'center' }}>Getting Started Is Simple.</h2>
-        <div ref={ref} className={`col-process-steps ${visible ? 'reveal-in' : 'reveal-hidden'}`}>
-          {STEPS.map((s, i) => (
-            <div key={i} className="col-process-step">
-              <span className="col-step-num">{s.num}</span>
-              <div className="col-step-connector" />
-              <h4 className="col-step-title">{s.title}</h4>
-              <p className="col-step-desc">{s.desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 // ── CTA ────────────────────────────────────────────────────────────
 function ColCTA({ onContact }: { onContact: () => void }) {
   const { ref, visible } = useReveal();
@@ -289,7 +253,6 @@ const CollaboratePage: React.FC = () => {
           <Navbar />
 
           <ColHero onContact={() => setShowModal(true)} />
-          <ProcessSection />
           <ColCTA onContact={() => setShowModal(true)} />
           <Footer />
         </div>

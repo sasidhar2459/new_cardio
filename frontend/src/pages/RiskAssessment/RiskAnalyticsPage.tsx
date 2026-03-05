@@ -256,7 +256,7 @@ const RiskAnalyticsPage: React.FC = () => {
 
               {/* ── CTA ── */}
               <div className="rar-cta">
-                <IonButton className="btn-white" shape="round" href="/contact">Talk to a Cardiologist</IonButton>
+                <IonButton className="btn-white" shape="round" href="/contact">Talk to a Profesionals</IonButton>
                 <IonButton
                   className="btn-outline-white"
                   shape="round"

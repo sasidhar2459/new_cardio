@@ -273,6 +273,10 @@ html[data-theme="dark"] .ra-hero::before {
   margin-top: 4px;
 }
 
+.ra-hero-card-btns--single {
+  justify-content: center;
+}
+
 .btn-outline-dim {
   --background: transparent;
   --color: rgba(255,255,255,0.45);

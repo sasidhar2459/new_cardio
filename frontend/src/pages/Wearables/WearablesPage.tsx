@@ -34,7 +34,7 @@ function WearablesHero() {
               Heart disease doesn't develop in a clinic — it develops in your daily life.
               By integrating continuous wearable data, Bypass can see what lab snapshots miss.
             </p>
-            <IonButton className="btn-white" shape="round" href="/risk-assessment/form">
+            <IonButton className="btn-white start-assessment-btn" shape="round" href="/risk-assessment/form">
               Start Your Assessment
             </IonButton>
           </div>

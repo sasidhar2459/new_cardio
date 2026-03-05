@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { IonPage, IonContent } from '@ionic/react';
+import { IonPage, IonContent, IonIcon } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
 import Navbar from '../../components/layout/Navbar';
+import { Icons } from '../../lib/icons';
 import './AuthPage.css';
 
 // Step 1 — phone entry
@@ -16,7 +17,7 @@ function StepPhone({ phone, onChange, onSendOTP, loading }: {
       <div className="auth-form-group">
         <label className="auth-label">Phone Number</label>
         <div className="auth-phone-row">
-          <span className="auth-phone-prefix">🇮🇳 +91</span>
+          <span className="auth-phone-prefix">IN +91</span>
           <input className="auth-input auth-phone-input" type="tel"
             placeholder="98765 43210" required
             value={phone} onChange={e => onChange(e.target.value)} />
@@ -51,7 +52,7 @@ function StepVerify({ phone, form, onChange, onShowPass, showPass, onShowConfirm
       </div>
 
       <div className="auth-form-group">
-        <label className="auth-label">Your Name <span style={{ color: 'rgba(255,255,255,0.3)', fontWeight: 400 }}>(optional)</span></label>
+        <label className="auth-label">Your Name <span className="auth-label-optional">(optional)</span></label>
         <input className="auth-input" type="text" placeholder="e.g. Arjun Sharma"
           value={form.name} onChange={e => onChange('name', e.target.value)} />
       </div>
@@ -62,8 +63,8 @@ function StepVerify({ phone, form, onChange, onShowPass, showPass, onShowConfirm
           <input className="auth-input" style={{ borderRadius: 12 }}
             type={showPass ? 'text' : 'password'} placeholder="Create a strong password" required
             value={form.password} onChange={e => onChange('password', e.target.value)} />
-          <button type="button" className="auth-pass-toggle" onClick={onShowPass}>
-            {showPass ? '🙈' : '👁️'}
+          <button type="button" className="auth-pass-toggle" aria-label={showPass ? 'Hide password' : 'Show password'} onClick={onShowPass}>
+            <IonIcon icon={showPass ? Icons.eyeOff : Icons.eye} />
           </button>
         </div>
       </div>
@@ -74,8 +75,8 @@ function StepVerify({ phone, form, onChange, onShowPass, showPass, onShowConfirm
           <input className="auth-input" style={{ borderRadius: 12 }}
             type={showConfirm ? 'text' : 'password'} placeholder="Repeat your password" required
             value={form.confirm} onChange={e => onChange('confirm', e.target.value)} />
-          <button type="button" className="auth-pass-toggle" onClick={onShowConfirm}>
-            {showConfirm ? '🙈' : '👁️'}
+          <button type="button" className="auth-pass-toggle" aria-label={showConfirm ? 'Hide confirm password' : 'Show confirm password'} onClick={onShowConfirm}>
+            <IonIcon icon={showConfirm ? Icons.eyeOff : Icons.eye} />
           </button>
         </div>
       </div>
@@ -119,11 +120,7 @@ const SignupPage: React.FC = () => {
           <div className="auth-bg-grid" />
           <div className="auth-card">
 
-            <a className="auth-logo" href="/home">
-              <span className="auth-logo-mark">bypass</span>
-              <span className="auth-logo-suffix">Heart Health</span>
-            </a>
-
+   
             {/* step indicator */}
             <div className="auth-steps">
               <div className={`auth-step ${step >= 1 ? 'active' : ''}`}>
@@ -177,7 +174,7 @@ const SignupPage: React.FC = () => {
 
             <p className="auth-switch">
               Already have an account?{' '}
-              <a onClick={() => history.push('/login')}>Sign in</a>
+              <button type="button" className="auth-switch-btn" onClick={() => history.push('/login')}>Sign in</button>
             </p>
 
           </div>
