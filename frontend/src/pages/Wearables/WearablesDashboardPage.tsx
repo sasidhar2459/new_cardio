@@ -6,10 +6,11 @@ import Footer from '../../components/layout/Footer';
 import { mockDevices, dashboardMetrics } from '../../data/mock_wearables';
 import { Icons } from '../../lib/icons';
 import { useReveal } from '../../hooks/useScrollReveal';
+import { useTheme } from '../../hooks/useTheme';
 import './WearablesDashboard.css';
 
 // ── Full-width sparkline — stretches to card width ─────────────────
-function CardSparkline({ points, color }: { points: number[]; color: string }) {
+function CardSparkline({ points, color, isLight }: { points: number[]; color: string; isLight: boolean }) {
   const w = 300; const h = 72;
   const max = Math.max(...points); const min = Math.min(...points);
   const pad = 8;
@@ -17,18 +18,21 @@ function CardSparkline({ points, color }: { points: number[]; color: string }) {
   const ys = points.map(p => h - pad - ((p - min) / (max - min || 1)) * (h - pad * 2));
   const d = xs.map((x, i) => `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${ys[i].toFixed(1)}`).join(' ');
   const fill = `${d} L${(w - pad).toFixed(1)},${h} L${pad},${h} Z`;
-  const gid = `csg-${color.replace('#', '')}`;
+  const gid = `csg-${color.replace('#', '')}-${isLight ? 'light' : 'dark'}`;
+  const guideColor = isLight ? 'rgba(15,23,42,0.14)' : 'rgba(255,255,255,0.12)';
   return (
     <svg viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" style={{ width: '100%', height: '72px', display: 'block' }}>
       <defs>
         <linearGradient id={gid} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor={color} stopOpacity="0.25" />
+          <stop offset="0%" stopColor={color} stopOpacity={isLight ? '0.32' : '0.25'} />
           <stop offset="100%" stopColor={color} stopOpacity="0" />
         </linearGradient>
       </defs>
+      <line x1={pad} y1={h - 1} x2={w - pad} y2={h - 1} stroke={guideColor} strokeWidth="1" />
+      <line x1={pad} y1={Math.round(h * 0.55)} x2={w - pad} y2={Math.round(h * 0.55)} stroke={guideColor} strokeWidth="1" strokeDasharray="3 4" />
       <path d={fill} fill={`url(#${gid})`} />
-      <path d={d} fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx={xs[xs.length - 1]} cy={ys[ys.length - 1]} r="5" fill={color} />
+      <path d={d} fill="none" stroke={color} strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx={xs[xs.length - 1]} cy={ys[ys.length - 1]} r="5" fill={color} stroke={isLight ? '#ffffff' : '#0b0f0d'} strokeWidth="2" />
     </svg>
   );
 }
@@ -58,6 +62,12 @@ function DevicePanel() {
     return Icons.batteryDead;
   }
 
+  const stateLabel =
+    state === 'connected' ? 'Live Sync' :
+    state === 'scanning' ? 'Scanning' :
+    state === 'found' ? 'Devices Found' :
+    'Not Connected';
+
   return (
     <div className="wbd-device-panel">
       <div className="wbd-panel-header">
@@ -70,6 +80,7 @@ function DevicePanel() {
               : 'No device paired'}
           </p>
         </div>
+        <span className={`wbd-state-pill wbd-state-${state}`}>{stateLabel}</span>
         {state !== 'connected' && (
           <IonButton className="btn-green-sm" shape="round" size="small" onClick={startScan}
             disabled={state === 'scanning'}>
@@ -130,12 +141,38 @@ function DevicePanel() {
   );
 }
 
+function ReadinessCard() {
+  return (
+    <div className="wbd-readiness-card">
+      <p className="wbd-readiness-label">Daily Readiness</p>
+      <div className="wbd-readiness-row">
+        <div className="wbd-readiness-ring">
+          <span>82</span>
+        </div>
+        <div className="wbd-readiness-copy">
+          <p className="wbd-readiness-title">Good Recovery Window</p>
+          <p className="wbd-readiness-sub">Sleep, resting HR, and HRV suggest moderate training intensity today.</p>
+        </div>
+      </div>
+      <div className="wbd-readiness-tags">
+        <span>Sleep +7%</span>
+        <span>HRV Stable</span>
+        <span>Stress Low</span>
+      </div>
+    </div>
+  );
+}
+
 // ── Dashboard metrics grid ─────────────────────────────────────────
 const TIME_RANGES = ['Day', 'Week', 'Month', 'All'];
 
 function MetricsGrid() {
   const [timeRange, setTimeRange] = useState('Week');
   const { ref, visible } = useReveal();
+  const { theme } = useTheme();
+  const featuredMetric = dashboardMetrics[0];
+  const restMetrics = dashboardMetrics.slice(1);
+  const metricIcon = (iconName: string) => Icons[iconName as keyof typeof Icons] || Icons.analytics;
 
   return (
     <div ref={ref} className={`wbd-metrics-section ${visible ? 'reveal-in' : 'reveal-hidden'}`}>
@@ -150,13 +187,27 @@ function MetricsGrid() {
         </div>
       </div>
 
+      <div className="wbd-featured-card" style={{ '--accent': featuredMetric.color } as React.CSSProperties}>
+        <div className="wbd-featured-left">
+          <p className="wbd-featured-label">Featured Metric</p>
+          <h3 className="wbd-featured-title">{featuredMetric.label}</h3>
+          <div className="wbd-featured-value-row">
+            <span className="wbd-featured-value">{featuredMetric.value}</span>
+            {featuredMetric.unit && <span className="wbd-featured-unit">{featuredMetric.unit}</span>}
+          </div>
+          <p className="wbd-featured-desc">{timeRange} trend shows stable rhythm with mild variance in late evenings.</p>
+        </div>
+        <div className="wbd-featured-right">
+          <CardSparkline points={featuredMetric.trend} color={featuredMetric.color} isLight={theme === 'light'} />
+        </div>
+      </div>
+
       <div className="wbd-metrics-grid">
-        {dashboardMetrics.map(m => (
-          <div key={m.id} className="wbd-metric-card"
-            style={{ '--accent': m.color } as React.CSSProperties}>
+        {restMetrics.map(m => (
+          <div key={m.id} className="wbd-metric-card" style={{ '--accent': m.color } as React.CSSProperties}>
             <div className="wbd-metric-body">
               <div className="wbd-metric-header">
-                <span className="wbd-metric-dot" style={{ background: m.color }} />
+                <IonIcon icon={metricIcon(m.icon)} className="wbd-metric-icon" />
                 <span className="wbd-metric-label">{m.label}</span>
               </div>
               <div className="wbd-metric-value-row">
@@ -166,7 +217,7 @@ function MetricsGrid() {
               <p className="wbd-metric-range">{timeRange} avg</p>
             </div>
             <div className="wbd-metric-chart">
-              <CardSparkline points={m.trend} color={m.color} />
+              <CardSparkline points={m.trend} color={m.color} isLight={theme === 'light'} />
             </div>
           </div>
         ))}
@@ -184,7 +235,7 @@ const WearablesDashboardPage: React.FC = () => {
       <IonContent fullscreen scrollY>
         <div className="wbd-page">
           <Navbar />
-          <div className="hero-bg-grid hero-bg-grid--dark" />
+          <div className="hero-bg-grid" />
 
 
           <div className="wbd-main">
@@ -201,11 +252,31 @@ const WearablesDashboardPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* device panel */}
-              <DevicePanel />
+              <section className="wbd-command-deck">
+                <div className="wbd-command-copy">
+                  <p className="wbd-command-kicker">Watch Intelligence Layer</p>
+                  <h2 className="wbd-command-title">A live command center for your wearable signals.</h2>
+                  <p className="wbd-command-sub">Track rhythm, movement, recovery and adherence in one continuous flow.</p>
+                </div>
+                <div className="wbd-command-gauges">
+                  <div className="wbd-gauge-pill"><span>Sync Quality</span><strong>98%</strong></div>
+                  <div className="wbd-gauge-pill"><span>Wear Time</span><strong>21h</strong></div>
+                  <div className="wbd-gauge-pill"><span>Alerts</span><strong>2</strong></div>
+                </div>
+              </section>
 
-              {/* metrics grid */}
-              <MetricsGrid />
+              <div className="wbd-layout-grid">
+                <aside className="wbd-left-rail">
+                  {/* device panel */}
+                  <DevicePanel />
+                  <ReadinessCard />
+                </aside>
+
+                <section className="wbd-right-board">
+                  {/* metrics grid */}
+                  <MetricsGrid />
+                </section>
+              </div>
 
             </div>
           </div>

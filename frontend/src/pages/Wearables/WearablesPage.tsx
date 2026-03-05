@@ -8,9 +8,9 @@ import { useReveal } from '../../hooks/useScrollReveal';
 import './WearablesPage.css';
 
 const HERO_PILLS = [
-  { label: 'Heart Rate', value: '72 bpm', color: '#ef4444' },
-  { label: 'Steps',      value: '11,200', color: '#22c55e' },
-  { label: 'Sleep',      value: '7h 45m', color: '#a855f7' },
+  { label: 'Heart Rate', value: '72 bpm', color: '#d46a6a', icon: Icons.heart },
+  { label: 'Steps',      value: '11,200', color: '#3d9b76', icon: Icons.walk },
+  { label: 'Sleep',      value: '7h 45m', color: '#7f6ab8', icon: Icons.moon },
 ];
 
 // ── Hero ──────────────────────────────────────────────────────────────
@@ -29,7 +29,7 @@ function WearablesHero() {
         <div className="wb-hero-grid">
           <div className="wb-hero-left">
             <p className="section-eyebrow">Wearables</p>
-            <h1 className="wb-hero-title">Why Continuous<br />Data Matters.</h1>
+            <h1 className="wb-hero-title">Why Continuous<br />Data <span className="wb-hero-accent">Matters.</span></h1>
             <p className="wb-hero-sub">
               Heart disease doesn't develop in a clinic — it develops in your daily life.
               By integrating continuous wearable data, Bypass can see what lab snapshots miss.
@@ -85,15 +85,21 @@ function WearablesHero() {
               {cardState === 'connected' && (
                 <>
                   <div className="wb-hero-connected-row">
-                    <span className="wb-hero-connected-dot" />
-                    <span className="wb-hero-connected-text">Apple Watch Series 9 — Connected</span>
+                    <span className="wb-hero-connected-device">
+                      <IonIcon icon={Icons.watch} className="wb-hero-connected-icon" />
+                      <span>Apple Watch Series 9</span>
+                    </span>
+                    <span className="wb-hero-connected-state">
+                      <span className="wb-hero-connected-dot" />
+                      <span>Connected</span>
+                    </span>
                   </div>
                   <div className="wb-hero-pills">
                     {HERO_PILLS.map(m => (
-                      <div key={m.label} className="wb-hero-pill" style={{ borderColor: `${m.color}33` }}>
-                        <span className="wb-hero-pill-dot" style={{ background: m.color }} />
+                      <div key={m.label} className="wb-hero-pill" style={{ '--wb-pill-accent': m.color } as React.CSSProperties}>
+                        <IonIcon icon={m.icon} className="wb-hero-pill-icon" />
                         <span className="wb-hero-pill-label">{m.label}</span>
-                        <span className="wb-hero-pill-value" style={{ color: m.color }}>{m.value}</span>
+                        <span className="wb-hero-pill-value">{m.value}</span>
                       </div>
                     ))}
                   </div>
@@ -130,12 +136,20 @@ function WhySection() {
 
           {/* right — bullet list */}
           <div ref={ref} className={`wb-why-right ${visible ? 'reveal-in' : 'reveal-hidden'}`}>
-            {whyPoints.map((pt, i) => (
-              <div key={i} className="wb-why-item">
-                <span className="wb-why-num">0{i + 1}</span>
-                <span className="wb-why-text">{pt}</span>
+            <div className="wb-why-loop-viewport">
+              <div className="wb-why-loop-track">
+                {whyPoints.map((pt, i) => (
+                  <div key={`why-a-${i}`} className="wb-why-item">
+                    <span className="wb-why-text">{pt}</span>
+                  </div>
+                ))}
+                {whyPoints.map((pt, i) => (
+                  <div key={`why-b-${i}`} className="wb-why-item" aria-hidden="true">
+                    <span className="wb-why-text">{pt}</span>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
 
         </div>
@@ -146,7 +160,6 @@ function WhySection() {
 
 // ── Tracked Data Section ──────────────────────────────────────────────
 function TrackedSection() {
-  const { ref, visible } = useReveal();
   return (
     <section className="wb-tracked-section">
       <div className="container">
@@ -158,95 +171,46 @@ function TrackedSection() {
           Every data point builds a fuller picture of your cardiovascular health — not just a snapshot, but a continuous narrative.
         </p>
 
-        <div ref={ref} className={`wb-tracked-grid ${visible ? 'reveal-in' : 'reveal-hidden'}`}>
+        <div className="wb-tracked-stack">
           {trackedData.map((item, i) => (
-            <div key={i} className="wb-tracked-card">
-              <span className="wb-tracked-num">0{i + 1}</span>
-              <div className="wb-tracked-body">
-                <p className="wb-tracked-label">{item.label}</p>
-                <p className="wb-tracked-desc">{item.desc}</p>
-              </div>
-              <span className="wb-tracked-arrow">→</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// sparkline for showcase cards — white lines on dark bg
-function WbSparkline({ points }: { points: number[] }) {
-  const w = 200; const h = 80;
-  const max = Math.max(...points); const min = Math.min(...points);
-  const xs = points.map((_, i) => (i / (points.length - 1)) * w);
-  const ys = points.map(p => h - ((p - min) / (max - min || 1)) * h * 0.75 - h * 0.1);
-  const d = xs.map((x, i) => `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${ys[i].toFixed(1)}`).join(' ');
-  return (
-    <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} className="wb-sparkline">
-      {/* dashed verticals */}
-      {xs.map((x, i) => (
-        <line key={`v${i}`} x1={x} y1={ys[i]} x2={x} y2={h}
-          stroke="rgba(255,255,255,0.25)" strokeWidth="1" strokeDasharray="3,4" />
-      ))}
-      <path d={d} fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-      {xs.map((x, i) => (
-        <circle key={`c${i}`} cx={x} cy={ys[i]} r="3.5" fill="#fff" />
-      ))}
-    </svg>
-  );
-}
-
-// bg colors cycling per card
-const trackedBgs = ['#1a1a1a','#1e2a1e','#1a1820','#111418','#2a1f18','#151e18','#1a1624'];
-
-// ── Showcase Section ──────────────────────────────────────────────────
-function ShowcaseSection() {
-  // duplicate for infinite scroll
-  const all = [...trackedData, ...trackedData];
-  return (
-    <section className="wb-showcase-section">
-      <div className="container">
-        <p className="section-eyebrow" style={{ textAlign: 'center' }}>Ongoing Data We Track</p>
-        <h2 className="section-heading" style={{ textAlign: 'center' }}>Your Daily Health Becomes<br />Part of Your Story</h2>
-        <p className="wb-section-sub">
-          Every data point builds a fuller picture of your cardiovascular health — not just a snapshot, but a continuous narrative.
-        </p>
-      </div>
-
-      {/* full-bleed carousel */}
-      <div className="wb-carousel-outer">
-        <div className="wb-carousel-track">
-          {all.map((item, i) => (
             <div
               key={i}
-              className="wb-showcase-card"
-              style={{ background: trackedBgs[i % trackedBgs.length] }}
+              className="wb-tracked-stack-item"
+              style={{ zIndex: i + 1 }}
             >
-              {/* desc at top */}
-              <p className="wb-card-category">{item.desc}</p>
-
-              {/* big label as metric */}
-              <div className="wb-card-metric-row">
-                <span className="wb-card-metric" style={{ fontSize: '32px', letterSpacing: '-1px' }}>{item.label}</span>
-              </div>
-
-              {/* uppercase tag */}
-              <p className="wb-card-label">CONTINUOUS</p>
-
-              {/* sparkline */}
-              <div className="wb-card-chart">
-                <WbSparkline points={[60,55,50,44,38,32,25]} />
-              </div>
-
-              {/* dates */}
-              <div className="wb-card-dates">
-                {['Jan 20', 'Jun 29', 'Oct 03', 'Jan 03'].map((d, j) => (
-                  <span key={j}>{d}</span>
-                ))}
+              <div
+                className="wb-tracked-card"
+                style={{
+                  '--wb-tracked-bg': (item as any).bg || '#d7edf1',
+                  '--wb-tracked-top': (item as any).topLayer || '#d9d2f2',
+                  '--wb-tracked-accent': (item as any).accent || '#5b7cfa',
+                } as React.CSSProperties}
+              >
+                <div className="wb-tracked-media">
+                  <img src={(item as any).image} alt={item.label} loading="lazy" className="wb-tracked-image" />
+                </div>
+                <div className="wb-tracked-content">
+                  <span className="wb-tracked-tag">{(item as any).tag}</span>
+                  <span className="wb-tracked-num">0{i + 1}</span>
+                  <p className="wb-tracked-label">{item.label}</p>
+                  <p className="wb-tracked-headline">{(item as any).headline}</p>
+                  <p className="wb-tracked-desc">{item.desc}</p>
+                  <div className="wb-tracked-stats">
+                    <div className="wb-tracked-stat">
+                      <span className="wb-tracked-stat-value">{(item as any).statA}</span>
+                      <span className="wb-tracked-stat-label">{(item as any).statALabel}</span>
+                    </div>
+                    <div className="wb-tracked-stat">
+                      <span className="wb-tracked-stat-value">{(item as any).statB}</span>
+                      <span className="wb-tracked-stat-label">{(item as any).statBLabel}</span>
+                    </div>
+                  </div>
+                </div>
+                <span className="wb-tracked-arrow">→</span>
               </div>
             </div>
           ))}
+          <div className="wb-tracked-stack-tail" aria-hidden="true" />
         </div>
       </div>
     </section>
@@ -282,7 +246,6 @@ const WearablesPage: React.FC = () => (
         <WearablesHero />
         <WhySection />
         <TrackedSection />
-        <ShowcaseSection />
         <CTASection />
         <Footer />
       </div>

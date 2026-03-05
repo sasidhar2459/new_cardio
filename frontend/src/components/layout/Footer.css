@@ -69,11 +69,11 @@
 
 /* ── Link columns ── */
 .footer-col h4.footer-col-title {
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.9);
   margin: 0 0 20px;
 }
 
@@ -147,7 +147,7 @@ html[data-theme="light"] .footer-tagline {
 }
 
 html[data-theme="light"] .footer-col h4.footer-col-title {
-  color: rgba(15, 23, 42, 0.68);
+  color: #0f172a;
 }
 
 html[data-theme="light"] .footer-col ul li a {

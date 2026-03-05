@@ -1,0 +1,230 @@
+/* ── Assessment History Detail Page ────────────────────────────── */
+.ahd-page {
+  position: relative;
+  background: radial-gradient(1200px 680px at 12% -20%, rgba(34,163,101,0.06), rgba(10,15,13,0)) #0a0f0d;
+  min-height: 100vh;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  --ahd-surface: #101a14;
+  --ahd-border: #2a3a2f;
+  --ahd-text-1: #f5f7f6;
+  --ahd-text-2: #b8c5bb;
+  --ahd-text-3: #8c9a90;
+}
+
+.ahd-main { padding: 100px 0 100px; }
+
+.ahd-ring-track { stroke: rgba(255,255,255,0.12); }
+
+/* ── Header ─────────────────────────────────────────────────────── */
+.ahd-page-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.ahd-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #b8c5bb;
+  padding: 8px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.ahd-back-btn:hover { background: rgba(255,255,255,0.1); }
+.ahd-back-icon { font-size: 16px; }
+
+.ahd-page-title { font-size: 28px; font-weight: 700; color: var(--ahd-text-1); margin: 0; }
+.ahd-page-sub { font-size: 13px; color: var(--ahd-text-3); margin: 4px 0 0; }
+
+/* ── Two-col layout ─────────────────────────────────────────────── */
+.ahd-layout {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 24px;
+  align-items: stretch;
+}
+@media (max-width: 860px) {
+  .ahd-layout { grid-template-columns: 1fr; }
+}
+
+.ahd-card--full { margin-top: 16px; }
+
+/* ── Score col ──────────────────────────────────────────────────── */
+.ahd-score-col {
+  background: var(--ahd-surface);
+  border: 1px solid var(--ahd-border);
+  border-radius: 16px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+.ahd-risk-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.ahd-ring-wrap {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+.ahd-ring-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.ahd-ring-score { font-size: 30px; font-weight: 800; }
+.ahd-ring-label { font-size: 11px; color: var(--ahd-text-3); }
+
+.ahd-score-desc {
+  font-size: 12px;
+  color: var(--ahd-text-3);
+  text-align: center;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.ahd-factor-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+}
+.ahd-factor-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.ahd-fc-label { font-size: 9px; font-weight: 700; letter-spacing: 0.08em; color: var(--ahd-text-3); text-transform: uppercase; }
+.ahd-fc-value { font-size: 15px; font-weight: 700; color: var(--ahd-text-1); }
+.ahd-fc-desc { font-size: 10px; color: var(--ahd-text-3); }
+
+/* ── Info col ───────────────────────────────────────────────────── */
+.ahd-info-col { display: flex; flex-direction: column; gap: 16px; }
+
+
+.ahd-card {
+  background: var(--ahd-surface);
+  border: 1px solid var(--ahd-border);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.ahd-card-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.ahd-card-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.ahd-card-icon svg { width: 18px; height: 18px; }
+
+.ahd-card-title { font-size: 15px; font-weight: 700; color: var(--ahd-text-1); margin: 0; }
+.ahd-card-body { font-size: 13px; color: var(--ahd-text-2); line-height: 1.6; margin: 0 0 14px; }
+
+/* lifetime risk stats */
+.ahd-lifetime-stats {
+  display: flex;
+  gap: 0;
+  background: rgba(255,255,255,0.04);
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.07);
+}
+.ahd-ls-block {
+  flex: 1;
+  padding: 14px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.ahd-ls-divider { width: 1px; background: rgba(255,255,255,0.1); }
+.ahd-ls-label { font-size: 11px; color: var(--ahd-text-3); }
+.ahd-ls-value { font-size: 22px; font-weight: 800; color: var(--ahd-text-1); }
+
+/* treatment plan */
+.ahd-plan-title { font-size: 16px; font-weight: 700; margin: 0 0 6px; }
+.ahd-plan-items { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+.ahd-plan-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--ahd-text-2);
+}
+.ahd-plan-icon { font-size: 15px; flex-shrink: 0; }
+
+/* ── Evidence strip ─────────────────────────────────────────────── */
+.ahd-evidence-strip {
+  display: flex;
+  gap: 0;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+.ahd-ev-stat {
+  flex: 1;
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.ahd-ev-num {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--ahd-text-1);
+  letter-spacing: -0.02em;
+}
+.ahd-ev-label {
+  font-size: 11px;
+  color: var(--ahd-text-3);
+  line-height: 1.4;
+}
+.ahd-ev-divider {
+  width: 1px;
+  background: rgba(255,255,255,0.08);
+  flex-shrink: 0;
+}
+
+.ahd-evidence-note {
+  font-size: 11px;
+  color: var(--ahd-text-3);
+  margin: 12px 0 0;
+  line-height: 1.5;
+  font-style: italic;
+}

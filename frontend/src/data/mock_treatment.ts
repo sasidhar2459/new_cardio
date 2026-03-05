@@ -1,5 +1,84 @@
 // Treatment page mock data — swap to API in Phase 2
 
+// ── Types ───────────────────────────────────────────────────────────
+export type BiomarkerStatus = 'optimal' | 'borderline' | 'elevated';
+
+export interface TrendPoint {
+  month: string;
+  value: number;
+}
+
+export interface TrendChartConfig {
+  id: string;
+  label: string;
+  unit: string;
+  color: string;
+  data: TrendPoint[];
+}
+
+export interface BiomarkerConfig {
+  id: string;
+  label: string;
+  value: string;
+  unit: string;
+  status: BiomarkerStatus;
+  change: number;
+  sparkline: number[];
+}
+
+export interface MonitorDashboard {
+  trendCharts: TrendChartConfig[];
+  biomarkers: BiomarkerConfig[];
+}
+
+// ── Monitor Dashboard — the whole panel mapped from one object ──────
+export const monitorDashboard: MonitorDashboard = {
+  trendCharts: [
+    {
+      id: 'weight',
+      label: 'Body Weight',
+      unit: 'kg',
+      color: '#4ade80',
+      data: [
+        { month: 'Aug', value: 94 },
+        { month: 'Sep', value: 91.5 },
+        { month: 'Oct', value: 89 },
+        { month: 'Nov', value: 86.2 },
+        { month: 'Dec', value: 84 },
+        { month: 'Jan', value: 81.8 },
+      ],
+    },
+    {
+      id: 'homa',
+      label: 'HOMA-IR Index',
+      unit: '',
+      color: '#60a5fa',
+      data: [
+        { month: 'Aug', value: 4.8 },
+        { month: 'Sep', value: 4.2 },
+        { month: 'Oct', value: 3.6 },
+        { month: 'Nov', value: 2.9 },
+        { month: 'Dec', value: 2.4 },
+        { month: 'Jan', value: 1.9 },
+      ],
+    },
+  ],
+  biomarkers: [
+    { id: 'ldl', label: 'LDL Cholesterol', value: '98', unit: 'mg/dL', status: 'optimal', change: -24, sparkline: [148, 135, 122, 115, 108, 98] },
+    { id: 'hba1c', label: 'HbA1c', value: '5.4', unit: '%', status: 'optimal', change: -0.8, sparkline: [6.5, 6.1, 5.9, 5.7, 5.5, 5.4] },
+    { id: 'hscrp', label: 'hs-CRP', value: '1.2', unit: 'mg/L', status: 'borderline', change: -1.6, sparkline: [3.1, 2.6, 2.1, 1.9, 1.5, 1.2] },
+    { id: 'bp', label: 'Blood Pressure', value: '118/76', unit: 'mmHg', status: 'optimal', change: -14, sparkline: [145, 138, 132, 128, 124, 118] },
+  ],
+};
+
+// ── Status → color map (used by the component) ─────────────────────
+export const statusColors: Record<BiomarkerStatus, string> = {
+  optimal: '#22c55e',
+  borderline: '#f59e0b',
+  elevated: '#ef4444',
+};
+
+// ── Risk levels ─────────────────────────────────────────────────────
 export const riskLevels = [
   {
     id: 'low',
@@ -112,33 +191,4 @@ export const whyItWorks = [
   { title: 'Continuous Oversight', body: 'Wearables + regular lab reviews mean your cardiologist always has a live picture of your heart.' },
   { title: 'Evidence-Based Medicine', body: 'Every intervention follows the latest ACC/AHA guidelines reviewed by our clinical board.' },
   { title: 'Measurable Outcomes', body: 'We track and report your biomarker improvements so you can see progress, not just feel it.' },
-];
-
-// Weight trend — 6 months, kg
-export const weightChartData = [
-  { month: 'Aug', value: 94 },
-  { month: 'Sep', value: 91.5 },
-  { month: 'Oct', value: 89 },
-  { month: 'Nov', value: 86.2 },
-  { month: 'Dec', value: 84 },
-  { month: 'Jan', value: 81.8 },
-];
-
-// HOMA-IR (insulin resistance index) — lower is better
-export const homaChartData = [
-  { month: 'Aug', value: 4.8 },
-  { month: 'Sep', value: 4.2 },
-  { month: 'Oct', value: 3.6 },
-  { month: 'Nov', value: 2.9 },
-  { month: 'Dec', value: 2.4 },
-  { month: 'Jan', value: 1.9 },
-];
-
-export type BiomarkerStatus = 'optimal' | 'borderline' | 'elevated';
-
-export const biomarkers = [
-  { label: 'LDL Cholesterol', value: '98', unit: 'mg/dL', status: 'optimal' as BiomarkerStatus, change: -24, sparkline: [148, 135, 122, 115, 108, 98] },
-  { label: 'HbA1c', value: '5.4', unit: '%', status: 'optimal' as BiomarkerStatus, change: -0.8, sparkline: [6.5, 6.1, 5.9, 5.7, 5.5, 5.4] },
-  { label: 'hs-CRP', value: '1.2', unit: 'mg/L', status: 'borderline' as BiomarkerStatus, change: -1.6, sparkline: [3.1, 2.6, 2.1, 1.9, 1.5, 1.2] },
-  { label: 'Blood Pressure', value: '118/76', unit: 'mmHg', status: 'optimal' as BiomarkerStatus, change: -14, sparkline: [145, 138, 132, 128, 124, 118] },
 ];

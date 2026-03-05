@@ -8,7 +8,7 @@ import AboutPage from './pages/About/AboutPage';
 import TreatmentPage from './pages/Treatment/TreatmentPage';
 import RiskAssessmentPage from './pages/RiskAssessment/RiskAssessmentPage';
 import RiskAssessmentFormPage from './pages/RiskAssessment/RiskAssessmentFormPage';
-import RiskAnalyticsPage from './pages/RiskAssessment/RiskAnalyticsPage';
+import AssessmentHistoryDetailPage from './pages/RiskAssessment/AssessmentHistoryDetailPage';
 import MetricsPage from './pages/Metrics/MetricsPage';
 import WearablesPage from './pages/Wearables/WearablesPage';
 import WearablesDashboardPage from './pages/Wearables/WearablesDashboardPage';
@@ -54,8 +54,8 @@ const App: React.FC = () => (
         <Route exact path="/risk-assessment/form">
           <RiskAssessmentFormPage />
         </Route>
-        <Route exact path="/risk-assessment/results">
-          <RiskAnalyticsPage />
+        <Route exact path="/risk-assessment/dashboard/:id/history">
+          <AssessmentHistoryDetailPage />
         </Route>
         <Route exact path="/metrics">
           <MetricsPage />

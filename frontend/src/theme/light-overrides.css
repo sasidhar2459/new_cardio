@@ -3,6 +3,29 @@
    clean on a white background without editing every single CSS file. */
 
 /* ── Page-level backgrounds ──────────────────────────────────────── */
+/* ring track — visible on white background */
+html[data-theme="light"] .rad-page {
+  --rad-ring-track: rgba(0, 0, 0, 0.12);
+}
+
+/* ── Recharts tooltip — light theme styling */
+html[data-theme="light"] .recharts-tooltip-wrapper {
+  outline: none !important;
+}
+
+html[data-theme="light"] .recharts-default-tooltip {
+  background: #ffffff !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 6px !important;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08) !important;
+}
+
+html[data-theme="light"] .recharts-tooltip-label,
+html[data-theme="light"] .recharts-tooltip-item {
+  color: #334155 !important;
+  font-size: 12px !important;
+}
+
 html[data-theme="light"] .landing,
 html[data-theme="light"] .about-page,
 html[data-theme="light"] .treatment-page,
@@ -15,12 +38,18 @@ html[data-theme="light"] .mdd-page,
 html[data-theme="light"] .wb-page,
 html[data-theme="light"] .wbd-page,
 html[data-theme="light"] .col-page,
-html[data-theme="light"] .auth-page {
-  background: #f7f7f7;
+html[data-theme="light"] .auth-page,
+html[data-theme="light"] .ahd-page {
+  /* mint-grid background — matches "Partner With Bypass" light theme look */
+  background-color: #eef5ee;
+  background-image:
+    linear-gradient(rgba(22, 163, 74, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(22, 163, 74, 0.08) 1px, transparent 1px);
+  background-size: 40px 40px;
   color: #1a1a1a;
 }
 
-/* ── Sections with dark backgrounds ──────────────────────────────── */
+/* ── Sections — transparent so page-level mint grid shows through ─── */
 /* Landing */
 html[data-theme="light"] .hero,
 html[data-theme="light"] .preventive-insights,
@@ -73,8 +102,10 @@ html[data-theme="light"] .wb-dashboard-section,
 html[data-theme="light"] .col-tracks-section,
 html[data-theme="light"] .col-why-section,
 html[data-theme="light"] .col-process-section,
-html[data-theme="light"] .col-cta-section {
-  background: #f7f7f7;
+html[data-theme="light"] .col-cta-section,
+/* Assessment History Detail */
+html[data-theme="light"] .ahd-main {
+  background: transparent;
 }
 
 /* ── Cards ───────────────────────────────────────────────────────── */
@@ -140,11 +171,50 @@ html[data-theme="light"] .wb-hero-connect-card,
 html[data-theme="light"] .wb-cta-card,
 html[data-theme="light"] .wb-device-card,
 html[data-theme="light"] .wbd-device-panel,
-html[data-theme="light"] .wbd-metric-card {
+html[data-theme="light"] .wbd-metric-card,
+/* Assessment History Detail */
+html[data-theme="light"] .ahd-card,
+html[data-theme="light"] .ahd-score-col,
+html[data-theme="light"] .ahd-factor-card,
+html[data-theme="light"] .ahd-lifetime-stats,
+html[data-theme="light"] .ahd-back-btn,
+html[data-theme="light"] .raf-page-back-btn {
   background: #ffffff;
   border-color: #e0e0e0;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
 }
+
+html[data-theme="light"] .ahd-page {
+  --ahd-surface: #ffffff;
+  --ahd-border: #e0e0e0;
+  --ahd-text-1: #1a1a1a;
+  --ahd-text-2: #444444;
+  --ahd-text-3: #777777;
+  --ahd-ring-track: rgba(0, 0, 0, 0.12);
+}
+
+html[data-theme="light"] .ahd-ring-track {
+  stroke: rgba(0, 0, 0, 0.12);
+}
+
+html[data-theme="light"] .ahd-page-title { color: #1a1a1a; }
+html[data-theme="light"] .ahd-page-sub,
+html[data-theme="light"] .ahd-score-desc,
+html[data-theme="light"] .ahd-fc-desc,
+html[data-theme="light"] .ahd-card-body,
+html[data-theme="light"] .ahd-ls-label,
+html[data-theme="light"] .ahd-plan-item { color: #555555; }
+html[data-theme="light"] .ahd-fc-value,
+html[data-theme="light"] .ahd-ls-value,
+html[data-theme="light"] .ahd-card-title { color: #1a1a1a; }
+html[data-theme="light"] .ahd-fc-label { color: #888888; }
+html[data-theme="light"] .ahd-back-btn { color: #444444; }
+html[data-theme="light"] .ahd-ls-divider { background: #e0e0e0; }
+html[data-theme="light"] .ahd-evidence-strip { background: #f4f4f4; border-color: #e0e0e0; }
+html[data-theme="light"] .ahd-ev-divider { background: #e0e0e0; }
+html[data-theme="light"] .ahd-ev-num { color: #1a1a1a; }
+html[data-theme="light"] .ahd-ev-label,
+html[data-theme="light"] .ahd-evidence-note { color: #777777; }
 
 /* ── Text color fixes ────────────────────────────────────────────── */
 html[data-theme="light"] h1,
@@ -425,8 +495,9 @@ html[data-theme="light"] .who-image-inner {
 
 /* ── Mission gradient ────────────────────────────────────────────── */
 html[data-theme="light"] .mission-section {
-  background: linear-gradient(135deg, #f0f5f1 0%, #e8f0ea 50%, #f0f5f1 100%);
-  border-top-color: #e0e8e2;
+  /* slight tint over the page grid */
+  background: rgba(209, 238, 209, 0.25);
+  border-top-color: #c8e0c8;
 }
 
 html[data-theme="light"] .mission-text {
@@ -517,22 +588,22 @@ html[data-theme="light"],
 
 /* ── IonContent backdrop ─────────────────────────────────────────── */
 html[data-theme="light"] ion-content {
-  --background: #f7f7f7;
+  --background: #eef5ee;
 }
 
 html[data-theme="light"] ion-page {
-  --background: #f7f7f7;
-  background: #f7f7f7;
+  --background: #eef5ee;
+  background: #eef5ee;
 }
 
 /* ── Ionic overrides ─────────────────────────────────────────────── */
 html[data-theme="light"] .ion-page {
-  background: #f7f7f7;
+  background: #eef5ee;
 }
 
 /* ── Scrollbar styling ───────────────────────────────────────────── */
 html[data-theme="light"] ::-webkit-scrollbar-track {
-  background: #f0f0f0;
+  background: #e4efe4;
 }
 
 html[data-theme="light"] ::-webkit-scrollbar-thumb {
@@ -775,6 +846,7 @@ html[data-theme="light"] .raf-heading {
 html[data-theme="light"] .mdd-back-btn,
 html[data-theme="light"] .wbd-back-btn,
 html[data-theme="light"] .rad-back-btn,
+html[data-theme="light"] .raf-page-back-btn,
 html[data-theme="light"] .raf-back-btn,
 html[data-theme="light"] .rar-back-btn {
   color: #555;
@@ -783,9 +855,14 @@ html[data-theme="light"] .rar-back-btn {
 html[data-theme="light"] .mdd-back-btn:hover,
 html[data-theme="light"] .wbd-back-btn:hover,
 html[data-theme="light"] .rad-back-btn:hover,
+html[data-theme="light"] .raf-page-back-btn:hover,
 html[data-theme="light"] .raf-back-btn:hover,
 html[data-theme="light"] .rar-back-btn:hover {
   color: #1a1a1a;
+}
+
+html[data-theme="light"] .raf-page-back-btn:hover {
+  background: #f5f5f5;
 }
 
 /* ── Dashboard specifics ─────────────────────────────────────────── */
@@ -828,16 +905,211 @@ html[data-theme="light"] .col-process-step::before {
 
 /* ── RA form step dots ───────────────────────────────────────────── */
 html[data-theme="light"] .raf-step-dot {
-  background: #d0d0d0;
+  background: transparent;
 }
 
-html[data-theme="light"] .raf-step-dot.raf-step-active {
-  background: #16a34a;
+/* ── Risk Assessment page contrast fixes (light theme) ─────────── */
+html[data-theme="light"] .ra-hero-card-title,
+html[data-theme="light"] .ra-score-label,
+html[data-theme="light"] .ra-marker-title,
+html[data-theme="light"] .ra-cta-title,
+html[data-theme="light"] .ra-factor-name {
+  color: #0f172a;
 }
 
-html[data-theme="light"] .raf-step-dot.raf-step-done {
-  background: #16a34a;
+html[data-theme="light"] .ra-hero-card-sub,
+html[data-theme="light"] .ra-hero-ready-text,
+html[data-theme="light"] .ra-hero-scanning-label,
+html[data-theme="light"] .ra-score-desc,
+html[data-theme="light"] .ra-score-bar-label,
+html[data-theme="light"] .ra-why-body,
+html[data-theme="light"] .ra-marker-desc,
+html[data-theme="light"] .ra-cta-sub {
+  color: #64748b;
 }
+
+html[data-theme="light"] .ra-score-badge--last {
+  color: #475569;
+  border-color: #cbd5e1;
+  background: #f8fafc;
+}
+
+html[data-theme="light"] .ra-factors-eyebrow,
+html[data-theme="light"] .ra-marker-num {
+  color: #16a34a;
+}
+
+html[data-theme="light"] .ra-factor-bar-track {
+  background: #e2e8f0;
+}
+
+html[data-theme="light"] .ra-factors-chart-shell {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+}
+
+html[data-theme="light"] .ra-factor-chip {
+  color: #475569;
+  border-color: #cbd5e1;
+  background: #ffffff;
+}
+
+html[data-theme="light"] .ra-chart-tooltip {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.1);
+}
+
+html[data-theme="light"] .ra-chart-tooltip-label { color: #64748b; }
+html[data-theme="light"] .ra-chart-tooltip-value { color: #0f172a; }
+
+html[data-theme="light"] .ra-hero-flip-hint {
+  background: rgba(15, 23, 42, 0.7);
+  border-color: rgba(255,255,255,0.42);
+  color: #ffffff;
+}
+
+/* ── Risk Dashboard polish (light mode) ────────────────────────── */
+html[data-theme="light"] .rad-page {
+  background: radial-gradient(900px 500px at 8% -18%, rgba(148, 163, 184, 0.18), rgba(248, 250, 252, 0)) #f3f5f7;
+}
+
+html[data-theme="light"] .rad-main {
+  color: #0f172a;
+}
+
+html[data-theme="light"] .rad-page .navbar-inner:not(.scrolled) .logo-mark { color: #0f172a; }
+html[data-theme="light"] .rad-page .navbar-inner:not(.scrolled) .logo-suffix { color: rgba(15,23,42,0.5); }
+html[data-theme="light"] .rad-page .navbar-inner:not(.scrolled) .navbar-links a { color: #1f2937; }
+html[data-theme="light"] .rad-page .navbar-inner:not(.scrolled) .nav-login-btn {
+  color: #0f172a;
+  background: rgba(15,23,42,0.07);
+  border-color: rgba(15,23,42,0.2);
+}
+html[data-theme="light"] .rad-page .navbar-inner:not(.scrolled) .theme-toggle {
+  color: #0f172a;
+  background: rgba(15,23,42,0.07);
+  border-color: rgba(15,23,42,0.2);
+}
+
+html[data-theme="light"] .rad-summary-panel,
+html[data-theme="light"] .rad-vital-card,
+html[data-theme="light"] .rad-overview-card,
+html[data-theme="light"] .rad-history-card,
+html[data-theme="light"] .rad-hcd-score-col,
+html[data-theme="light"] .rad-hcd-lifetime-card,
+html[data-theme="light"] .rad-hcd-plan-card,
+html[data-theme="light"] .rad-hcd-why-card,
+html[data-theme="light"] .rad-hcd-factor-card,
+html[data-theme="light"] .rad-pg-btn,
+html[data-theme="light"] .rad-pg-num {
+  background: #ffffff;
+  border-color: #dde3ea;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+}
+
+html[data-theme="light"] .rad-page-title,
+html[data-theme="light"] .rad-vital-value,
+html[data-theme="light"] .rad-hc-stat-value,
+html[data-theme="light"] .rad-ov-big-num,
+html[data-theme="light"] .rad-hcd-card-title {
+  color: #0f172a;
+}
+
+html[data-theme="light"] .rad-vitals-title,
+html[data-theme="light"] .rad-history-title,
+html[data-theme="light"] .rad-hc-date,
+html[data-theme="light"] .rad-ov-stat-count,
+html[data-theme="light"] .rad-hcd-plan-item,
+html[data-theme="light"] .rad-hcd-ls-value {
+  color: #334155;
+}
+
+html[data-theme="light"] .rad-summary-eyebrow,
+html[data-theme="light"] .rad-driver-name,
+html[data-theme="light"] .rad-driver-pct,
+html[data-theme="light"] .rad-rs-label,
+html[data-theme="light"] .rad-vital-label,
+html[data-theme="light"] .rad-vital-normal,
+html[data-theme="light"] .rad-vital-range,
+html[data-theme="light"] .rad-ov-label,
+html[data-theme="light"] .rad-ov-score-label,
+html[data-theme="light"] .rad-ov-bar-label,
+html[data-theme="light"] .rad-ov-stat-name,
+html[data-theme="light"] .rad-hc-stat-label,
+html[data-theme="light"] .rad-mini-ring-max,
+html[data-theme="light"] .rad-hcd-score-desc,
+html[data-theme="light"] .rad-hcd-plan-desc,
+html[data-theme="light"] .rad-hcd-why-desc,
+html[data-theme="light"] .rad-hcd-ls-label,
+html[data-theme="light"] .rad-hcd-fc-label,
+html[data-theme="light"] .rad-hcd-fc-desc,
+html[data-theme="light"] .rad-pg-info,
+html[data-theme="light"] .rad-back-btn {
+  color: #64748b;
+}
+
+/* Plan item icons — neutral slate for both themes */
+html[data-theme="light"] .rad-hcd-plan-check,
+html[data-theme="dark"] .rad-hcd-plan-check {
+  color: #636f85 !important;
+}
+
+html[data-theme="light"] .rad-filter-chip {
+  background: #ffffff;
+  border-color: #d7dee7;
+  color: #64748b;
+}
+
+html[data-theme="light"] .rad-filter-chip:hover {
+  color: #334155;
+  border-color: #bac6d5;
+}
+
+html[data-theme="light"] .rad-filter-chip--active,
+html[data-theme="light"] .rad-pg-num--active {
+  color: #15803d;
+  border-color: rgba(22,163,74,0.38);
+  background: rgba(22,163,74,0.1);
+}
+
+html[data-theme="light"] .rad-driver-track,
+html[data-theme="light"] .rad-factor-bar-track {
+  background: #e8edf3;
+}
+
+html[data-theme="light"] .rad-hc-detail {
+  background: #f8fafc;
+  border-top-color: #dce4ee;
+}
+
+html[data-theme="light"] .ra-story-step,
+html[data-theme="light"] .ra-story-panel,
+html[data-theme="light"] .ra-story-trend {
+  background: #ffffff;
+  border-color: #e2e8f0;
+}
+
+html[data-theme="light"] .ra-story-step-title,
+html[data-theme="light"] .ra-story-title,
+html[data-theme="light"] .ra-story-impact-row strong {
+  color: #0f172a;
+}
+
+html[data-theme="light"] .ra-story-step-desc,
+html[data-theme="light"] .ra-story-main,
+html[data-theme="light"] .ra-story-action {
+  color: #64748b;
+}
+
+html[data-theme="light"] .ra-story-impact-row span {
+  color: #94a3b8;
+}
+
+html[data-theme="light"] .ra-story-impact-track {
+  background: #e2e8f0;
+}
+
 
 html[data-theme="light"] .raf-progress-fill {
   background: #16a34a;
@@ -985,4 +1257,596 @@ html[data-theme="light"] .wb-hero {
     -webkit-backdrop-filter: none;
     background: var(--liquid-glass-bg-strong);
   }
+}
+
+/* ── Final White Theme: Risk Dashboard ─────────────────────────── */
+html[data-theme="light"] .rad-page {
+  background: radial-gradient(1100px 620px at 8% -18%, rgba(30, 64, 175, 0.07), rgba(241, 245, 249, 0)) #f4f6f9;
+  color: #0f172a;
+  --rad-surface: #ffffff;
+  --rad-surface-soft: #f8fafc;
+  --rad-border: #dce3ec;
+  --rad-border-strong: #c7d2e2;
+  --rad-text-1: #0f172a;
+  --rad-text-2: #334155;
+  --rad-text-3: #64748b;
+  --rad-accent: #16a34a;
+}
+
+html[data-theme="light"] .rad-page .hero-bg-grid {
+  background-image:
+    linear-gradient(rgba(15,23,42,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15,23,42,0.04) 1px, transparent 1px);
+}
+
+html[data-theme="light"] .rad-page .navbar-inner:not(.scrolled) .logo-mark { color: #0f172a; }
+html[data-theme="light"] .rad-page .navbar-inner:not(.scrolled) .logo-suffix { color: rgba(15,23,42,0.5); }
+html[data-theme="light"] .rad-page .navbar-inner:not(.scrolled) .navbar-links a { color: #1f2937; }
+html[data-theme="light"] .rad-page .navbar-inner:not(.scrolled) .nav-login-btn {
+  color: #0f172a;
+  background: rgba(15,23,42,0.07);
+  border-color: rgba(15,23,42,0.2);
+}
+html[data-theme="light"] .rad-page .navbar-inner:not(.scrolled) .theme-toggle {
+  color: #0f172a;
+  background: rgba(15,23,42,0.07);
+  border-color: rgba(15,23,42,0.2);
+}
+
+html[data-theme="light"] .rad-page-title,
+html[data-theme="light"] .rad-vital-value,
+html[data-theme="light"] .rad-hc-stat-value,
+html[data-theme="light"] .rad-ov-big-num,
+html[data-theme="light"] .rad-hcd-card-title,
+html[data-theme="light"] .rad-mini-ring-score {
+  color: #0f172a;
+}
+
+html[data-theme="light"] .rad-back-btn,
+html[data-theme="light"] .rad-summary-eyebrow,
+html[data-theme="light"] .rad-driver-name,
+html[data-theme="light"] .rad-driver-pct,
+html[data-theme="light"] .rad-rs-label,
+html[data-theme="light"] .rad-vital-label,
+html[data-theme="light"] .rad-vital-normal,
+html[data-theme="light"] .rad-vital-range,
+html[data-theme="light"] .rad-ov-label,
+html[data-theme="light"] .rad-ov-score-label,
+html[data-theme="light"] .rad-ov-bar-label,
+html[data-theme="light"] .rad-ov-stat-name,
+html[data-theme="light"] .rad-hc-stat-label,
+html[data-theme="light"] .rad-hcd-score-desc,
+html[data-theme="light"] .rad-hcd-plan-desc,
+html[data-theme="light"] .rad-hcd-why-desc,
+html[data-theme="light"] .rad-hcd-ls-label,
+html[data-theme="light"] .rad-hcd-fc-label,
+html[data-theme="light"] .rad-hcd-fc-desc,
+html[data-theme="light"] .rad-pg-info {
+  color: #64748b;
+}
+
+html[data-theme="light"] .rad-back-btn {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  color: #444444;
+}
+
+html[data-theme="light"] .rad-back-btn:hover {
+  background: #f7f7f7;
+  color: #444444;
+}
+
+html[data-theme="light"] .rad-back-btn-icon {
+  background: transparent;
+  border: none;
+  color: inherit;
+}
+
+html[data-theme="light"] .rad-summary-panel,
+html[data-theme="light"] .rad-vital-card,
+html[data-theme="light"] .rad-overview-card,
+html[data-theme="light"] .rad-history-card,
+html[data-theme="light"] .rad-hcd-score-col,
+html[data-theme="light"] .rad-hcd-lifetime-card,
+html[data-theme="light"] .rad-hcd-plan-card,
+html[data-theme="light"] .rad-hcd-why-card,
+html[data-theme="light"] .rad-hcd-factor-card,
+html[data-theme="light"] .rad-pg-btn,
+html[data-theme="light"] .rad-pg-num {
+  background: #ffffff;
+  border-color: #dce3ec;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+}
+
+html[data-theme="light"] .rad-history-card:hover {
+  background: #f8fafc;
+}
+
+html[data-theme="light"] .rad-hc-detail {
+  background: #f8fafc;
+  border-top-color: #dce3ec;
+}
+
+html[data-theme="light"] .rad-driver-track,
+html[data-theme="light"] .rad-risk-stat-divider,
+html[data-theme="light"] .rad-vital-normal,
+html[data-theme="light"] .rad-vital-range {
+  border-color: #e5eaf1;
+}
+
+html[data-theme="light"] .rad-driver-track,
+html[data-theme="light"] .rad-factor-bar-track,
+html[data-theme="light"] .rad-score-bar-track,
+html[data-theme="light"] .rad-vital-card::before {
+  background: #e8edf3;
+}
+
+html[data-theme="light"] .rad-page .wb-time-tabs {
+  background: #eef2f7;
+  border-color: #d6deea;
+}
+
+html[data-theme="light"] .rad-page .wb-time-tab {
+  color: #334155;
+  border-color: #c6d0dd;
+  background: #ffffff;
+}
+
+html[data-theme="light"] .rad-page .wb-time-tab:hover {
+  color: #166534;
+  border-color: #86c897;
+}
+
+html[data-theme="light"] .rad-page .wb-time-tab-active {
+  background: #16a34a;
+  border-color: #16a34a;
+  color: #ffffff;
+}
+
+html[data-theme="light"] .rad-filter-chip {
+  background: #ffffff;
+  border-color: #d7dee8;
+  color: #64748b;
+}
+
+html[data-theme="light"] .rad-filter-chip:hover {
+  color: #334155;
+  border-color: #bfc9d7;
+}
+
+html[data-theme="light"] .rad-filter-chip--active,
+html[data-theme="light"] .rad-pg-num--active {
+  color: #166534;
+  border-color: rgba(22,163,74,0.38);
+  background: rgba(22,163,74,0.12);
+}
+
+html[data-theme="light"] .rad-retake-btn {
+  --background: #0f766e;
+  --background-hover: #115e59;
+  --color: #ffffff;
+  --border-color: rgba(15, 118, 110, 0.34);
+  --box-shadow: 0 8px 20px rgba(15, 118, 110, 0.2);
+}
+
+html[data-theme="light"] .rad-pg-btn,
+html[data-theme="light"] .rad-pg-num {
+  color: #334155;
+  border-color: #cfd8e3;
+  background: #ffffff;
+}
+
+html[data-theme="light"] .rad-pg-btn:hover:not(:disabled),
+html[data-theme="light"] .rad-pg-num:hover {
+  color: #166534;
+  border-color: #86c897;
+  background: #f8fffa;
+}
+
+html[data-theme="light"] .rad-pg-info {
+  color: #64748b;
+}
+
+/* ── Risk Assessment Form Page (RAF) — comprehensive light theme ──── */
+
+/* Page & Shell */
+html[data-theme="light"] .raf-shell {
+  background: #f7f7f7;
+  color: #1a1a1a;
+}
+
+html[data-theme="light"] .raf-page {
+  background: #f7f7f7;
+  color: #1a1a1a;
+}
+
+html[data-theme="light"] .raf-page .hero-bg-grid {
+  background-image:
+    linear-gradient(rgba(15,23,42,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15,23,42,0.02) 1px, transparent 1px);
+}
+
+/* Step Progress Bar */
+html[data-theme="light"] .raf-steps-row::before {
+  background: #cbd5e1;
+}
+
+html[data-theme="light"] .raf-steps-row::after {
+  background: #16a34a;
+}
+
+html[data-theme="light"] .raf-steps-row {
+  gap: 12px;
+}
+
+html[data-theme="light"] .raf-step-dot {
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+html[data-theme="light"] .raf-toggle-grid {
+  gap: 12px;
+}
+
+html[data-theme="light"] .raf-toggle-row {
+  border: 1px solid #e5e7eb;
+  border-bottom-color: #e5e7eb;
+  background: #f8fafc;
+}
+
+html[data-theme="light"] .raf-field-row {
+  gap: 12px;
+}
+
+html[data-theme="light"] .raf-step-dot .raf-dot-circle {
+  background: #ffffff;
+  border-color: #d0d0d0;
+  color: #888;
+}
+
+html[data-theme="light"] .raf-step-dot.done .raf-dot-circle {
+  background: #e0f2e0;
+  border-color: #16a34a;
+  color: #16a34a;
+}
+
+html[data-theme="light"] .raf-step-dot.active .raf-dot-circle {
+  background: #16a34a;
+  border-color: #16a34a;
+  color: #ffffff;
+}
+
+html[data-theme="light"] .raf-dot-label {
+  color: #475569;
+}
+
+html[data-theme="light"] .raf-step-dot.active .raf-dot-label,
+html[data-theme="light"] .raf-step-dot.done .raf-dot-label {
+  color: #1f2937;
+}
+
+/* Step Header */
+html[data-theme="light"] .raf-step-count {
+  color: #999;
+}
+
+html[data-theme="light"] .raf-step-section-label {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+/* Form Card */
+html[data-theme="light"] .raf-card {
+  background: #ffffff;
+  border-color: #e0e0e0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Step Content */
+html[data-theme="light"] .raf-step-title {
+  color: #1a1a1a;
+  font-weight: 700;
+}
+
+html[data-theme="light"] .raf-step-sub {
+  color: #888;
+}
+
+/* Fields */
+html[data-theme="light"] .raf-label {
+  color: #333;
+  font-weight: 600;
+}
+
+html[data-theme="light"] .raf-unit {
+  color: #999;
+  font-weight: 400;
+}
+
+/* The input rule already exists but let's ensure focus state is set */
+html[data-theme="light"] .raf-input:focus {
+  border-color: #16a34a;
+  outline: none;
+}
+
+html[data-theme="light"] .raf-input::placeholder {
+  color: #bbb;
+}
+
+/* Radio Group */
+html[data-theme="light"] .raf-radio-btn {
+  background: #f5f5f5;
+  border-color: #d0d0d0;
+  color: #555;
+}
+
+html[data-theme="light"] .raf-radio-btn:hover {
+  border-color: #16a34a;
+  color: #1a1a1a;
+  background: #f9f9f9;
+}
+
+html[data-theme="light"] .raf-radio-btn.active {
+  background: #e0f2e0;
+  border-color: #16a34a;
+  color: #16a34a;
+  font-weight: 700;
+}
+
+/* Toggle */
+html[data-theme="light"] .raf-toggle-row {
+  border-bottom-color: #e8e8e8;
+}
+
+html[data-theme="light"] .raf-toggle-label {
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+html[data-theme="light"] .raf-toggle-desc {
+  color: #999;
+}
+
+html[data-theme="light"] .raf-toggle {
+  background: #e0e0e0;
+  border-color: #d0d0d0;
+}
+
+html[data-theme="light"] .raf-toggle-thumb {
+  background: #ffffff;
+}
+
+html[data-theme="light"] .raf-toggle--on {
+  background: #e0f2e0;
+  border-color: #16a34a;
+}
+
+html[data-theme="light"] .raf-toggle--on .raf-toggle-thumb {
+  background: #16a34a;
+}
+
+/* Info Box */
+html[data-theme="light"] .raf-info-box {
+  background: #f0fdf4;
+  border-color: #16a34a;
+}
+
+html[data-theme="light"] .raf-info-box p {
+  color: #555;
+}
+
+/* CAC Result */
+html[data-theme="light"] .raf-cac-result {
+  border-color: #d0d0d0;
+  background: #f9f9f9;
+}
+
+html[data-theme="light"] .raf-cac-result p {
+  color: #1a1a1a;
+}
+
+/* Review Table */
+html[data-theme="light"] .raf-review-row {
+  border-color: #e5e7eb;
+  border-bottom-color: #e5e7eb;
+  background: #f8fafc;
+}
+
+html[data-theme="light"] .raf-review-label {
+  color: #888;
+}
+
+html[data-theme="light"] .raf-review-value {
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+html[data-theme="light"] .raf-edit-btn {
+  background: transparent;
+  border-color: #d0d0d0;
+  color: #16a34a;
+}
+
+html[data-theme="light"] .raf-edit-btn:hover {
+  border-color: #16a34a;
+  background: #f0fdf4;
+}
+
+/* Navigation */
+html[data-theme="light"] .raf-nav {
+  border-top-color: #e8e8e8;
+}
+
+html[data-theme="light"] .raf-back-btn {
+  background: transparent;
+  border-color: #d0d0d0;
+  color: #888;
+}
+
+html[data-theme="light"] .raf-back-btn:hover {
+  border-color: #16a34a;
+  color: #1a1a1a;
+  background: #f9f9f9;
+}
+
+/* Error Messages */
+html[data-theme="light"] .raf-errors {
+  background: rgba(220, 38, 38, 0.05);
+  border-color: rgba(220, 38, 38, 0.2);
+}
+
+html[data-theme="light"] .raf-errors p {
+  color: #dc2626;
+}
+
+/* Success Screen */
+html[data-theme="light"] .raf-success-card {
+  background: #ffffff;
+  border-color: #e0e0e0;
+}
+
+html[data-theme="light"] .raf-success-card h2 {
+  color: #1a1a1a;
+}
+
+html[data-theme="light"] .raf-success-card p {
+  color: #888;
+}
+
+html[data-theme="light"] .raf-success-icon {
+  background: #e0f2e0;
+  border-color: #16a34a;
+  color: #16a34a;
+}
+
+/* ── Wearables Page (WB) — final light contrast pass ────────────── */
+html[data-theme="light"] .wb-page {
+  background: linear-gradient(160deg, #edf5ee 0%, #f4f8f5 100%);
+  color: #0f172a;
+}
+
+html[data-theme="light"] .wb-hero,
+html[data-theme="light"] .wb-why-section,
+html[data-theme="light"] .wb-tracked-section,
+html[data-theme="light"] .wb-showcase-section,
+html[data-theme="light"] .wb-cta-section,
+html[data-theme="light"] .wb-connect-cta-section,
+html[data-theme="light"] .wb-device-section,
+html[data-theme="light"] .wb-dashboard-section {
+  background: transparent;
+}
+
+html[data-theme="light"] .wb-why-title,
+html[data-theme="light"] .wb-tracked-label,
+html[data-theme="light"] .wb-connect-cta-title,
+html[data-theme="light"] .wb-device-title,
+html[data-theme="light"] .wb-metric-value,
+html[data-theme="light"] .wb-cta-title {
+  color: #0f172a;
+}
+
+html[data-theme="light"] .wb-section-sub,
+html[data-theme="light"] .wb-why-quote,
+html[data-theme="light"] .wb-why-num,
+html[data-theme="light"] .wb-tracked-desc,
+html[data-theme="light"] .wb-connect-cta-sub,
+html[data-theme="light"] .wb-cta-sub,
+html[data-theme="light"] .wb-device-sub,
+html[data-theme="light"] .wb-metric-label,
+html[data-theme="light"] .wb-metric-unit,
+html[data-theme="light"] .wb-metric-range,
+html[data-theme="light"] .wb-page-num,
+html[data-theme="light"] .wb-rescan-btn,
+html[data-theme="light"] .wb-connected-status,
+html[data-theme="light"] .wb-device-item-type,
+html[data-theme="light"] .wb-device-item-battery {
+  color: #64748b;
+}
+
+html[data-theme="light"] .wb-why-text,
+html[data-theme="light"] .wb-device-item-name,
+html[data-theme="light"] .wb-found-header h4,
+html[data-theme="light"] .wb-found-header p {
+  color: #1f2937;
+}
+
+html[data-theme="light"] .wb-why-item,
+html[data-theme="light"] .wb-why-item:first-child {
+  border-color: #dbe7df;
+}
+
+html[data-theme="light"] .wb-tracked-grid {
+  border-color: #dbe7df;
+}
+
+html[data-theme="light"] .wb-tracked-card {
+  background: var(--wb-tracked-bg);
+}
+
+html[data-theme="light"] .wb-tracked-card:hover {
+  background: var(--wb-tracked-bg);
+}
+
+html[data-theme="light"] .wb-tracked-arrow,
+html[data-theme="light"] .wb-tracked-num {
+  color: var(--wb-tracked-accent);
+}
+
+html[data-theme="light"] .wb-showcase-card {
+  border-color: rgba(15, 23, 42, 0.14);
+}
+
+html[data-theme="light"] .wb-cta-card,
+html[data-theme="light"] .wb-connect-cta-card,
+html[data-theme="light"] .wb-device-card,
+html[data-theme="light"] .wb-metric-card {
+  background: #ffffff;
+  border-color: #d7e4da;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+}
+
+html[data-theme="light"] .wb-cta-metric-pill,
+html[data-theme="light"] .wb-device-item {
+  background: #f8fcf8;
+  border-color: #dbe9df;
+}
+
+html[data-theme="light"] .wb-device-item:hover {
+  background: #eef7f0;
+  border-color: #a8d0b3;
+}
+
+html[data-theme="light"] .wb-cta-pill-label {
+  color: #64748b;
+}
+
+html[data-theme="light"] .wb-time-tab {
+  border-color: #d3e2d7;
+  color: #64748b;
+  background: #ffffff;
+}
+
+html[data-theme="light"] .wb-time-tab:hover {
+  border-color: #9fcdac;
+  color: #1f2937;
+}
+
+html[data-theme="light"] .wb-time-tab-active {
+  background: #e7f5ea;
+  border-color: #9fcdac;
+  color: #14532d;
+}
+
+html[data-theme="light"] .wb-page-btn {
+  color: #16a34a;
+}
+
+html[data-theme="light"] .wb-page-btn:disabled {
+  color: #94a3b8;
+}
+
+html[data-theme="light"] .wb-rescan-btn:hover {
+  color: #334155;
 }

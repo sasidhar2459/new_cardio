@@ -16,6 +16,24 @@
   background: linear-gradient(160deg, #f0f5f1 0%, #eaf2ec 50%, #f5f7f5 100%);
   border-bottom: 1px solid #e8ede9;
   text-align: center;
+  isolation: isolate;
+}
+
+.contact-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(15,23,42,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15,23,42,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.contact-hero > * {
+  position: relative;
+  z-index: 1;
 }
 
 .contact-hero .container {
@@ -377,6 +395,12 @@ html[data-theme="dark"] .contact-page {
 html[data-theme="dark"] .contact-hero {
   background: #060d08;
   border-bottom-color: #1e2d20;
+}
+
+html[data-theme="dark"] .contact-hero::before {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
 }
 
 html[data-theme="dark"] .contact-hero-title {

@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { IonPage, IonContent, IonButton } from '@ionic/react';
+import { IonPage, IonContent, IonButton, IonIcon } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
 import Navbar from '../../components/layout/Navbar';
 import { assessmentSteps } from '../../data/mock_risk_assessment';
+import { useTheme } from '../../hooks/useTheme';
+import { Icons } from '../../lib/icons';
 import './RiskAssessmentFormPage.css';
 
 // ── Form state ───────────────────────────────────────────────────────
@@ -53,12 +55,17 @@ const initial: FormData = {
 
 // ── Step Progress Bar ────────────────────────────────────────────────
 function StepBar({ current, total }: { current: number; total: number }) {
+  const progress = total > 1 ? current / (total - 1) : 0;
+
   return (
     <div className="raf-stepbar">
-      <div className="raf-stepbar-track">
-        <div className="raf-stepbar-fill" style={{ width: `${(current / (total - 1)) * 100}%` }} />
-      </div>
-      <div className="raf-steps-row">
+      <div
+        className="raf-steps-row"
+        style={{
+          ['--raf-steps' as any]: total,
+          ['--raf-progress-ratio' as any]: progress,
+        }}
+      >
         {assessmentSteps.map((s, i) => (
           <div key={i} className={`raf-step-dot ${i < current ? 'done' : i === current ? 'active' : ''}`}>
             <div className="raf-dot-circle">{i < current ? '✓' : i + 1}</div>
@@ -136,25 +143,35 @@ function Step0({ data, set }: { data: FormData; set: (d: Partial<FormData>) => v
     <div className="raf-step-content">
       <h2 className="raf-step-title">Basic Information</h2>
       <p className="raf-step-sub">Demographics & lifestyle factors</p>
-      <Field label="Age" unit="years, 30–60" value={data.age} onChange={v => set({ age: v })} placeholder="e.g. 45" />
-      <RadioGroup
-        label="Biological Sex"
-        options={[{ value: 'male', label: 'Male' }, { value: 'female', label: 'Female' }]}
-        value={data.sex}
-        onChange={v => set({ sex: v as 'male' | 'female' })}
-      />
-      <RadioGroup
-        label="Smoking Status"
-        options={[
-          { value: 'never', label: 'Never' },
-          { value: 'former', label: 'Former' },
-          { value: 'current', label: 'Current' },
-        ]}
-        value={data.smoking}
-        onChange={v => set({ smoking: v as FormData['smoking'] })}
-      />
-      <Toggle label="South Asian Ethnicity" desc="Increases cardiovascular risk by ~1.5×" value={data.southAsian} onChange={v => set({ southAsian: v })} />
-      <Toggle label="Diabetes Diagnosed" desc="Type 1 or Type 2 diabetes" value={data.diabetes} onChange={v => set({ diabetes: v })} />
+      <div className="raf-basic-layout">
+        {/* Left half */}
+        <div className="raf-basic-left">
+          <Field label="Age" unit="years, 30-60" value={data.age} onChange={v => set({ age: v })} placeholder="e.g. 45" />
+          <div className="raf-basic-radios">
+            <RadioGroup
+              label="Smoking Status"
+              options={[
+                { value: 'never', label: 'Never' },
+                { value: 'former', label: 'Former' },
+                { value: 'current', label: 'Current' },
+              ]}
+              value={data.smoking}
+              onChange={v => set({ smoking: v as FormData['smoking'] })}
+            />
+            <RadioGroup
+              label="Biological Sex"
+              options={[{ value: 'male', label: 'Male' }, { value: 'female', label: 'Female' }]}
+              value={data.sex}
+              onChange={v => set({ sex: v as 'male' | 'female' })}
+            />
+          </div>
+        </div>
+        {/* Right half */}
+        <div className="raf-basic-right">
+          <Toggle label="Diabetes Diagnosed" desc="Type 1 or Type 2 diabetes" value={data.diabetes} onChange={v => set({ diabetes: v })} />
+          <Toggle label="South Asian Ethnicity" desc="Increases cardiovascular risk by ~1.5x" value={data.southAsian} onChange={v => set({ southAsian: v })} />
+        </div>
+      </div>
     </div>
   );
 }
@@ -164,17 +181,17 @@ function Step1({ data, set }: { data: FormData; set: (d: Partial<FormData>) => v
     <div className="raf-step-content">
       <h2 className="raf-step-title">Clinical Parameters</h2>
       <p className="raf-step-sub">Blood pressure, lipids & metabolic markers</p>
-      <div className="raf-field-row">
+      <div className="raf-field-row raf-field-row--clinical-top">
         <Field label="Systolic BP" unit="mmHg" value={data.sbp} onChange={v => set({ sbp: v })} placeholder="e.g. 130" />
         <Field label="Diastolic BP" unit="mmHg" value={data.dbp} onChange={v => set({ dbp: v })} placeholder="e.g. 85" />
-      </div>
-      <div className="raf-field-row">
         <Field label="LDL Cholesterol" unit="mg/dL" value={data.ldl} onChange={v => set({ ldl: v })} placeholder="e.g. 130" />
         <Field label="HDL Cholesterol" unit="mg/dL" value={data.hdl} onChange={v => set({ hdl: v })} placeholder="e.g. 45" />
       </div>
-      <Field label="HbA1c" unit="%" value={data.hba1c} onChange={v => set({ hba1c: v })} placeholder="e.g. 5.8" />
-      <Toggle label="Family History of ASCVD" desc="First-degree relative with early heart disease" value={data.familyHistory} onChange={v => set({ familyHistory: v })} />
-      <Toggle label="Other Chronic Conditions" desc="e.g. CKD, autoimmune, HIV" value={data.otherChronic} onChange={v => set({ otherChronic: v })} />
+      <div className="raf-field-row raf-field-row--clinical-bottom">
+        <Field label="HbA1c" unit="%" value={data.hba1c} onChange={v => set({ hba1c: v })} placeholder="e.g. 5.8" />
+        <Toggle label="Family History of ASCVD" desc="First-degree relative with early heart disease" value={data.familyHistory} onChange={v => set({ familyHistory: v })} />
+        <Toggle label="Other Chronic Conditions" desc="e.g. CKD, autoimmune, HIV" value={data.otherChronic} onChange={v => set({ otherChronic: v })} />
+      </div>
     </div>
   );
 }
@@ -184,15 +201,17 @@ function Step2({ data, set }: { data: FormData; set: (d: Partial<FormData>) => v
     <div className="raf-step-content">
       <h2 className="raf-step-title">Risk-Enhancing Factors</h2>
       <p className="raf-step-sub">Advanced biomarkers & systemic conditions</p>
-      <Toggle label="Metabolic Syndrome" desc="Central obesity + ≥2 metabolic abnormalities" value={data.metabolicSyndrome} onChange={v => set({ metabolicSyndrome: v })} />
-      <Toggle label="Chronic Inflammatory Condition" desc="Rheumatoid arthritis, psoriasis, lupus" value={data.chronicInflammatory} onChange={v => set({ chronicInflammatory: v })} />
-      <Toggle label="Chronic Kidney Disease" desc="eGFR < 60 or persistent albuminuria" value={data.chronicKidney} onChange={v => set({ chronicKidney: v })} />
-      <Toggle label="Women-Specific Risk Factors" desc="PCOS, premature menopause, pre-eclampsia" value={data.womenRisk} onChange={v => set({ womenRisk: v })} />
-      <div className="raf-field-row">
+      <div className="raf-toggle-grid raf-toggle-grid--4">
+        <Toggle label="Metabolic Syndrome" desc="Central obesity + >=2 metabolic abnormalities" value={data.metabolicSyndrome} onChange={v => set({ metabolicSyndrome: v })} />
+        <Toggle label="Chronic Inflammatory Condition" desc="Rheumatoid arthritis, psoriasis, lupus" value={data.chronicInflammatory} onChange={v => set({ chronicInflammatory: v })} />
+        <Toggle label="Chronic Kidney Disease" desc="eGFR < 60 or persistent albuminuria" value={data.chronicKidney} onChange={v => set({ chronicKidney: v })} />
+        <Toggle label="Women-Specific Risk Factors" desc="PCOS, premature menopause, pre-eclampsia" value={data.womenRisk} onChange={v => set({ womenRisk: v })} />
+      </div>
+      <div className="raf-field-row raf-field-row--compact">
         <Field label="ApoB" unit="mg/dL" value={data.apoB} onChange={v => set({ apoB: v })} placeholder="optional" />
         <Field label="Lp(a)" unit="mg/dL" value={data.lpa} onChange={v => set({ lpa: v })} placeholder="optional" />
+        <Field label="hs-CRP" unit="mg/L" value={data.hsCRP} onChange={v => set({ hsCRP: v })} placeholder="optional" />
       </div>
-      <Field label="hs-CRP" unit="mg/L" value={data.hsCRP} onChange={v => set({ hsCRP: v })} placeholder="optional" />
     </div>
   );
 }
@@ -202,16 +221,18 @@ function Step3({ data, set }: { data: FormData; set: (d: Partial<FormData>) => v
     <div className="raf-step-content">
       <h2 className="raf-step-title">Body Composition</h2>
       <p className="raf-step-sub">Measurements & fitness metrics</p>
-      <div className="raf-field-row">
-        <Field label="Waist Circumference" unit="cm" value={data.waist} onChange={v => set({ waist: v })} placeholder="optional" />
-        <Field label="Waist-Hip Ratio" value={data.waistHip} onChange={v => set({ waistHip: v })} placeholder="e.g. 0.92" />
-      </div>
-      <div className="raf-field-row">
-        <Field label="Visceral Fat Level" unit="rating 1–12" value={data.visceralFat} onChange={v => set({ visceralFat: v })} placeholder="optional" />
-        <Field label="VO₂ Max" unit="mL/kg/min" value={data.vo2max} onChange={v => set({ vo2max: v })} placeholder="optional" />
-      </div>
-      <div className="raf-info-box">
-        <p>VO₂ Max is one of the strongest predictors of all-cause mortality. Even rough estimates from fitness trackers are helpful.</p>
+      <div className="raf-field-row raf-field-row--body">
+        <div className="raf-body-col">
+          <Field label="Waist Circumference" unit="cm" value={data.waist} onChange={v => set({ waist: v })} placeholder="optional" />
+          <Field label="Visceral Fat Level" unit="rating 1–12" value={data.visceralFat} onChange={v => set({ visceralFat: v })} placeholder="optional" />
+        </div>
+        <div className="raf-body-col">
+          <Field label="Waist-Hip Ratio" value={data.waistHip} onChange={v => set({ waistHip: v })} placeholder="e.g. 0.92" />
+          <Field label="VO₂ Max" unit="mL/kg/min" value={data.vo2max} onChange={v => set({ vo2max: v })} placeholder="optional" />
+        </div>
+        <div className="raf-info-box raf-info-box--tall">
+          <p>VO₂ Max is one of the strongest predictors of all-cause mortality. Even rough estimates from fitness trackers are helpful.</p>
+        </div>
       </div>
     </div>
   );
@@ -292,7 +313,9 @@ function Step5({ data, onEdit }: { data: FormData; onEdit: (step: number) => voi
 // ── Page ─────────────────────────────────────────────────────────────
 const RiskAssessmentFormPage: React.FC = () => {
   const history = useHistory();
+  const { theme } = useTheme();
   const [step, setStep] = useState(0);
+  const [fromReview, setFromReview] = useState(false);
   const [data, setData] = useState<FormData>(initial);
   const [errors, setErrors] = useState<string[]>([]);
 
@@ -324,24 +347,9 @@ const RiskAssessmentFormPage: React.FC = () => {
   const back = () => { setErrors([]); setStep(s => s - 1); };
 
   const submit = () => {
-    // Phase 2 — will POST to backend, then redirect with real score
-    history.push('/risk-assessment/results', {
-      assessment: {
-        age: parseInt(data.age) || undefined,
-        sex: data.sex,
-        smoking: data.smoking,
-        sbp: parseFloat(data.sbp) || undefined,
-        dbp: parseFloat(data.dbp) || undefined,
-        ldl: parseFloat(data.ldl) || undefined,
-        hdl: parseFloat(data.hdl) || undefined,
-        familyHistory: data.familyHistory,
-        bmi: parseFloat(data.bmi) || undefined,
-        hsCrp: parseFloat(data.hsCrp) || undefined,
-        hbA1c: parseFloat(data.hbA1c) || undefined,
-        cacScore: parseFloat(data.cacScore) || undefined,
-        hasCac: data.hasCac,
-      },
-    });
+    // Phase 2 — will POST to backend, get back real id, redirect to /risk-assessment/dashboard/:id/history
+    // hardcoded id=1 for now
+    history.push('/risk-assessment/dashboard/1/history');
   };
 
   return (
@@ -349,11 +357,16 @@ const RiskAssessmentFormPage: React.FC = () => {
       <IonContent fullscreen scrollY>
         <div className="raf-page">
           <Navbar />
-          <div className="hero-bg-grid hero-bg-grid--dark" />
-
+          <div className={`hero-bg-grid ${theme === 'dark' ? 'hero-bg-grid--dark' : ''}`} />
+<br />
 
           <div className="raf-shell">
             <div className="container">
+
+              <button className="raf-page-back-btn" onClick={() => history.push('/risk-assessment')}>
+                <IonIcon icon={Icons.arrowBack} className="raf-page-back-icon" />
+                <span>Back to Assessment</span>
+              </button>
 
               {/* progress */}
               <StepBar current={step} total={assessmentSteps.length} />
@@ -371,7 +384,7 @@ const RiskAssessmentFormPage: React.FC = () => {
                 {step === 2 && <Step2 data={data} set={set} />}
                 {step === 3 && <Step3 data={data} set={set} />}
                 {step === 4 && <Step4 data={data} set={set} />}
-                {step === 5 && <Step5 data={data} onEdit={s => { setStep(s); }} />}
+                {step === 5 && <Step5 data={data} onEdit={s => { setFromReview(true); setStep(s); }} />}
 
                 {/* validation errors */}
                 {errors.length > 0 && (
@@ -382,11 +395,21 @@ const RiskAssessmentFormPage: React.FC = () => {
 
                 {/* navigation */}
                 <div className="raf-nav">
-                  {step > 0 && (
+                  {step > 0 && !fromReview && (
                     <button className="raf-back-btn" onClick={back}>← Back</button>
                   )}
                   <div style={{ flex: 1 }} />
-                  {step < assessmentSteps.length - 1 ? (
+                  {fromReview && step !== 5 ? (
+                    <IonButton className="btn-white" shape="round" onClick={() => {
+                      const errs = validate();
+                      if (errs.length) { setErrors(errs); return; }
+                      setErrors([]);
+                      setFromReview(false);
+                      setStep(5);
+                    }}>
+                      Save & Back to Review
+                    </IonButton>
+                  ) : step < assessmentSteps.length - 1 ? (
                     <IonButton className="btn-white" shape="round" onClick={next}>
                       Next →
                     </IonButton>

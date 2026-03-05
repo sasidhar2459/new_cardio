@@ -12,30 +12,57 @@ import { Icons } from '../../lib/icons';
 import { useReveal } from '../../hooks/useScrollReveal';
 import './MetricsPage.css';
 
-// preview pills shown after "loading"
-const MET_PILLS = [
-  { label: 'ApoB',        value: '82 mg/dL',  color: '#a855f7' },
-  { label: 'Systolic BP', value: '118 mmHg',  color: '#ef4444' },
-  { label: 'VO₂ Max',    value: '48 ml/kg',   color: '#10b981' },
-];
-
 // ── Hero ─────────────────────────────────────────────────────────────
 function MetricsHero() {
-  const [cardState, setCardState] = useState<'idle' | 'loading' | 'ready'>('idle');
+  const heroImage = '/ai-art/data-that-drives-health.png';
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [isAutoFlipping, setIsAutoFlipping] = useState(false);
+  const flipRef = useRef<HTMLDivElement | null>(null);
+  const hasAutoFlipPlayedRef = useRef(false);
+  const timersRef = useRef<Array<ReturnType<typeof setTimeout>>>([]);
 
-  function handleLoad() {
-    setCardState('loading');
-    setTimeout(() => setCardState('ready'), 2800);
+  useEffect(() => {
+    const node = flipRef.current;
+    if (!node || hasAutoFlipPlayedRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting || hasAutoFlipPlayedRef.current) return;
+
+          hasAutoFlipPlayedRef.current = true;
+          setIsAutoFlipping(true);
+
+          timersRef.current.push(setTimeout(() => setIsFlipped(true), 220));
+          timersRef.current.push(setTimeout(() => setIsFlipped(false), 2100));
+          timersRef.current.push(setTimeout(() => setIsAutoFlipping(false), 3300));
+
+          observer.disconnect();
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(node);
+
+    return () => {
+      observer.disconnect();
+      timersRef.current.forEach((timer) => clearTimeout(timer));
+      timersRef.current = [];
+    };
+  }, []);
+
+  function toggleFlip() {
+    setIsFlipped((v) => !v);
   }
 
   return (
     <section className="met-hero">
-      <div className="hero-bg-grid" />
       <div className="container">
         <div className="met-hero-grid">
           <div className="met-hero-left">
             <p className="section-eyebrow">Metrics</p>
-            <h1 className="met-hero-title">Data That<br />Drives Results.</h1>
+            <h1 className="met-hero-title">Data That<br />Drives <span className="met-hero-accent">Results.</span></h1>
             <p className="met-hero-sub">
               Bypass tracks the biomarkers that actually predict cardiac events — not vanity numbers. Every metric is colour-coded, quantifiable, and tied to outcomes.
             </p>
@@ -44,61 +71,65 @@ function MetricsHero() {
             </IonButton>
           </div>
 
-          {/* right — interactive metrics preview card */}
+          {/* right — flip card matching RA hero */}
           <div className="met-hero-right">
-            <div className={`met-hero-card ${cardState === 'ready' ? 'met-hero-card--ready' : ''}`}>
-              <p className="section-eyebrow">Your Biomarkers</p>
-
-              {/* idle */}
-              {cardState === 'idle' && (
-                <>
-                  <h2 className="met-hero-card-title">See Your Key<br />Metrics Live.</h2>
-                  <p className="met-hero-card-sub">
-                    Every biomarker that actually predicts cardiac events — tracked continuously, colour-coded, actionable.
-                  </p>
-                  <button className="met-hero-load-btn" onClick={handleLoad}>
-                    <span className="met-hlb-bg" />
-                    <IonIcon icon={Icons.barChart} className="met-hlb-icon" />
-                    <span className="met-hlb-label">Preview My Metrics</span>
-                  </button>
-                </>
-              )}
-
-              {/* loading — animated bars */}
-              {cardState === 'loading' && (
-                <div className="met-hero-loading">
-                  <div className="met-bar-anim">
-                    {[0.4, 0.65, 0.5, 0.8, 0.55].map((h, i) => (
-                      <div key={i} className="met-bar-col" style={{ '--bar-h': h, '--bar-delay': `${i * 0.12}s` } as React.CSSProperties} />
-                    ))}
+            <div
+              ref={flipRef}
+              className={`met-hero-flip ${isFlipped ? 'is-flipped' : ''} ${isAutoFlipping ? 'is-auto-flipping' : ''}`}
+              tabIndex={0}
+              aria-label="Metrics card flip"
+              onMouseEnter={() => { if (!isAutoFlipping) setIsFlipped(true); }}
+              onMouseLeave={() => { if (!isAutoFlipping) setIsFlipped(false); }}
+              onClick={toggleFlip}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  toggleFlip();
+                }
+              }}
+            >
+              <div className="met-hero-flip-inner">
+                <div className="met-hero-face met-hero-face--front">
+                  <img src={heroImage} alt="Metrics" className="met-hero-face-img" />
+                  <div className="met-hero-flip-hint" aria-hidden="true">
+                    <span>Hover or Tap to Flip</span>
+                    <IonIcon icon={Icons.arrowForward} className="met-hero-flip-hint-icon" />
                   </div>
-                  <p className="met-hero-loading-label">Loading Metrics…</p>
-                  <div className="wb-scan-dots"><span /><span /><span /></div>
                 </div>
-              )}
-
-              {/* ready */}
-              {cardState === 'ready' && (
-                <>
-                  <div className="met-hero-ready-row">
-                    <span className="met-hero-ready-dot" />
-                    <span className="met-hero-ready-text">Live Data — 6 metrics tracked</span>
+   <div className="ra-hero-face ra-hero-face--back ra-hero-card">
+                  <p className="section-eyebrow">Your Biomarkers</p>
+                  <h2 className="ra-hero-card-title">See Your Key<br />Metrics Live.</h2>
+                  <p className="ra-hero-card-sub">
+                    Every biomarker that actually predicts cardiac events — tracked continuously, colour-coded, and actionable.
+                  </p>
+                  <div className="ra-hero-card-btns">
+                    <button className="ra-hero-scan-btn" onClick={() => window.location.href = '/metrics/dashboard'}>
+                      <span className="ra-hsb-bg" />
+                      <IonIcon icon={Icons.analytics} className="ra-hsb-icon" />
+                      <span className="ra-hsb-label">Metrics Dashboard</span>
+                    </button>   <IonButton className="btn-white" shape="round" href="/risk-assessment/form">
+                      Take Assessment
+                    </IonButton>
+                 
                   </div>
-                  <div className="ra-hero-pills">
-                    {MET_PILLS.map(p => (
-                      <div key={p.label} className="wb-hero-pill" style={{ borderColor: `${p.color}33` }}>
-                        <span className="wb-hero-pill-dot" style={{ background: p.color }} />
-                        <span className="wb-hero-pill-label">{p.label}</span>
-                        <span className="wb-hero-pill-value" style={{ color: p.color }}>{p.value}</span>
-                      </div>
-                    ))}
+                </div>
+                {/* <div className="met-hero-face met-hero-face--back met-hero-card">
+                  <p className="section-eyebrow"></p>
+                  <h2 className="met-hero-card-title"></h2>
+                  <p className="met-hero-card-sub">
+                  </p>
+                  <div className="met-hero-card-btns">
+                    <button className="met-hero-dash-btn" onClick={() => window.location.href = }>
+                      <span className="met-hdb-bg" />
+                      <IonIcon icon={Icons.barChart} className="met-hdb-icon" />
+                      <span className="met-hdb-label">Metrics Dashboard</span>
+                    </button>
+                    <IonButton className="btn-white" shape="round" href="/risk-assessment/form">
+                      Start Assessment
+                    </IonButton>
                   </div>
-                  <IonButton className="btn-green" shape="round" href="/metrics/dashboard">
-                    <IonIcon slot="start" icon={Icons.arrowForward} />
-                    View My Dashboard
-                  </IonButton>
-                </>
-              )}
+                </div> */}
+              </div>
             </div>
           </div>
         </div>
@@ -342,45 +373,94 @@ function ProgressSection() {
   );
 }
 
-// mock values shown on each phone card — swap to real data in Phase 2
-const phoneCards = [
-  { title: 'LDL & ApoB',       value: '82',   unit: 'mg/dL',  sub: 'ApoB',        trend: [38,52,45,30,22,18,12] },
-  { title: 'Inflammation',      value: '1.2',  unit: 'mg/L',   sub: 'hs-CRP',      trend: [60,55,48,40,32,25,18] },
-  { title: 'Blood Pressure',    value: '118',  unit: 'mmHg',   sub: 'Systolic',    trend: [70,65,58,52,46,40,35] },
-  { title: 'VO₂ Max',          value: '48',   unit: 'ml/kg',  sub: 'Cardio fit',  trend: [20,28,34,40,44,46,48] },
-  { title: 'Glucose & HbA1c',  value: '5.2',  unit: '%',      sub: 'HbA1c',       trend: [55,50,46,42,38,35,32] },
-  { title: 'HRV',               value: '64',   unit: 'ms',     sub: 'Heart rate V',trend: [30,36,42,48,54,60,64] },
-  { title: 'Sleep Quality',     value: '87',   unit: '%',      sub: 'Recovery',    trend: [40,48,55,62,68,74,80] },
-  { title: 'Body Fat',          value: '18.4', unit: '%',      sub: 'Composition', trend: [65,60,54,48,42,36,30] },
-  { title: 'Steps',             value: '9,240',unit: '/day',   sub: 'Activity',    trend: [30,40,50,58,65,72,78] },
-  { title: 'Risk Level',        value: 'Low',  unit: '',       sub: 'RISK LEVEL',  trend: [80,70,60,48,36,25,15] },
+// looping cards for metrics marquee — static for now, API can replace in Phase 2
+const loopMetricCards = [
+  {
+    title: 'LDL & ApoB',
+    value: '82',
+    unit: 'mg/dL',
+    sub: 'ApoB',
+    image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=900&q=80',
+    imageAlt: 'Lab lipid profile report used to track LDL and ApoB',
+  },
+  {
+    title: 'Inflammation',
+    value: '1.2',
+    unit: 'mg/L',
+    sub: 'HS-CRP',
+    image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=900&q=80',
+    imageAlt: 'Clinician reviewing inflammation marker trends on a dashboard',
+  },
+  {
+    title: 'Blood Pressure',
+    value: '118',
+    unit: 'mmHg',
+    sub: 'Systolic',
+    image: 'https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?auto=format&fit=crop&w=900&q=80',
+    imageAlt: 'Blood pressure cuff and monitoring setup',
+  },
+  {
+    title: 'VO2 Max',
+    value: '48',
+    unit: 'ml/kg',
+    sub: 'Cardio Fit',
+    image: 'https://images.unsplash.com/photo-1579758629938-03607ccdbaba?auto=format&fit=crop&w=900&q=80',
+    imageAlt: 'Cardio performance assessment and endurance training session',
+  },
+  {
+    title: 'Glucose & HbA1c',
+    value: '5.2',
+    unit: '%',
+    sub: 'HbA1c',
+    image: 'https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=900&q=80',
+    imageAlt: 'Blood glucose measurement for long-term metabolic tracking',
+  },
+  {
+    title: 'HRV',
+    value: '64',
+    unit: 'ms',
+    sub: 'Heart Rate V',
+    image: 'https://images.unsplash.com/photo-1550831107-1553da8c8464?auto=format&fit=crop&w=900&q=80',
+    imageAlt: 'Wearable device displaying heart rhythm and variability data',
+  },
+  {
+    title: 'Sleep Quality',
+    value: '87',
+    unit: '%',
+    sub: 'Recovery',
+    image: 'https://images.unsplash.com/photo-1541199249251-f713e6145474?auto=format&fit=crop&w=900&q=80',
+    imageAlt: 'Sleep tracking interface showing nightly recovery quality',
+  },
+  {
+    title: 'Body Fat',
+    value: '18.4',
+    unit: '%',
+    sub: 'Composition',
+    image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80',
+    imageAlt: 'Body composition assessment in a fitness lab environment',
+  },
+  {
+    title: 'Steps',
+    value: '9,240',
+    unit: '/day',
+    sub: 'Activity',
+    image: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=900&q=80',
+    imageAlt: 'Walking activity used for daily step and mobility tracking',
+  },
+  {
+    title: 'Risk Level',
+    value: 'Low',
+    unit: '',
+    sub: 'Risk Profile',
+    image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=80',
+    imageAlt: 'Clinical risk profile dashboard with decision markers',
+  },
 ];
-
-// tiny SVG sparkline inside each phone card
-function Sparkline({ points }: { points: number[] }) {
-  const w = 160; const h = 60;
-  const max = Math.max(...points); const min = Math.min(...points);
-  const xs = points.map((_, i) => (i / (points.length - 1)) * w);
-  const ys = points.map(p => h - ((p - min) / (max - min || 1)) * h * 0.8 - h * 0.1);
-  const d = xs.map((x, i) => `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${ys[i].toFixed(1)}`).join(' ');
-  return (
-    <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} className="met-sparkline">
-      <path d={d} fill="none" stroke="rgba(255,255,255,0.9)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      {xs.map((x, i) => (
-        <circle key={i} cx={x} cy={ys[i]} r="3" fill="#fff" />
-      ))}
-      {/* dashed verticals */}
-      {xs.map((x, i) => (
-        <line key={i} x1={x} y1={ys[i]} x2={x} y2={h} stroke="rgba(255,255,255,0.2)" strokeWidth="1" strokeDasharray="3,3" />
-      ))}
-    </svg>
-  );
-}
 
 // ── Key Metrics Section ───────────────────────────────────────────────
 function KeyMetricsSection() {
   // duplicate cards for seamless loop
-  const all = [...phoneCards, ...phoneCards];
+  const all = [...loopMetricCards, ...loopMetricCards];
   return (
     <section className="met-key-section">
       <div className="container">
@@ -391,28 +471,23 @@ function KeyMetricsSection() {
         </p>
       </div>
 
-      {/* full-width scroll strip — no container constraint */}
-      <div className="met-carousel-outer">
-        <div className="met-carousel-track">
+      {/* full-width scroll strip */}
+      <div className="met-loop-wrap">
+        <div className="met-loop-track met-loop-left">
           {all.map((card, i) => (
-            <div key={i} className="met-phone-card">
-              <div className="met-phone-inner">
-                <p className="met-phone-title">{card.title}</p>
-                <div className="met-phone-value-row">
-                  <span className="met-phone-value">{card.value}</span>
-                  {card.unit && <span className="met-phone-unit">{card.unit}</span>}
-                </div>
-                <p className="met-phone-sub">{card.sub}</p>
-                <div className="met-phone-chart">
-                  <Sparkline points={card.trend} />
-                </div>
-                <div className="met-phone-dates">
-                  {['Jan 20','Jun 29','Oct 03','Jan 03'].map((d,j) => (
-                    <span key={j}>{d}</span>
-                  ))}
-                </div>
+            <article key={i} className="met-loop-card">
+              <div className="met-loop-card-media">
+                <img src={card.image} alt={card.imageAlt} loading="lazy" />
               </div>
-            </div>
+              <div className="met-loop-card-content">
+                <p className="met-loop-title">{card.title}</p>
+                <div className="met-loop-value-row">
+                  <span className="met-loop-value">{card.value}</span>
+                  {card.unit && <span className="met-loop-unit">{card.unit}</span>}
+                </div>
+                <p className="met-loop-sub">{card.sub}</p>
+              </div>
+            </article>
           ))}
         </div>
       </div>

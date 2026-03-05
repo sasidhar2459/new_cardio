@@ -3,18 +3,155 @@
 /* ── Risk Assessment Dashboard ─────────────────────────────────── */
 .rad-page {
   position: relative;
-  background: #0a0f0d;
+  background: radial-gradient(1200px 680px at 12% -20%, rgba(34, 163, 101, 0.06), rgba(10, 15, 13, 0)) #0a0f0d;
   min-height: 100vh;
   color: #fff;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .rad-main { padding: 100px 0 100px; }
+
+/* ── Visual Refresh Layer ───────────────────────────────────────── */
+.rad-page {
+  --rad-surface: #101a14;
+  --rad-surface-soft: #142018;
+  --rad-border: #2a3a2f;
+  --rad-border-strong: #36493c;
+  --rad-text-1: #f5f7f6;
+  --rad-text-2: #b8c5bb;
+  --rad-text-3: #8c9a90;
+  --rad-accent: #84cc16;
+  --rad-ring-track: rgba(255,255,255,0.12);
+}
+
+.rad-ring-track {
+  stroke: var(--rad-ring-track);
+}
+
+.rad-summary-panel,
+.rad-vital-card,
+.rad-overview-card,
+.rad-history-card,
+.rad-hcd-score-col,
+.rad-hcd-lifetime-card,
+.rad-hcd-plan-card,
+.rad-hcd-why-card,
+.rad-hcd-factor-card,
+.rad-pg-btn,
+.rad-pg-num {
+  background: var(--rad-surface);
+  border-color: var(--rad-border);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.16);
+}
+
+.rad-summary-panel,
+.rad-vital-card,
+.rad-overview-card {
+  border-radius: 18px;
+}
+
+.rad-page-title,
+.rad-vital-value,
+.rad-hc-stat-value,
+.rad-hcd-card-title,
+.rad-ov-big-num {
+  color: var(--rad-text-1);
+}
+
+.rad-vitals-title,
+.rad-history-title,
+.rad-hc-date,
+.rad-hc-level-pill,
+.rad-rs-value,
+.rad-hcd-plan-item,
+.rad-hcd-ls-value {
+  color: var(--rad-text-2);
+}
+
+.rad-summary-eyebrow,
+.rad-driver-pct,
+.rad-rs-label,
+.rad-vital-label,
+.rad-vital-normal,
+.rad-vital-range,
+.rad-ov-label,
+.rad-ov-score-label,
+.rad-ov-bar-label,
+.rad-ov-stat-name,
+.rad-hc-stat-label,
+.rad-mini-ring-max,
+.rad-hcd-score-desc,
+.rad-hcd-plan-desc,
+.rad-hcd-why-desc,
+.rad-hcd-ls-label,
+.rad-hcd-fc-label,
+.rad-hcd-fc-desc,
+.rad-pg-info,
+.rad-back-btn {
+  color: var(--rad-text-3);
+}
+
+.rad-back-btn:hover,
+.rad-filter-chip--active,
+.rad-pg-num--active,
+.rad-pg-btn:hover:not(:disabled) {
+  color: var(--rad-accent);
+}
+
+.rad-filter-chip {
+  border-color: var(--rad-border);
+  color: var(--rad-text-3);
+}
+
+.rad-filter-chip:hover {
+  border-color: var(--rad-border-strong);
+  color: var(--rad-text-2);
+}
+
+.rad-filter-chip--active {
+  background: rgba(134, 182, 117, 0.14);
+  border-color: rgba(134, 182, 117, 0.38);
+}
+
+.rad-vital-card::before {
+  height: 2px;
+  opacity: 0.65;
+}
+
+.rad-driver-track,
+.rad-factor-bar-track {
+  background: rgba(255,255,255,0.1);
+}
+
+.rad-history-card {
+  border-left-width: 3px;
+}
+
+.rad-history-card:hover {
+  background: var(--rad-surface-soft);
+}
+
+.rad-hc-toggle {
+  background: #2f855a;
+  border-color: #276749;
+  color: #ffffff;
+}
+
+.rad-hc-toggle:hover {
+  background: #38a169;
+  border-color: #2f855a;
+}
+
+.rad-hc-detail {
+  background: rgba(14, 22, 17, 0.75);
+  border-top-color: rgba(134, 182, 117, 0.16);
+}
 
 /* ── Page header ───────────────────────────────────────────────── */
 .rad-page-header {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 10px;
   margin-bottom: 48px;
 }
@@ -23,18 +160,21 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  background: none;
-  border: none;
-  color: rgba(255,255,255,0.35);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: #b8c5bb;
+  padding: 8px 14px;
   font-size: 13px;
-  font-weight: 600;
   cursor: pointer;
-  transition: color 0.2s;
-  padding: 0;
-  width: fit-content;
-  letter-spacing: 0.5px;
+  white-space: nowrap;
+  transition: background 0.15s;
 }
-.rad-back-btn:hover { color: #a3e635; }
+.rad-back-btn:hover { background: rgba(255,255,255,0.1); }
+
+.rad-back-btn-icon {
+  font-size: 16px;
+}
 
 .rad-page-title {
   font-size: clamp(32px, 4vw, 56px);
@@ -69,7 +209,9 @@
 .rad-level-badge {
   padding: 6px 16px;
   border-radius: 999px;
-  border: 1px solid;
+  border: 1px solid rgba(163,230,53,0.34);
+  color: #b7d18f;
+  background: rgba(163,230,53,0.08);
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.5px;
@@ -148,6 +290,7 @@
 }
 .rad-driver-fill {
   height: 100%;
+  background: #84cc16;
   border-radius: 2px;
   transition: width 0.6s ease;
 }
@@ -156,6 +299,20 @@
   color: rgba(255,255,255,0.25);
   width: 32px;
   text-align: right;
+}
+
+.rad-retake-btn {
+  --background: #0f766e;
+  --background-hover: #115e59;
+  --color: #ffffff;
+  --border-radius: 999px;
+  --border-width: 1px;
+  --border-color: rgba(15, 118, 110, 0.28);
+  --box-shadow: 0 8px 20px rgba(15, 118, 110, 0.24);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
 /* ── Vitals section ────────────────────────────────────────────── */
@@ -182,6 +339,38 @@
   letter-spacing: -0.5px;
 }
 
+.rad-page .wb-time-tabs {
+  display: inline-flex;
+  gap: 8px;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--rad-border, #253428);
+}
+
+.rad-page .wb-time-tab {
+  min-width: 86px;
+  height: 38px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--rad-text-3, #8c9a90);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.rad-page .wb-time-tab:hover {
+  color: var(--rad-text-2, #b8c5bb);
+}
+
+.rad-page .wb-time-tab-active {
+  background: rgba(255,255,255,0.10);
+  color: #ffffff;
+  border-color: rgba(255,255,255,0.20);
+}
+
 .rad-vitals-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -199,10 +388,16 @@
   transition: border-color 0.2s, transform 0.2s;
 }
 .rad-vital-card::before {
+  content: none;
+}
+.rad-vital-card::after {
   content: '';
-  display: block;
-  height: 3px;
-  background: var(--accent, #a3e635);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accent, #84cc16);
   opacity: 0.8;
 }
 .rad-vital-card:hover { border-color: #2a3f2c; transform: translateY(-3px); }
@@ -267,8 +462,9 @@
 /* Overview row */
 .rad-overview-row {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
+  align-items: stretch;
 }
 
 .rad-overview-card {
@@ -279,10 +475,14 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  min-height: 210px;
 }
 
-.rad-overview-card--trend { background: #0b160e; border-color: rgba(163,230,53,0.15); }
-.rad-overview-card--stats { background: #0f1a12; }
+.rad-overview-card--trend,
+.rad-overview-card--stats {
+  background: #0f1a12;
+  border-color: #1e2d20;
+}
 
 .rad-ov-icon-wrap {
   width: 36px; height: 36px;
@@ -341,7 +541,7 @@
 .rad-ov-trend-tag {
   font-size: 11px;
   font-weight: 700;
-  color: #a3e635;
+  color: #27ae60;
   letter-spacing: 0.3px;
 }
 
@@ -387,7 +587,7 @@
   transition: all 0.15s;
 }
 .rad-filter-chip:hover { color: rgba(255,255,255,0.6); border-color: #2a3f2c; }
-.rad-filter-chip--active { background: #1a2e1c; color: #a3e635; border-color: rgba(163,230,53,0.3); }
+.rad-filter-chip--active { background: rgba(39,174,96,0.12); color: #27ae60; border-color: rgba(39,174,96,0.28); }
 
 /* assessment cards */
 .rad-history-cards { display: flex; flex-direction: column; gap: 10px; }
@@ -411,7 +611,8 @@
 .rad-hc-accent { display: none; }
 
 .rad-hc-main {
-  display: flex;
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr) auto;
   align-items: center;
   gap: 24px;
   padding: 18px 22px;
@@ -458,19 +659,40 @@
 
 /* expand button */
 .rad-hc-toggle {
-  background: rgba(163,230,53,0.06);
-  border: 1px solid rgba(163,230,53,0.15);
+  background: #2f855a;
+  border: 1px solid #276749;
   border-radius: 8px;
-  color: rgba(163,230,53,0.6);
+  color: #ffffff;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
   padding: 6px 14px;
-  cursor: pointer;
+  cursor: default;
   flex-shrink: 0;
   transition: all 0.15s;
   white-space: nowrap;
 }
-.rad-hc-toggle:hover { color: #a3e635; border-color: rgba(163,230,53,0.35); }
+.rad-hc-toggle:hover { background: #38a169; border-color: #2f855a; color: #ffffff; cursor: pointer; }
+
+/* kill global glass overlays for dashboard cards to keep tones consistent */
+.rad-page .rad-summary-panel::before,
+.rad-page .rad-overview-card::before {
+  content: none !important;
+}
+
+.rad-page .rad-summary-panel,
+.rad-page .rad-vital-card,
+.rad-page .rad-overview-card,
+.rad-page .rad-history-card,
+.rad-page .rad-hcd-score-col,
+.rad-page .rad-hcd-lifetime-card,
+.rad-page .rad-hcd-plan-card,
+.rad-page .rad-hcd-why-card,
+.rad-page .rad-hcd-factor-card,
+.rad-page .rad-pg-btn,
+.rad-page .rad-pg-num {
+  background: var(--rad-surface) !important;
+  border-color: var(--rad-border) !important;
+}
 
 /* ── Detail panel (expanded) ───────────────────────────────────── */
 .rad-hc-detail {
@@ -587,7 +809,7 @@
 }
 .rad-hcd-ls-block + .rad-hcd-ls-block { border-left: 1px solid #1e2d20; }
 .rad-hcd-ls-label { font-size: 11px; color: rgba(255,255,255,0.35); }
-.rad-hcd-ls-value { font-size: 18px; font-weight: 700; color: #a3e635; }
+.rad-hcd-ls-value { font-size: 18px; font-weight: 700; color: #27ae60; }
 
 /* treatment plan card */
 .rad-hcd-plan-card {
@@ -615,7 +837,7 @@
 /* why it works card */
 .rad-hcd-why-card {
   background: #0f1a12;
-  border: 1px solid rgba(163,230,53,0.12);
+  border: 1px solid #1e2d20;
   border-radius: 16px;
   padding: 22px;
   display: flex;
@@ -645,7 +867,7 @@
   cursor: pointer;
   transition: all 0.15s;
 }
-.rad-pg-btn:hover:not(:disabled) { color: #a3e635; border-color: rgba(163,230,53,0.3); }
+.rad-pg-btn:hover:not(:disabled) { color: #27ae60; border-color: rgba(39,174,96,0.28); }
 .rad-pg-btn:disabled { opacity: 0.3; cursor: default; }
 
 .rad-pg-pages { display: flex; gap: 4px; }
@@ -664,9 +886,9 @@
 }
 .rad-pg-num:hover { color: rgba(255,255,255,0.8); border-color: #2a3f2c; }
 .rad-pg-num--active {
-  background: rgba(163,230,53,0.12);
-  border-color: rgba(163,230,53,0.4);
-  color: #a3e635;
+  background: rgba(39,174,96,0.12);
+  border-color: rgba(39,174,96,0.28);
+  color: #27ae60;
 }
 
 .rad-pg-info {
@@ -690,6 +912,7 @@
   .rad-overview-row { grid-template-columns: 1fr; }
   .rad-overview-card--stats { grid-column: auto; }
   .rad-hc-stats { gap: 16px; }
+  .rad-hc-main { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 500px) {

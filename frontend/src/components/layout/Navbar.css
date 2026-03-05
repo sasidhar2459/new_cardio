@@ -245,6 +245,37 @@ html[data-theme="dark"] .navbar-inner.scrolled .nav-login-btn:hover {
   border-color: color-mix(in srgb, var(--nav-glass-border) 76%, white 24%);
 }
 
+/* light mode at top (not scrolled): keep nav readable on light pages */
+html[data-theme="light"] .navbar-inner:not(.scrolled) .logo-mark {
+  color: #0f172a;
+}
+
+html[data-theme="light"] .navbar-inner:not(.scrolled) .logo-suffix {
+  color: rgba(15, 23, 42, 0.6);
+}
+
+html[data-theme="light"] .navbar-inner:not(.scrolled) .navbar-links a {
+  color: #334155;
+  opacity: 0.92;
+}
+
+html[data-theme="light"] .navbar-inner:not(.scrolled) .navbar-links a:hover {
+  color: #0f172a;
+  opacity: 1;
+}
+
+html[data-theme="light"] .navbar-inner:not(.scrolled) .nav-login-btn {
+  color: #0f172a;
+  background: rgba(255, 255, 255, 0.78);
+  border-color: rgba(15, 23, 42, 0.18);
+  box-shadow: 0 2px 12px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.62);
+}
+
+html[data-theme="light"] .navbar-inner:not(.scrolled) .nav-login-btn:hover {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(15, 23, 42, 0.26);
+}
+
 /* ---- HAMBURGER ---- */
 .nav-hamburger {
   display: none;
