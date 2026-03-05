@@ -20,24 +20,36 @@ export default function Navbar() {
 
   useEffect(() => {
     let scrollEl: HTMLElement | null = null;
+    let timers: ReturnType<typeof setTimeout>[] = [];
 
     const onScroll = () => {
-      if (scrollEl) setScrolled(scrollEl.scrollTop > 50);
+      setScrolled((scrollEl?.scrollTop ?? 0) > 50);
     };
 
-    // IonContent isn't always ready immediately — wait a tick
-    const timer = setTimeout(() => {
+    const attach = (el: HTMLElement) => {
+      if (scrollEl === el) return; // already attached
+      if (scrollEl) scrollEl.removeEventListener('scroll', onScroll);
+      scrollEl = el;
+      el.addEventListener('scroll', onScroll, { passive: true });
+      onScroll(); // sync initial state
+    };
+
+    const tryAttach = () => {
       const ionContent = document.querySelector('ion-content');
       if (ionContent) {
         (ionContent as any).getScrollElement().then((el: HTMLElement) => {
-          scrollEl = el;
-          el.addEventListener('scroll', onScroll);
-        });
+          if (el) attach(el);
+        }).catch(() => {});
       }
-    }, 100);
+    };
+
+    // Try immediately, then at 100ms, 300ms, 600ms in case ion-content loads late
+    [0, 100, 300, 600].forEach(delay => {
+      timers.push(setTimeout(tryAttach, delay));
+    });
 
     return () => {
-      clearTimeout(timer);
+      timers.forEach(clearTimeout);
       if (scrollEl) scrollEl.removeEventListener('scroll', onScroll);
     };
   }, []);

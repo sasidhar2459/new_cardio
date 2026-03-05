@@ -228,3 +228,136 @@
   line-height: 1.5;
   font-style: italic;
 }
+
+/* ── Compared to Others section ─────────────────────────────── */
+.ahd-peer-section {
+  margin-top: 16px;
+  background: var(--ahd-surface);
+  border: 1px solid var(--ahd-border);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.ahd-peer-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.ahd-peer-head-text { display: flex; flex-direction: column; gap: 3px; }
+.ahd-peer-title { font-size: 15px; font-weight: 700; color: var(--ahd-text-1); margin: 0; }
+.ahd-peer-subtitle { font-size: 12px; color: var(--ahd-text-3); margin: 0; }
+
+.ahd-peer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 20px;
+}
+@media (max-width: 860px) {
+  .ahd-peer-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 520px) {
+  .ahd-peer-grid { grid-template-columns: 1fr; }
+}
+
+.ahd-peer-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  padding: 14px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ahd-peer-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.ahd-peer-metric-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ahd-text-3);
+  line-height: 1.3;
+}
+
+.ahd-peer-user-val {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.ahd-peer-unit {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--ahd-text-3);
+}
+
+.ahd-peer-curve {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.ahd-peer-curve-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9px;
+  color: var(--ahd-text-3);
+  margin-top: -4px;
+}
+
+.ahd-peer-card-foot {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 2px;
+}
+
+.ahd-peer-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  width: fit-content;
+}
+
+.ahd-peer-badge--good {
+  background: rgba(163, 230, 53, 0.12);
+  color: #a3e635;
+  border: 1px solid rgba(163, 230, 53, 0.2);
+}
+
+.ahd-peer-badge--warn {
+  background: rgba(249, 115, 22, 0.12);
+  color: #f97316;
+  border: 1px solid rgba(249, 115, 22, 0.2);
+}
+
+.ahd-peer-avg-note {
+  font-size: 10px;
+  color: var(--ahd-text-3);
+  line-height: 1.4;
+}
+
+.ahd-peer-legend {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  font-size: 11px;
+  color: var(--ahd-text-3);
+  line-height: 1.6;
+}
+
+.ahd-peer-legend strong { color: var(--ahd-text-2); }

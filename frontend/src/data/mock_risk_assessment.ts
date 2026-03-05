@@ -34,6 +34,111 @@ export const riskHistory = [
   { date: 'Mar 10, 2025', bp: '124/81', hr: 75, weight: 71.5, glucose: 90,  riskScore: 8,  level: 'Low' },
 ];
 
+// Peer comparison data — age group 45–54 male, per NHANES/ACC-AHA benchmarks
+// Phase 2: replace with API call using user's age + sex from profile
+
+export interface PeerMetric {
+  key: string;
+  label: string;
+  unit: string;
+  userValue: number;
+  userDisplay: string;
+  peerMean: number;
+  peerSd: number;
+  percentile: number;         // % of peers the user is "better than"
+  betterDirection: 'lower' | 'higher';
+  peerLabel: string;
+  peerDisplay: string;
+  rangeLabel: [string, string];
+}
+
+export const peerComparisonData: PeerMetric[] = [
+  {
+    key: 'riskScore',
+    label: 'Cardiovascular Risk Score',
+    unit: '/ 40',
+    userValue: 14,
+    userDisplay: '14',
+    peerMean: 18.5,
+    peerSd: 5.0,
+    percentile: 62,
+    betterDirection: 'lower',
+    peerLabel: 'avg for males 45–54',
+    peerDisplay: '18.5',
+    rangeLabel: ['Low Risk', 'High Risk'],
+  },
+  {
+    key: 'systolicBp',
+    label: 'Systolic Blood Pressure',
+    unit: 'mmHg',
+    userValue: 128,
+    userDisplay: '128',
+    peerMean: 127,
+    peerSd: 16,
+    percentile: 48,
+    betterDirection: 'lower',
+    peerLabel: 'avg for males 45–54',
+    peerDisplay: '127',
+    rangeLabel: ['90 mmHg', '170 mmHg'],
+  },
+  {
+    key: 'heartRate',
+    label: 'Resting Heart Rate',
+    unit: 'bpm',
+    userValue: 78,
+    userDisplay: '78',
+    peerMean: 72,
+    peerSd: 10,
+    percentile: 27,
+    betterDirection: 'lower',
+    peerLabel: 'avg for males 45–54',
+    peerDisplay: '72',
+    rangeLabel: ['50 bpm', '100 bpm'],
+  },
+  {
+    key: 'glucose',
+    label: 'Fasting Glucose',
+    unit: 'mg/dL',
+    userValue: 95,
+    userDisplay: '95',
+    peerMean: 100,
+    peerSd: 14,
+    percentile: 64,
+    betterDirection: 'lower',
+    peerLabel: 'avg for males 45–54',
+    peerDisplay: '100',
+    rangeLabel: ['70 mg/dL', '140 mg/dL'],
+  },
+  {
+    key: 'bmi',
+    label: 'Body Mass Index',
+    unit: 'kg/m²',
+    userValue: 24.9,
+    userDisplay: '24.9',
+    peerMean: 29.1,
+    peerSd: 5.5,
+    percentile: 78,
+    betterDirection: 'lower',
+    peerLabel: 'avg for males 45–54',
+    peerDisplay: '29.1',
+    rangeLabel: ['18 kg/m²', '42 kg/m²'],
+  },
+  {
+    key: 'tenYearRisk',
+    label: '10-Year CVD Risk',
+    unit: '%',
+    userValue: 7,
+    userDisplay: '7%',
+    peerMean: 9.5,
+    peerSd: 5.0,
+    percentile: 60,
+    betterDirection: 'lower',
+    peerLabel: 'avg for males 45–54',
+    peerDisplay: '9.5%',
+    rangeLabel: ['<2%', '>20%'],
+  },
+];
+
 // Step definitions — mirrors old_cardio Flutter form
 export const assessmentSteps = [
   { id: 0, title: 'Basic Information',        subtitle: 'Demographics & lifestyle' },

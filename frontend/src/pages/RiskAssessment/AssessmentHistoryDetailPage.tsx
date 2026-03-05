@@ -236,6 +236,7 @@ const AssessmentHistoryDetailPage: React.FC = () => {
                   Based on ACC/AHA 2023 guidelines and pooled cardiovascular outcomes data from global cohort studies.
                 </p>
               </div>
+
             </div>
           </div>
           <Footer />

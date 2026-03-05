@@ -12,6 +12,340 @@ import { Icons } from '../../lib/icons';
 import { useReveal } from '../../hooks/useScrollReveal';
 import './RiskAssessmentDashboard.css';
 
+// ── Peer Comparison — unique chart per metric ───────────────────────
+
+// 1. CV Risk Score → percentile fill bar
+function ChartRiskScore({ value, peerMean }: { value: number; peerMean: number }) {
+  const pct = Math.min((value / 40) * 100, 100);
+  const peerPct = Math.min((peerMean / 40) * 100, 100);
+  const color = value <= 8 ? '#27ae60' : value <= 14 ? '#e67e22' : value <= 21 ? '#d35400' : '#c0392b';
+  return (
+    <svg viewBox="0 0 220 44" style={{ display: 'block', width: '100%', height: 'auto' }}>
+      {/* track */}
+      <rect x="0" y="16" width="220" height="12" rx="6" fill="rgba(255,255,255,0.06)" />
+      {/* color zones */}
+      <rect x="0"   y="16" width="55"  height="12" rx="6" fill="rgba(39,174,96,0.18)" />
+      <rect x="55"  y="16" width="55"  height="12" fill="rgba(230,126,34,0.18)" />
+      <rect x="110" y="16" width="55"  height="12" fill="rgba(211,84,0,0.18)" />
+      <rect x="165" y="16" width="55"  height="12" rx="6" fill="rgba(192,57,43,0.18)" />
+      {/* filled bar */}
+      <rect x="0" y="16" width={`${(pct / 100) * 220}`} height="12" rx="6" fill={color} opacity="0.7" />
+      {/* peer avg tick */}
+      <line x1={`${(peerPct / 100) * 220}`} y1="12" x2={`${(peerPct / 100) * 220}`} y2="32" stroke="rgba(255,255,255,0.35)" strokeWidth="1.5" strokeDasharray="3,2" />
+      {/* user dot */}
+      <circle cx={`${(pct / 100) * 220}`} cy="22" r="7" fill={color} stroke="#0a0f0d" strokeWidth="2" />
+      {/* zone labels */}
+      <text x="4"   y="40" fontSize="8" fill="rgba(255,255,255,0.3)">Low</text>
+      <text x="66"  y="40" fontSize="8" fill="rgba(255,255,255,0.3)">Borderline</text>
+      <text x="122" y="40" fontSize="8" fill="rgba(255,255,255,0.3)">Inter.</text>
+      <text x="172" y="40" fontSize="8" fill="rgba(255,255,255,0.3)">High</text>
+    </svg>
+  );
+}
+
+// 2. Systolic BP → two-zone pressure gauge (horizontal)
+function ChartSystolicBp({ value }: { value: number }) {
+  const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
+  const pct = clamp(((value - 80) / (180 - 80)) * 100, 0, 100);
+  const color = value < 120 ? '#27ae60' : value < 130 ? '#a3e635' : value < 140 ? '#e67e22' : '#c0392b';
+  const label = value < 120 ? 'Normal' : value < 130 ? 'Elevated' : value < 140 ? 'High Stage 1' : 'High Stage 2';
+  return (
+    <svg viewBox="0 0 220 54" style={{ display: 'block', width: '100%', height: 'auto' }}>
+      <defs>
+        <linearGradient id="bp-grad" x1="0" x2="1" y1="0" y2="0">
+          <stop offset="0%"   stopColor="#27ae60" stopOpacity="0.5" />
+          <stop offset="40%"  stopColor="#a3e635" stopOpacity="0.5" />
+          <stop offset="65%"  stopColor="#e67e22" stopOpacity="0.5" />
+          <stop offset="100%" stopColor="#c0392b" stopOpacity="0.5" />
+        </linearGradient>
+      </defs>
+      {/* gradient track */}
+      <rect x="0" y="18" width="220" height="10" rx="5" fill="url(#bp-grad)" />
+      {/* zone dividers */}
+      <line x1="44" y1="16" x2="44" y2="30" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+      <line x1="88" y1="16" x2="88" y2="30" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+      <line x1="132" y1="16" x2="132" y2="30" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+      {/* user marker line + diamond */}
+      <line x1={`${(pct / 100) * 220}`} y1="10" x2={`${(pct / 100) * 220}`} y2="30" stroke={color} strokeWidth="2" />
+      <polygon points={`${(pct / 100) * 220},6 ${(pct / 100) * 220 - 5},14 ${(pct / 100) * 220 + 5},14`} fill={color} />
+      {/* zone labels */}
+      <text x="2"   y="44" fontSize="8" fill="rgba(255,255,255,0.3)">Normal</text>
+      <text x="48"  y="44" fontSize="8" fill="rgba(255,255,255,0.3)">Elevated</text>
+      <text x="92"  y="44" fontSize="8" fill="rgba(255,255,255,0.3)">High 1</text>
+      <text x="136" y="44" fontSize="8" fill="rgba(255,255,255,0.3)">High 2</text>
+      {/* user label */}
+      <text x={`${(pct / 100) * 220}`} y="54" fontSize="9" fill={color} textAnchor="middle" fontWeight="700">{label}</text>
+    </svg>
+  );
+}
+
+// 3. Heart Rate → dot on zone track with colored bands
+function ChartHeartRate({ value }: { value: number }) {
+  const zones = [
+    { label: 'Athletic', range: [40, 60], color: '#3b82f6' },
+    { label: 'Normal',   range: [60, 80], color: '#27ae60' },
+    { label: 'Elevated', range: [80, 100], color: '#e67e22' },
+    { label: 'High',     range: [100, 120], color: '#c0392b' },
+  ];
+  const min = 40, max = 120, W = 220;
+  const xOf = (v: number) => Math.max(0, Math.min(W, ((v - min) / (max - min)) * W));
+  const userColor = value < 60 ? '#3b82f6' : value < 80 ? '#27ae60' : value < 100 ? '#e67e22' : '#c0392b';
+  return (
+    <svg viewBox="0 0 220 48" style={{ display: 'block', width: '100%', height: 'auto' }}>
+      {zones.map((z, i) => {
+        const x1 = xOf(z.range[0]), x2 = xOf(z.range[1]);
+        return (
+          <g key={i}>
+            <rect x={x1} y="16" width={x2 - x1} height="10" fill={z.color} opacity="0.22"
+              rx={i === 0 ? 5 : 0} style={{ borderRadius: i === zones.length - 1 ? '0 5px 5px 0' : '0' }} />
+            <text x={(x1 + x2) / 2} y="38" fontSize="8" fill="rgba(255,255,255,0.3)" textAnchor="middle">{z.label}</text>
+          </g>
+        );
+      })}
+      {/* track border */}
+      <rect x="0" y="16" width="220" height="10" rx="5" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
+      {/* user dot */}
+      <circle cx={xOf(value)} cy="21" r="8" fill={userColor} stroke="#0a0f0d" strokeWidth="2" />
+      <text x={xOf(value)} y="24.5" fontSize="8" fill="#fff" textAnchor="middle" fontWeight="700">{value}</text>
+      {/* bpm label */}
+      <text x={xOf(value)} y="48" fontSize="8" fill={userColor} textAnchor="middle">bpm</text>
+    </svg>
+  );
+}
+
+// 4. Glucose → segmented 3-zone bar
+function ChartGlucose({ value }: { value: number }) {
+  const segments = [
+    { label: 'Normal',      range: [70, 100],  color: '#27ae60' },
+    { label: 'Pre-diabetic', range: [100, 126], color: '#e67e22' },
+    { label: 'Diabetic',    range: [126, 200],  color: '#c0392b' },
+  ];
+  const min = 70, max = 200, W = 220;
+  const xOf = (v: number) => Math.max(0, Math.min(W, ((v - min) / (max - min)) * W));
+  const userColor = value < 100 ? '#27ae60' : value < 126 ? '#e67e22' : '#c0392b';
+  const userX = xOf(value);
+  return (
+    <svg viewBox="0 0 220 50" style={{ display: 'block', width: '100%', height: 'auto' }}>
+      {segments.map((s, i) => {
+        const x1 = xOf(s.range[0]), x2 = xOf(s.range[1]);
+        return (
+          <g key={i}>
+            <rect x={x1} y="14" width={x2 - x1 - 2} height="14"
+              rx={i === 0 ? 5 : i === segments.length - 1 ? 5 : 0}
+              fill={s.color} opacity="0.25" />
+            <text x={(x1 + x2) / 2} y="40" fontSize="8" fill="rgba(255,255,255,0.3)" textAnchor="middle">{s.label}</text>
+          </g>
+        );
+      })}
+      {/* divider lines */}
+      <line x1={xOf(100)} y1="12" x2={xOf(100)} y2="30" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
+      <line x1={xOf(126)} y1="12" x2={xOf(126)} y2="30" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
+      {/* user marker */}
+      <rect x={userX - 2} y="10" width="4" height="18" rx="2" fill={userColor} />
+      <circle cx={userX} cy="10" r="5" fill={userColor} stroke="#0a0f0d" strokeWidth="1.5" />
+      {/* value label */}
+      <text x={userX} y="50" fontSize="9" fill={userColor} textAnchor="middle" fontWeight="700">{value} mg/dL</text>
+    </svg>
+  );
+}
+
+// 5. BMI → category ladder (stacked pills)
+function ChartBmi({ value }: { value: number }) {
+  const cats = [
+    { label: 'Underweight', max: 18.5, color: '#3b82f6' },
+    { label: 'Normal',      max: 25,   color: '#27ae60' },
+    { label: 'Overweight',  max: 30,   color: '#e67e22' },
+    { label: 'Obese',       max: 40,   color: '#c0392b' },
+  ];
+  const active = cats.findIndex(c => value < c.max);
+  const activeIdx = active === -1 ? cats.length - 1 : active;
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 4, padding: '2px 0' }}>
+      {cats.map((c, i) => {
+        const isActive = i === activeIdx;
+        return (
+          <div key={i} style={{
+            display: 'flex', alignItems: 'center', gap: 8,
+            background: isActive ? `${c.color}22` : 'rgba(255,255,255,0.03)',
+            border: `1px solid ${isActive ? c.color + '55' : 'rgba(255,255,255,0.06)'}`,
+            borderRadius: 6, padding: '5px 10px',
+            transition: 'all 0.2s',
+          }}>
+            <div style={{
+              width: 8, height: 8, borderRadius: '50%',
+              background: isActive ? c.color : 'rgba(255,255,255,0.15)',
+              flexShrink: 0,
+            }} />
+            <span style={{ fontSize: 11, color: isActive ? c.color : 'rgba(255,255,255,0.3)', flex: 1 }}>{c.label}</span>
+            {isActive && (
+              <span style={{ fontSize: 10, fontWeight: 700, color: c.color }}>{value} ←</span>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+// 6. 10-Year CVD Risk → half-donut arc gauge
+function ChartTenYearRisk({ value }: { value: number }) {
+  const W = 220, cx = 110, cy = 90, r = 70;
+  const pct = Math.min(value / 25, 1); // max meaningful = 25%
+  // half-circle arc: left=-180deg, right=0deg
+  const toRad = (deg: number) => (deg * Math.PI) / 180;
+  const arcX = (pct: number) => cx + r * Math.cos(toRad(180 - pct * 180));
+  const arcY = (pct: number) => cy - r * Math.sin(toRad(pct * 180));
+
+  const color = value < 5 ? '#27ae60' : value < 10 ? '#a3e635' : value < 15 ? '#e67e22' : '#c0392b';
+  const label = value < 5 ? 'Low' : value < 10 ? 'Borderline' : value < 15 ? 'Intermediate' : 'High';
+
+  // build arc path from 0% to pct
+  const startX = cx - r, startY = cy; // 180deg = left
+  const endX = arcX(pct), endY = arcY(pct);
+  const largeArc = pct > 0.5 ? 1 : 0;
+
+  return (
+    <svg viewBox="0 0 220 100" style={{ display: 'block', width: '100%', height: 'auto' }}>
+      {/* track */}
+      <path d={`M ${cx - r} ${cy} A ${r} ${r} 0 0 1 ${cx + r} ${cy}`}
+        fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="14" strokeLinecap="round" />
+      {/* color zone fills */}
+      {[
+        { from: 0, to: 0.2, color: '#27ae60' },
+        { from: 0.2, to: 0.4, color: '#a3e635' },
+        { from: 0.4, to: 0.6, color: '#e67e22' },
+        { from: 0.6, to: 1.0, color: '#c0392b' },
+      ].map((seg, i) => {
+        const sx = arcX(seg.from), sy = arcY(seg.from);
+        const ex = arcX(seg.to),   ey = arcY(seg.to);
+        const lg = (seg.to - seg.from) > 0.5 ? 1 : 0;
+        return (
+          <path key={i}
+            d={`M ${sx} ${sy} A ${r} ${r} 0 ${lg} 1 ${ex} ${ey}`}
+            fill="none" stroke={seg.color} strokeWidth="14" strokeLinecap="butt" opacity="0.22" />
+        );
+      })}
+      {/* user fill arc */}
+      {pct > 0 && (
+        <path d={`M ${startX} ${startY} A ${r} ${r} 0 ${largeArc} 1 ${endX} ${endY}`}
+          fill="none" stroke={color} strokeWidth="14" strokeLinecap="round" opacity="0.9" />
+      )}
+      {/* needle dot at user position */}
+      <circle cx={endX} cy={endY} r="7" fill={color} stroke="#0a0f0d" strokeWidth="2" />
+      {/* center labels */}
+      <text x={cx} y={cy - 12} fontSize="22" fontWeight="800" fill={color} textAnchor="middle">{value}%</text>
+      <text x={cx} y={cy + 6}  fontSize="10" fill="rgba(255,255,255,0.45)" textAnchor="middle">10-yr risk</text>
+      {/* zone labels */}
+      <text x="8"   y={cy + 20} fontSize="8" fill="rgba(255,255,255,0.3)">Low</text>
+      <text x={W - 8} y={cy + 20} fontSize="8" fill="rgba(255,255,255,0.3)" textAnchor="end">High</text>
+      {/* risk label */}
+      <text x={cx} y={cy + 20} fontSize="10" fontWeight="700" fill={color} textAnchor="middle">{label}</text>
+    </svg>
+  );
+}
+
+function PeerComparisonDashboard() {
+  const row = riskHistory[0];
+  const bmi = parseFloat((row.weight / (1.70 * 1.70)).toFixed(1));
+  const systolic = parseInt(row.bp);
+  const tenYrVal = row.riskScore >= 22 ? 20 : row.riskScore >= 15 ? 14 : row.riskScore >= 8 ? 7 : 3;
+
+  const isBetter = (key: string, val: number, mean: number) => {
+    if (key === 'heartRate' || key === 'tenYearRisk') return val <= mean;
+    return val <= mean;
+  };
+
+  const cards = [
+    {
+      key: 'riskScore', label: 'Cardiovascular Risk Score',
+      display: String(row.riskScore), unit: '/ 40',
+      value: row.riskScore, mean: 18.5, pct: 62,
+      chart: <ChartRiskScore value={row.riskScore} peerMean={18.5} />,
+      note: 'Peer avg: 18.5 / 40 · males 45–54',
+    },
+    {
+      key: 'systolicBp', label: 'Systolic Blood Pressure',
+      display: String(systolic), unit: 'mmHg',
+      value: systolic, mean: 127, pct: 48,
+      chart: <ChartSystolicBp value={systolic} />,
+      note: 'Peer avg: 127 mmHg · males 45–54',
+    },
+    {
+      key: 'heartRate', label: 'Resting Heart Rate',
+      display: String(row.hr), unit: 'bpm',
+      value: row.hr, mean: 72, pct: 27,
+      chart: <ChartHeartRate value={row.hr} />,
+      note: 'Peer avg: 72 bpm · males 45–54',
+    },
+    {
+      key: 'glucose', label: 'Fasting Glucose',
+      display: String(row.glucose), unit: 'mg/dL',
+      value: row.glucose, mean: 100, pct: 64,
+      chart: <ChartGlucose value={row.glucose} />,
+      note: 'Peer avg: 100 mg/dL · males 45–54',
+    },
+    {
+      key: 'bmi', label: 'Body Mass Index',
+      display: String(bmi), unit: 'kg/m²',
+      value: bmi, mean: 29.1, pct: 78,
+      chart: <ChartBmi value={bmi} />,
+      note: 'Peer avg: 29.1 kg/m² · males 45–54',
+    },
+    {
+      key: 'tenYearRisk', label: '10-Year CVD Risk',
+      display: `${tenYrVal}%`, unit: '',
+      value: tenYrVal, mean: 9.5, pct: 60,
+      chart: <ChartTenYearRisk value={tenYrVal} />,
+      note: 'Peer avg: 9.5% · males 45–54',
+    },
+  ];
+
+  return (
+    <div className="rad-peer-section">
+      <div className="rad-peer-head">
+        <div className="rad-peer-icon-wrap">
+          <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="#a3e635" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <circle cx="9" cy="7" r="4" stroke="#a3e635" strokeWidth="1.5" />
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87" stroke="#a3e635" strokeWidth="1.5" strokeLinecap="round" />
+            <path d="M16 3.13a4 4 0 0 1 0 7.75" stroke="#a3e635" strokeWidth="1.5" strokeLinecap="round" />
+          </svg>
+        </div>
+        <div>
+          <p className="rad-peer-title">How You Compare to Others Like You</p>
+          <p className="rad-peer-subtitle">Males · Age 45–54 · NHANES 2021–2023 population norms</p>
+        </div>
+      </div>
+      <div className="rad-peer-grid">
+        {cards.map(c => {
+          const better = isBetter(c.key, c.value, c.mean);
+          return (
+            <div key={c.key} className="rad-peer-card">
+              <div className="rad-peer-card-top">
+                <span className="rad-peer-metric-label">{c.label}</span>
+                <span className="rad-peer-user-val" style={{ color: better ? '#a3e635' : '#f97316' }}>
+                  {c.display}
+                  {c.unit && <span className="rad-peer-unit"> {c.unit}</span>}
+                </span>
+              </div>
+              <div style={{ margin: '4px 0' }}>{c.chart}</div>
+              <div className="rad-peer-card-foot">
+                <span className={`rad-peer-badge ${better ? 'rad-peer-badge--good' : 'rad-peer-badge--warn'}`}>
+                  {better ? `Better than ${c.pct}% of peers` : `Above avg — room to improve`}
+                </span>
+                <span className="rad-peer-avg-note">{c.note}</span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      <p className="rad-peer-legend">
+        Source: NHANES 2021–2023, ACC/AHA Pooled Cohort equations. Each chart uses a distinct visual suited to that metric's clinical meaning.
+      </p>
+    </div>
+  );
+}
+
 // ── Charts ─────────────────────────────────────────────────────────
 
 function VitalsAreaChart({ points, color }: { points: number[]; color: string }) {
@@ -459,6 +793,7 @@ const RiskAssessmentDashboardPage: React.FC = () => {
               <RiskSummary />
               <VitalsGrid />
               <HistorySection />
+              <PeerComparisonDashboard />
             </div>
           </div>
           <Footer />
